@@ -145,7 +145,7 @@
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
-    {
+    { 
       "name": "citytaxi",
       "rootUri": "../",
       "packageUri": "lib/",
