@@ -1,5 +1,5 @@
 ---------------
-This is for all
+This is for All
 ---------------
 create a folder into the htdocs (xampp)
 Select your own branches (with your name), don't use others' branches.
