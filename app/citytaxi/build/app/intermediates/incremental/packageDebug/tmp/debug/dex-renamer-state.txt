@@ -1,4 +1,0 @@
-#Tue Jan 02 22:13:15 IST 2024
-base.0=/Applications/XAMPP/xamppfiles/htdocs/5_CityTexi/app/citytaxi/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
-path.0=classes.dex
-renamed.0=classes.dex
