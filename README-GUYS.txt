@@ -20,14 +20,5 @@ use "cd windows" command to go into the website folder and work there.
 use the index file into the website folder.. 
 dont change anything in that outside index file.. 
 
-main branch add
-changes from hanan branch
-creating pull request from hanan
-creating pull request 2 from hanan
-creating pull req 3 from hanan      
-
-pull  req 8    
-
-pushing from main copy
 
 
