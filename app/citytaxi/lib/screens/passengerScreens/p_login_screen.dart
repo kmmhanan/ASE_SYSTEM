@@ -65,8 +65,7 @@ class _PLoginScreenState extends State<PLoginScreen> {
                         builder: (context) => const PForgotPassword(),
                       ));
                 },
-                child: Text('Forgot Password ?',
-                    style: Theme.of(context).textTheme.bold13),
+                child: Text('Forgot Password ?', style: Theme.of(context).textTheme.bold13),
               ),
             )
           ],
@@ -105,8 +104,7 @@ class _PLoginScreenState extends State<PLoginScreen> {
                       ),
                     );
                   },
-                  child: Text('SIGN UP',
-                      style: Theme.of(context).textTheme.bold13),
+                  child: Text('SIGN UP', style: Theme.of(context).textTheme.bold13),
                 ),
               ],
             ),

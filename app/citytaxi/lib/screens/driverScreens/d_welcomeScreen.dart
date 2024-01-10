@@ -1,7 +1,6 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/screens/driverScreens/d_signup.dart';
 import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
-import 'package:citytaxi/screens/passengerScreens/p_signup_screen.dart';
 import 'package:citytaxi/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -34,18 +33,12 @@ class DWelcomeScreen extends StatelessWidget {
             const SizedBox(height: 40),
             Text(
               'Welcome',
-              style: TextStyle(
-                  color: Palette.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700),
+              style: TextStyle(color: Palette.white, fontSize: 24, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 16),
             Text(
               'Have a better riding experience',
-              style: TextStyle(
-                  color: Palette.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400),
+              style: TextStyle(color: Palette.white, fontSize: 16, fontWeight: FontWeight.w400),
             ),
             const SizedBox(height: 50),
             InkWell(
@@ -62,8 +55,7 @@ class DWelcomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 decoration: ShapeDecoration(
                   color: Palette.mainColor30,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
                 child: Text('Create an account',
                     textAlign: TextAlign.center,
@@ -88,17 +80,12 @@ class DWelcomeScreen extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                      side: BorderSide(width: 1, color: Palette.mainColor30),
-                      borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(side: BorderSide(width: 1, color: Palette.mainColor30), borderRadius: BorderRadius.circular(12)),
                 ),
                 child: Center(
                   child: Text(
                     'Log In',
-                    style: TextStyle(
-                        color: Palette.mainColor30,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400),
+                    style: TextStyle(color: Palette.mainColor30, fontSize: 16, fontWeight: FontWeight.w400),
                   ),
                 ),
               ),
