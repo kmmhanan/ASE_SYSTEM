@@ -1,9 +1,10 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/screens/driverScreens/d_welcomeScreen.dart';
+import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
 import 'package:citytaxi/screens/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
-import '../passengerScreens/p_login_screen.dart';
+import 'driver_homePage/d_homePage.dart';
 
 class DSignUpPage extends StatefulWidget {
   const DSignUpPage({super.key});
@@ -44,22 +45,16 @@ class _DSignUpPageState extends State<DSignUpPage> {
             const SizedBox(height: 25),
             Text(
               'Create An Account',
-              style: TextStyle(
-                  color: Palette.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700),
+              style: TextStyle(color: Palette.white, fontSize: 24, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 25),
             CustomTextField(label: 'Name', controller: nameController),
             const SizedBox(height: 8),
-            CustomTextField(
-                label: 'Contact Number', controller: contactNumController),
+            CustomTextField(label: 'Contact Number', controller: contactNumController),
             const SizedBox(height: 8),
-            CustomTextField(
-                label: 'National ID Card', controller: idController),
+            CustomTextField(label: 'National ID Card', controller: idController),
             const SizedBox(height: 8),
-            CustomTextField(
-                label: 'Email Address', controller: emailController),
+            CustomTextField(label: 'Email Address', controller: emailController),
           ],
         ),
       ),
@@ -72,36 +67,28 @@ class _DSignUpPageState extends State<DSignUpPage> {
           children: [
             ElevatedButton(
               onPressed: () {
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => const JobsDetails(),
-                //     ));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DHomePage(),
+                    ));
               },
               style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 backgroundColor: Palette.white,
                 fixedSize: const Size(343, 56),
                 elevation: 0,
               ),
               child: Text(
                 'SIGN UP',
-                style: TextStyle(
-                    color: Palette.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400),
+                style: TextStyle(color: Palette.black, fontSize: 16, fontWeight: FontWeight.w400),
               ),
             ),
             const SizedBox(height: 14),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('ALREADY HAVE AN ACCOUNT?   ',
-                    style: TextStyle(
-                        color: Palette.white,
-                        fontSize: 13.30,
-                        fontWeight: FontWeight.w400)),
+                Text('ALREADY HAVE AN ACCOUNT?   ', style: TextStyle(color: Palette.white, fontSize: 13.30, fontWeight: FontWeight.w400)),
                 InkWell(
                   onTap: () {
                     Navigator.push(
@@ -112,10 +99,7 @@ class _DSignUpPageState extends State<DSignUpPage> {
                   },
                   child: Text(
                     'LOGIN',
-                    style: TextStyle(
-                        color: Palette.mainColor30,
-                        fontSize: 13.30,
-                        fontWeight: FontWeight.w400),
+                    style: TextStyle(color: Palette.mainColor30, fontSize: 13.30, fontWeight: FontWeight.w400),
                   ),
                 ),
               ],
