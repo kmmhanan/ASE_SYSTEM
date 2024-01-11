@@ -1,6 +1,6 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
+import 'package:citytaxi/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 class PasswordChanged extends StatefulWidget {
@@ -22,7 +22,7 @@ class _PasswordChangedState extends State<PasswordChanged> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const PLoginScreen(),
+          builder: (context) => const WelcomeScreen(),
         ),
       );
     });

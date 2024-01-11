@@ -1,6 +1,8 @@
 import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/components/default_screen.dart';
 import 'package:citytaxi/constants/strings.dart';
+import 'package:citytaxi/screens/driverScreens/d_signup_screen.dart';
+import 'package:citytaxi/screens/driverScreens/driver_homePage/d_homePage.dart';
 import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_homePage.dart';
 import 'package:citytaxi/screens/passwordChange/forgot_password_screen.dart';
 import 'package:citytaxi/screens/passengerScreens/p_signup_screen.dart';
@@ -9,14 +11,14 @@ import 'package:flutter/material.dart';
 
 import '../widgets/custom_text_field.dart';
 
-class PLoginScreen extends StatefulWidget {
-  const PLoginScreen({super.key});
+class DLoginScreen extends StatefulWidget {
+  const DLoginScreen({super.key});
 
   @override
-  State<PLoginScreen> createState() => _PLoginScreenState();
+  State<DLoginScreen> createState() => _DLoginScreenState();
 }
 
-class _PLoginScreenState extends State<PLoginScreen> {
+class _DLoginScreenState extends State<DLoginScreen> {
   @override
   Widget build(BuildContext context) {
     final TextEditingController emailController = TextEditingController();
@@ -73,7 +75,7 @@ class _PLoginScreenState extends State<PLoginScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const PHomePage(),
+                    builder: (context) => const DHomePage(),
                   ),
                 );
               },
@@ -90,7 +92,7 @@ class _PLoginScreenState extends State<PLoginScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const PSignUpScreen(),
+                        builder: (context) => const DSignUpScreen(),
                       ),
                     );
                   },

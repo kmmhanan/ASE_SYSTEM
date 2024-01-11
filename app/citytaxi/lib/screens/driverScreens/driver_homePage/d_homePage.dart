@@ -5,7 +5,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import '../../../constants/palette.dart';
-import '../d_welcomeScreen.dart';
+import '../d_welcome_screen.dart';
 
 class DHomePage extends StatefulWidget {
   const DHomePage({super.key});
@@ -15,7 +15,7 @@ class DHomePage extends StatefulWidget {
 }
 
 class _DHomePageState extends State<DHomePage> {
-   bool isAvailable = true;
+  bool isAvailable = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +27,8 @@ class _DHomePageState extends State<DHomePage> {
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new, color: Palette.white),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => DWelcomeScreen()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => DWelcomeScreen()));
             }),
         title: Text('Back', style: TextStyle(color: Palette.white)),
       ),
@@ -42,7 +43,8 @@ class _DHomePageState extends State<DHomePage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Drive more, Earn more', style: Theme.of(context).textTheme.normal24),
+            Text('Drive more, Earn more',
+                style: Theme.of(context).textTheme.normal24),
             const SizedBox(height: 24),
             ClipRRect(
               borderRadius: BorderRadius.circular(16.0),
@@ -71,28 +73,35 @@ class _DHomePageState extends State<DHomePage> {
           children: [
             InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => DriverList()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DriverList()));
               },
               child: Container(
                 height: 56,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.white)),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.white)),
                 child: Center(
-                  child: Text('View List', style: Theme.of(context).textTheme.normal16),
+                  child: Text('View List',
+                      style: Theme.of(context).textTheme.normal16),
                 ),
               ),
             ),
             const SizedBox(height: 22),
             InkWell(
-               onTap: () {
+              onTap: () {
                 setState(() {
                   isAvailable = !isAvailable;
                 });
               },
               child: Container(
                 height: 56,
-                decoration: BoxDecoration(color:isAvailable? Palette.green : Palette.red, borderRadius: BorderRadius.circular(12)), 
+                decoration: BoxDecoration(
+                    color: isAvailable ? Palette.green : Palette.red,
+                    borderRadius: BorderRadius.circular(12)),
                 child: Center(
-                  child: Text(isAvailable? 'Available': 'BUSY', style: Theme.of(context).textTheme.normal16),
+                  child: Text(isAvailable ? 'Available' : 'BUSY',
+                      style: Theme.of(context).textTheme.normal16),
                   //    Text('BUSY', style: Theme.of(context).textTheme.normal16),
                 ),
               ),
@@ -101,7 +110,8 @@ class _DHomePageState extends State<DHomePage> {
             InkWell(
               onTap: () {},
               child: Center(
-                child: Text('Change Status', style: Theme.of(context).textTheme.normal16),
+                child: Text('Change Status',
+                    style: Theme.of(context).textTheme.normal16),
               ),
             )
           ],

@@ -1,7 +1,7 @@
 import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/components/default_screen.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/driverScreens/d_signup.dart';
+import 'package:citytaxi/screens/driverScreens/d_signup_screen.dart';
 import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
 import 'package:citytaxi/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +47,7 @@ class DWelcomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const DSignUpPage(),
+                    builder: (context) => const DSignUpScreen(),
                   ),
                 );
               },

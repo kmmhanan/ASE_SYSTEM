@@ -1,6 +1,6 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/passwordChange/reset_password_page.dart';
+import 'package:citytaxi/screens/passwordChange/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 
 class LinkForgotPassword extends StatefulWidget {

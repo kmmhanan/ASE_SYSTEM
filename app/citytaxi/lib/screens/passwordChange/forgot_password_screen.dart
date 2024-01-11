@@ -6,8 +6,8 @@ import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/custom_text_field.dart';
 
-class PForgotPassword extends StatelessWidget {
-  const PForgotPassword({super.key});
+class ForgotPasswordScreen extends StatelessWidget {
+  const ForgotPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

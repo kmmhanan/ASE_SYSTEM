@@ -2,7 +2,7 @@ import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/components/default_screen.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
-import 'package:citytaxi/screens/passwordChange/password_changed_page.dart';
+import 'package:citytaxi/screens/passwordChange/password_changed.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/custom_text_field.dart';
