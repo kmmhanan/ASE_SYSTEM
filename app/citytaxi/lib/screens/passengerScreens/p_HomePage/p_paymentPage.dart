@@ -1,10 +1,7 @@
 import 'package:citytaxi/constants/palette.dart';
-import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_confirmationPage.dart';
-import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_homePage.dart';
+import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_review.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class PPaymentPage extends StatelessWidget {
   const PPaymentPage({super.key});
@@ -16,84 +13,79 @@ class PPaymentPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Palette.mainColor60,
         elevation: 0,
+        //  automaticallyImplyLeading: false,
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new, color: Palette.white),
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const PHomePage(),
-                  ));
+              Navigator.pop(context);
             }),
         title: Text('Back', style: TextStyle(color: Palette.white)),
       ),
-      body: Container(
-          //  margin: const EdgeInsets.all(16),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 64),
-          clipBehavior: Clip.antiAlias,
-          decoration: ShapeDecoration(
-            color: Palette.white,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(32),
-                topRight: Radius.circular(32),
-              ),
-            ),
-          ),
-          child: Column(children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Select Payment',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Palette.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ],
-            ),
-            // Text(
-            //   'Amount',
-            //   textAlign: TextAlign.center,
-            //   style: TextStyle(color: Palette.black, fontSize: 16, fontWeight: FontWeight.w400),
-            // )
-          ])),
       bottomNavigationBar: Container(
-        color: Palette.white,
-        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 32),
+        decoration: ShapeDecoration(
+            color: Colors.black.withOpacity(0.3),
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(32),
+              topRight: Radius.circular(32),
+            ))),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PReviewPage(),
-                      ));
-                },
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  decoration: ShapeDecoration(
-                    color: Palette.mainColor30,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+            Center(child: Text('Select Payment', style: Theme.of(context).textTheme.normal16)),
+            const SizedBox(height: 50),
+            Text(
+              'Amount',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.normal16,
+            ),
+            Text(
+              '245.67 Rs',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bold32,
+            ),
+            const SizedBox(height: 50),
+            Container(
+              padding: const EdgeInsets.all(18),
+              decoration: ShapeDecoration(
+                color: Colors.black.withOpacity(0.10000000149011612),
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 1, color: Colors.white),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              child: Row(
+                children: [
+                  Image.asset(
+                    'assets/logo/images/mastercard.png',
+                    height: 40,
                   ),
-                  child: Text('Pay',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Palette.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      )),
-                )),
+                  SizedBox(width: 24),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Master Card', style: Theme.of(context).textTheme.normal13),
+                      SizedBox(height: 8),
+                      Text('****    ****    ****   4584', style: Theme.of(context).textTheme.normal13),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 25),
+            InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PReviewPage()));
+              },
+              child: Container(
+                height: 56,
+                decoration: BoxDecoration(color: Palette.green, borderRadius: BorderRadius.circular(12)),
+                child: Center(
+                  child: Text('Pay', style: Theme.of(context).textTheme.normal16),
+                ),
+              ),
+            ),
           ],
         ),
       ),
