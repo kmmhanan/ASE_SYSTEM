@@ -1,4 +1,5 @@
 import 'package:citytaxi/constants/palette.dart';
+import 'package:citytaxi/screens/passwordChange/link_forgot_password.dart';
 import 'package:citytaxi/screens/passwordChange/p_forgot_password.dart';
 // import 'package:citytaxi/splash_screen.dart';
 import 'package:citytaxi/welcome_screen.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: const SplashScreen(),
       // Current Working Screen
-      home: const PForgotPassword(),
+      home: const LinkForgotPassword(),
     );
   }
 }

@@ -66,6 +66,7 @@ flutter:
     - assets/logo/icons/Shape.png
     - assets/logo/images/map.png
     - assets/logo/images/ridedetails.png
+    - assets/logo/icons/mail.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
