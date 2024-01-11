@@ -2,6 +2,7 @@ import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/components/default_screen.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/screens/driverScreens/d_signup_screen.dart';
+import 'package:citytaxi/screens/driverScreens/d_welcome_screen.dart';
 import 'package:citytaxi/screens/driverScreens/driver_homePage/d_homePage.dart';
 import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_homePage.dart';
 import 'package:citytaxi/screens/passwordChange/forgot_password_screen.dart';
@@ -30,7 +31,7 @@ class _DLoginScreenState extends State<DLoginScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const PWelcomeScreen(),
+            builder: (context) => const DWelcomeScreen(),
           ),
         );
       },

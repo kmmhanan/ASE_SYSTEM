@@ -21,9 +21,9 @@ class MyApp extends StatelessWidget {
         primaryColor: Palette.mainColor60,
         fontFamily: 'Merriweather Sans',
       ),
-      // home: const SplashScreen(),
+      home: const SplashScreen(),
       // Current Working Screen
-      home: const DSignUpScreen(),
+      // home: const DSignUpScreen(),
     );
   }
 }
