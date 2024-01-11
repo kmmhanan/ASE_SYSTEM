@@ -145,14 +145,14 @@
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
-    { 
+    {
       "name": "citytaxi",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-01-02T17:43:36.355726Z",
+  "generated": "2024-01-11T10:27:59.089746Z",
   "generator": "pub",
   "generatorVersion": "3.1.0"
 }
