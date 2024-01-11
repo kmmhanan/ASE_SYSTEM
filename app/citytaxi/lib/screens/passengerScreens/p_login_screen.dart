@@ -1,5 +1,5 @@
 import 'package:citytaxi/components/custom_buttons.dart';
-import 'package:citytaxi/constants/palette.dart';
+import 'package:citytaxi/components/default_screen.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_homePage.dart';
 import 'package:citytaxi/screens/passwordChange/p_forgot_password.dart';
@@ -22,29 +22,26 @@ class _PLoginScreenState extends State<PLoginScreen> {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
 
-    return Scaffold(
-      backgroundColor: Palette.mainColor60,
-      appBar: AppBar(
-        backgroundColor: Palette.mainColor60,
-        elevation: 0,
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new, color: Palette.white),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const PWelcomeScreen(),
-                  ));
-            }),
-        title: Text('Back', style: TextStyle(color: Palette.white)),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
+    return DefaultScreen(
+      appBarTitle: 'Back',
+      appBarOnPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const PWelcomeScreen(),
+          ),
+        );
+      },
+      widget: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 48),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 24),
-            Text('Login', style: Theme.of(context).textTheme.bold24),
+            Text(
+              'Login',
+              style: Theme.of(context).textTheme.bold24,
+            ),
             const SizedBox(height: 24),
             CustomTextField(
               label: 'Email Address',
@@ -69,34 +66,25 @@ class _PLoginScreenState extends State<PLoginScreen> {
                 child: Text('Forgot Password ?',
                     style: Theme.of(context).textTheme.bold13),
               ),
-            )
-          ],
-        ),
-      ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+            ),
+            const Expanded(child: SizedBox()),
             CTWhiteButton(
-                onTapped: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PHomePage(),
-                    ),
-                  );
-                },
-                text: 'LOGIN'),
+              onTapped: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PHomePage(),
+                  ),
+                );
+              },
+              text: 'LOGIN',
+            ),
             const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'DON’T HAVE AN ACCOUNT?   ',
-                  style: Theme.of(context).textTheme.normal13,
-                ),
+                Text('DON’T HAVE AN ACCOUNT?   ',
+                    style: Theme.of(context).textTheme.normal13),
                 InkWell(
                   onTap: () {
                     Navigator.push(
@@ -106,8 +94,10 @@ class _PLoginScreenState extends State<PLoginScreen> {
                       ),
                     );
                   },
-                  child: Text('SIGN UP',
-                      style: Theme.of(context).textTheme.bold13),
+                  child: Text(
+                    'SIGN UP',
+                    style: Theme.of(context).textTheme.bold13,
+                  ),
                 ),
               ],
             ),
