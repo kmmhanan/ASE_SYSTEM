@@ -2,9 +2,7 @@ import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/screens/driverScreens/driver_homePage/d_homePage.dart';
 import 'package:citytaxi/screens/driverScreens/driver_homePage/ride_details.dart';
 import 'package:citytaxi/screens/driverScreens/widgets/listcard_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart'; 
 
 import '../../../constants/palette.dart';
 
@@ -22,38 +20,40 @@ class DriverList extends StatelessWidget {
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new, color: Palette.white),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => DHomePage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const DHomePage()));
             }),
         title: Text('Back', style: TextStyle(color: Palette.white)),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: ShapeDecoration(
-            color: Colors.black.withOpacity(0.3),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(32),
-                topRight: Radius.circular(32),
-              ),
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          color: Palette.black.withOpacity(0.3),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(32),
+            topRight: Radius.circular(32),
           ),
-          child: Column(
-            children: [
-              const SizedBox(height: 18),
-              Center(child: Text('Hire List', style: Theme.of(context).textTheme.normal16)),
-              const SizedBox(height: 18),
-              const ListCardWidget(
-                fromAddress: '23/2, Athapttu Mawatha, Dehiwala ',
-                toAddress: '32, Dr. Pons Rd, Bambalpitiya ',
-                distance: '45km',
+        ),
+        child: Column(
+          children: [
+            const SizedBox(height: 18),
+            Center(child: Text('Hire List', style: Theme.of(context).textTheme.normal16)),
+            const SizedBox(height: 18),
+            const SingleChildScrollView(
+              child: Column(
+                children: [
+                  ListCardWidget(
+                    fromAddress: '23/2, Athapttu Mawatha, Dehiwala ',
+                    toAddress: '32, Dr. Pons Rd, Bambalpitiya ',
+                    distance: '45km',
+                  ),
+                  ListCardWidget(
+                    fromAddress: '23/2, Athapttu Mawatha, Dehiwala, Dr. Pons Rd, Bambalpitiya, Athapttu Mawatha, Dehiwala ',
+                    toAddress: 'Airport and Aviation Services (Sri Lanka) (Private) Limited. Bandaranaike International Airport, Katunayake, Sri Lanka.',
+                    distance: '45km',
+                  ),
+                ],
               ),
-              const ListCardWidget(
-                fromAddress: '23/2, Athapttu Mawatha, Dehiwala, Dr. Pons Rd, Bambalpitiya, Athapttu Mawatha, Dehiwala ',
-                toAddress: 'Airport and Aviation Services (Sri Lanka) (Private) Limited. Bandaranaike International Airport, Katunayake, Sri Lanka.',
-                distance: '45km',
-              ),
-            ],
-          ),
+            )
+          ],
         ),
       ),
       bottomNavigationBar: Container(
@@ -78,7 +78,7 @@ class DriverList extends StatelessWidget {
             const SizedBox(height: 22),
             InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => RideDetailsPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const RideDetailsPage()));
               },
               child: Container(
                 height: 56,

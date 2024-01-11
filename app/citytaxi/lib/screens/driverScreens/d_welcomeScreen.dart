@@ -20,7 +20,7 @@ class DWelcomeScreen extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => WelcomeScreen(),
+                  builder: (context) => const WelcomeScreen(),
                 ));
           },
         ),
@@ -46,7 +46,7 @@ class DWelcomeScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => DSignUpPage(),
+                      builder: (context) => const DSignUpPage(),
                     ));
               },
               child: Container(
@@ -72,7 +72,7 @@ class DWelcomeScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PLoginScreen(),
+                      builder: (context) => const PLoginScreen(),
                     ));
               },
               child: Container(

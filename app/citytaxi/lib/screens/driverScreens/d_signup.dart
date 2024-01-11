@@ -4,7 +4,7 @@ import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
 import 'package:citytaxi/screens/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
-import 'driver_homePage/d_homePage.dart';
+import 'driver_homePage/d_homepage.dart';
 
 class DSignUpPage extends StatefulWidget {
   const DSignUpPage({super.key});
@@ -59,7 +59,7 @@ class _DSignUpPageState extends State<DSignUpPage> {
         ),
       ),
       bottomNavigationBar: Container(
-        height: 120,
+        height: 125,
         padding: const EdgeInsets.only(left: 16, right: 16, bottom: 32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
