@@ -1,7 +1,7 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_paymentPage.dart';
 import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
-import 'package:citytaxi/screens/passwordChange/resetPasswordPage.dart';
+import 'package:citytaxi/screens/passwordChange/reset_password_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';

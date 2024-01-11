@@ -1,6 +1,6 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/passwordChange/resetPasswordPage.dart';
+import 'package:citytaxi/screens/passwordChange/reset_password_page.dart';
 import 'package:flutter/material.dart';
 
 class LinkForgotPassword extends StatefulWidget {
@@ -24,7 +24,7 @@ class _LinkForgotPasswordState extends State<LinkForgotPassword> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const ResetPassword(),
+            builder: (context) => const ResetPasswordScreen(),
           ),
         );
       },
