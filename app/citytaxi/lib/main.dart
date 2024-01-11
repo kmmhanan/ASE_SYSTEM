@@ -1,6 +1,6 @@
 import 'package:citytaxi/constants/palette.dart';
-// import 'package:citytaxi/screens/passwordChange/p_forgot_password.dart';
-import 'package:citytaxi/splash_screen.dart';
+import 'package:citytaxi/screens/passwordChange/p_forgot_password.dart';
+// import 'package:citytaxi/splash_screen.dart';
 import 'package:citytaxi/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -19,9 +19,9 @@ class MyApp extends StatelessWidget {
         primaryColor: Palette.mainColor60,
         fontFamily: 'Merriweather Sans',
       ),
-      home: const SplashScreen(),
+      // home: const SplashScreen(),
       // Current Working Screen
-      // home: const PForgotPassword(),
+      home: const PForgotPassword(),
     );
   }
 }
