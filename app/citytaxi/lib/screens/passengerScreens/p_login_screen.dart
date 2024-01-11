@@ -50,7 +50,7 @@ class _PLoginScreenState extends State<PLoginScreen> {
               label: 'Email Address',
               controller: emailController,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
             CustomTextField(
               label: 'Password',
               controller: passwordController,
@@ -60,12 +60,14 @@ class _PLoginScreenState extends State<PLoginScreen> {
               child: InkWell(
                 onTap: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PForgotPassword(),
-                      ));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PForgotPassword(),
+                    ),
+                  );
                 },
-                child: Text('Forgot Password ?', style: Theme.of(context).textTheme.bold13),
+                child: Text('Forgot Password ?',
+                    style: Theme.of(context).textTheme.bold13),
               ),
             )
           ],
@@ -104,7 +106,8 @@ class _PLoginScreenState extends State<PLoginScreen> {
                       ),
                     );
                   },
-                  child: Text('SIGN UP', style: Theme.of(context).textTheme.bold13),
+                  child: Text('SIGN UP',
+                      style: Theme.of(context).textTheme.bold13),
                 ),
               ],
             ),
