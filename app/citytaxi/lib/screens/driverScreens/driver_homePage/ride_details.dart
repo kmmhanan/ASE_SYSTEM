@@ -69,9 +69,12 @@ class RideDetailsPage extends StatelessWidget {
               onTap: () {},
               child: Container(
                 height: 56,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.white)),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.white)),
                 child: Center(
-                  child: Text('Call', style: Theme.of(context).textTheme.normal16),
+                  child:
+                      Text('Call', style: Theme.of(context).textTheme.normal16),
                 ),
               ),
             ),

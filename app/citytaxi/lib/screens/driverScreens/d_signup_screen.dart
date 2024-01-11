@@ -1,24 +1,28 @@
 import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/components/default_screen.dart';
+import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_homePage.dart';
+import 'package:citytaxi/screens/driverScreens/d_login_screen.dart';
+import 'package:citytaxi/screens/driverScreens/d_welcome_screen.dart';
 import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
-import 'package:citytaxi/screens/passengerScreens/p_welcome_screen.dart';
 import 'package:citytaxi/screens/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
-class PSignUpScreen extends StatefulWidget {
-  const PSignUpScreen({super.key});
+import 'driver_homePage/d_homePage.dart';
+
+class DSignUpScreen extends StatefulWidget {
+  const DSignUpScreen({super.key});
 
   @override
-  State<PSignUpScreen> createState() => _PSignUpScreenState();
+  State<DSignUpScreen> createState() => _DSignUpScreenState();
 }
 
-class _PSignUpScreenState extends State<PSignUpScreen> {
+class _DSignUpScreenState extends State<DSignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final TextEditingController nameController = TextEditingController();
     final TextEditingController contactNumController = TextEditingController();
+    final TextEditingController idController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
 
     return DefaultScreen(
@@ -27,7 +31,7 @@ class _PSignUpScreenState extends State<PSignUpScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const PWelcomeScreen(),
+            builder: (context) => const DWelcomeScreen(),
           ),
         );
       },
@@ -53,6 +57,11 @@ class _PSignUpScreenState extends State<PSignUpScreen> {
             ),
             const SizedBox(height: 16),
             CustomTextField(
+              label: 'National ID Card',
+              controller: idController,
+            ),
+            const SizedBox(height: 16),
+            CustomTextField(
               label: 'Email Address',
               controller: emailController,
             ),
@@ -62,7 +71,7 @@ class _PSignUpScreenState extends State<PSignUpScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const PHomePage(),
+                    builder: (context) => const DHomePage(),
                   ),
                 );
               },
@@ -79,7 +88,7 @@ class _PSignUpScreenState extends State<PSignUpScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const PLoginScreen(),
+                        builder: (context) => const DLoginScreen(),
                       ),
                     );
                   },

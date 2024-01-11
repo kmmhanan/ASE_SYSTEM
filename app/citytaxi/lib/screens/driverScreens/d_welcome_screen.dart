@@ -1,13 +1,13 @@
 import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/components/default_screen.dart';
 import 'package:citytaxi/constants/strings.dart';
+import 'package:citytaxi/screens/driverScreens/d_signup_screen.dart';
 import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
-import 'package:citytaxi/screens/passengerScreens/p_signup_screen.dart';
 import 'package:citytaxi/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
-class PWelcomeScreen extends StatelessWidget {
-  const PWelcomeScreen({super.key});
+class DWelcomeScreen extends StatelessWidget {
+  const DWelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,6 @@ class PWelcomeScreen extends StatelessWidget {
             Expanded(
               child: Image.asset(
                 'assets/logo/welcome.png',
-                // height: 450,
                 width: 450,
               ),
             ),
@@ -39,7 +38,7 @@ class PWelcomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Have a better sharing experience',
+              'Have a good day, Drive Safe',
               style: Theme.of(context).textTheme.normal16,
             ),
             const SizedBox(height: 50),
@@ -48,7 +47,7 @@ class PWelcomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const PSignUpScreen(),
+                    builder: (context) => const DSignUpScreen(),
                   ),
                 );
               },
