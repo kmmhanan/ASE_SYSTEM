@@ -66,21 +66,21 @@ extension CustomStyles on TextTheme {
     );
   }
 
-  TextStyle get bold14 {
-    return TextStyle(
-      fontSize: 13.3,
-      color: Palette.black,
-      fontWeight: FontWeight.w700,
-    );
-  }
+  // TextStyle get bold14 {
+  //   return TextStyle(
+  //     fontSize: 13.3,
+  //     color: Palette.black,
+  //     fontWeight: FontWeight.w700,
+  //   );
+  // }
 
-  TextStyle get bold15 {
-    return TextStyle(
-      fontSize: 13.3,
-      color: Palette.black,
-      fontWeight: FontWeight.w400,
-    );
-  }
+  // TextStyle get bold15 {
+  //   return TextStyle(
+  //     fontSize: 13.3,
+  //     color: Palette.black,
+  //     fontWeight: FontWeight.w400,
+  //   );
+  // }
 
   TextStyle get bold16 {
     return TextStyle(
