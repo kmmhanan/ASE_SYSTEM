@@ -20,7 +20,7 @@ class DriverList extends StatelessWidget {
             icon: Icon(Icons.arrow_back_ios_new, color: Palette.white),
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const DHomePage()));
+                  MaterialPageRoute(builder: (context) => const DHomeScreen()));
             }),
         title: Text('Back', style: TextStyle(color: Palette.white)),
       ),

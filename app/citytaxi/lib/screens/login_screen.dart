@@ -36,80 +36,83 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         );
       },
-      widget: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 48),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 24),
-            Text(
-              'Login',
-              style: Theme.of(context).textTheme.bold24,
-            ),
-            const SizedBox(height: 24),
-            CustomTextField(
-              label: 'Email Address',
-              controller: emailController,
-            ),
-            const SizedBox(height: 16),
-            CustomTextField(
-              label: 'Password',
-              controller: passwordController,
-            ),
-            const SizedBox(height: 24),
-            Center(
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          ForgotPasswordScreen(user: widget.user),
-                    ),
-                  );
-                },
-                child: Text('Forgot Password ?',
-                    style: Theme.of(context).textTheme.bold13),
+      widget: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height - 56,
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 48),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 24),
+              Text(
+                'Login',
+                style: Theme.of(context).textTheme.bold24,
               ),
-            ),
-            const Expanded(child: SizedBox()),
-            FillButton(
-              onTapped: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => widget.user == User.passenger
-                        ? const PHomeScreen()
-                        : const DHomePage(),
-                  ),
-                );
-              },
-              text: 'LOGIN',
-              color: Palette.white,
-            ),
-            const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('DON’T HAVE AN ACCOUNT?   ',
-                    style: Theme.of(context).textTheme.normal13),
-                InkWell(
+              const SizedBox(height: 24),
+              CustomTextField(
+                label: 'Email Address',
+                controller: emailController,
+              ),
+              const SizedBox(height: 16),
+              CustomTextField(
+                label: 'Password',
+                controller: passwordController,
+              ),
+              const SizedBox(height: 24),
+              Center(
+                child: InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SignUpScreen(user: widget.user),
+                        builder: (context) =>
+                            ForgotPasswordScreen(user: widget.user),
                       ),
                     );
                   },
-                  child: Text(
-                    'SIGN UP',
-                    style: Theme.of(context).textTheme.bold13,
-                  ),
+                  child: Text('Forgot Password ?',
+                      style: Theme.of(context).textTheme.bold13),
                 ),
-              ],
-            ),
-          ],
+              ),
+              const Expanded(child: SizedBox()),
+              FillButton(
+                onTapped: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => widget.user == User.passenger
+                          ? const PHomeScreen()
+                          : const DHomeScreen(),
+                    ),
+                  );
+                },
+                text: 'LOGIN',
+                color: Palette.white,
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('DON’T HAVE AN ACCOUNT?   ',
+                      style: Theme.of(context).textTheme.normal13),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SignUpScreen(user: widget.user),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'SIGN UP',
+                      style: Theme.of(context).textTheme.bold13,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

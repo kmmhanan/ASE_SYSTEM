@@ -20,6 +20,7 @@ class DefaultScreen extends StatelessWidget {
       backgroundColor: Palette.mainColor60,
       appBar: AppBar(
         backgroundColor: Palette.mainColor60,
+        toolbarHeight: 56,
         elevation: 0,
         leading: IconButton(
           icon: Icon(
