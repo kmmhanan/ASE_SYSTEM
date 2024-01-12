@@ -28,45 +28,49 @@ class ResetPasswordScreen extends StatelessWidget {
           ),
         );
       },
-      widget: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 24),
-            Text('Reset Password', style: Theme.of(context).textTheme.bold24),
-            const SizedBox(height: 16),
-            Text('Set new password',
-                style: Theme.of(context).textTheme.normal13),
-            const SizedBox(height: 24),
-            CustomTextField(
-                label: 'Email Address', controller: emailController),
-            const SizedBox(height: 16),
-            CustomTextField(label: 'Password', controller: passwordController),
-            const SizedBox(height: 16),
-            CustomTextField(
-                label: 'Confirm Password', controller: passwordController),
-            Expanded(
-              child: Container(
-                alignment: Alignment.bottomCenter,
-                child: FillButton(
-                  onTapped: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SuccessMessageScreen(
-                            goToScreen: WelcomeScreen(),
-                            message: 'Password Changed Successfully.'),
-                      ),
-                    );
-                  },
-                  text: 'Confirm',
-                  color: Palette.white,
+      widget: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height - 56,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 24),
+              Text('Reset Password', style: Theme.of(context).textTheme.bold24),
+              const SizedBox(height: 16),
+              Text('Set new password',
+                  style: Theme.of(context).textTheme.normal13),
+              const SizedBox(height: 24),
+              CustomTextField(
+                  label: 'Email Address', controller: emailController),
+              const SizedBox(height: 16),
+              CustomTextField(
+                  label: 'Password', controller: passwordController),
+              const SizedBox(height: 16),
+              CustomTextField(
+                  label: 'Confirm Password', controller: passwordController),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.bottomCenter,
+                  child: FillButton(
+                    onTapped: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SuccessMessageScreen(
+                              goToScreen: WelcomeScreen(),
+                              message: 'Password Changed Successfully.'),
+                        ),
+                      );
+                    },
+                    text: 'Confirm',
+                    color: Palette.white,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 48),
-          ],
+              const SizedBox(height: 48),
+            ],
+          ),
         ),
       ),
     );
