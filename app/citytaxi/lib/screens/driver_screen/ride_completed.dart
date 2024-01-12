@@ -1,6 +1,6 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/driverScreens/d_homePage.dart';
+import 'package:citytaxi/screens/driver_screen/d_homePage.dart';
 import 'package:flutter/material.dart';
 
 class RideCompleted extends StatefulWidget {

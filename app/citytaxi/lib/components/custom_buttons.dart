@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
 
-class CTBlueButton extends StatelessWidget {
-  const CTBlueButton({
+class FillButton extends StatelessWidget {
+  const FillButton({
     super.key,
     required this.onTapped,
     required this.text,
+    required this.color,
   });
 
   final Function() onTapped;
   final String text;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class CTBlueButton extends StatelessWidget {
         width: double.infinity,
         height: 56,
         decoration: ShapeDecoration(
-          color: Palette.mainColor30,
+          color: color,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -29,83 +31,11 @@ class CTBlueButton extends StatelessWidget {
           child: Text(
             text,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.normal16,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CTWhiteButton extends StatelessWidget {
-  const CTWhiteButton({
-    super.key,
-    required this.onTapped,
-    required this.text,
-  });
-
-  final Function() onTapped;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTapped,
-      child: Container(
-        width: double.infinity,
-        height: 56,
-        decoration: ShapeDecoration(
-          color: Palette.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .normal16
-                .copyWith(color: Palette.black),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CTYellowButton extends StatelessWidget {
-  const CTYellowButton({
-    super.key,
-    required this.onTapped,
-    required this.text,
-  });
-
-  final Function() onTapped;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTapped,
-      child: Container(
-        width: double.infinity,
-        height: 56,
-        decoration: ShapeDecoration(
-          color: Palette.yellow,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .normal16
-                .copyWith(color: Palette.black),
+            style: Theme.of(context).textTheme.normal16.copyWith(
+                  color: (color == Palette.white || color == Palette.yellow)
+                      ? Palette.black
+                      : Palette.white,
+                ),
           ),
         ),
       ),

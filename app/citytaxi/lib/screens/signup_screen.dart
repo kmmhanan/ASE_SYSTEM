@@ -1,10 +1,11 @@
 import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/components/default_screen.dart';
+import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/models/user_model.dart';
-import 'package:citytaxi/screens/driverScreens/d_homePage.dart';
+import 'package:citytaxi/screens/driver_screen/d_homePage.dart';
 import 'package:citytaxi/screens/login_screen.dart';
-import 'package:citytaxi/screens/passengerScreens/p_homePage.dart';
+import 'package:citytaxi/screens/passenger_screen/passenger_home_screen.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:citytaxi/components/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -68,18 +69,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
               controller: emailController,
             ),
             const Expanded(child: SizedBox()),
-            CTWhiteButton(
+            FillButton(
               onTapped: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => widget.user == User.passenger
-                        ? const PHomePage()
+                        ? const PHomeScreen()
                         : const DHomePage(),
                   ),
                 );
               },
               text: 'SIGN UP',
+              color: Palette.white,
             ),
             const SizedBox(height: 24),
             Row(

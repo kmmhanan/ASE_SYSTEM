@@ -1,13 +1,11 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/driverScreens/ride_processing.dart';
+import 'package:citytaxi/screens/driver_screen/ride_completed.dart';
 import 'package:citytaxi/components/customcard_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-class RideDetailsPage extends StatelessWidget {
-  const RideDetailsPage({super.key});
+class RidePaymentScreen extends StatelessWidget {
+  const RidePaymentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +24,7 @@ class RideDetailsPage extends StatelessWidget {
       ),
       body: Center(
         child: Image.asset(
-          'assets/logo/images/ridedetails.png',
+          'assets/logo/images/payment.png',
           height: 250,
         ),
       ),
@@ -43,9 +41,20 @@ class RideDetailsPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Center(
-                child: Text('Ride Details',
+                child: Text('Ride Processing',
                     style: Theme.of(context).textTheme.normal16)),
-            const SizedBox(height: 18),
+            const SizedBox(height: 50),
+            Text(
+              'Amount',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.normal16,
+            ),
+            Text(
+              '245.67 Rs',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bold32,
+            ),
+            const SizedBox(height: 50),
             const Card(
               child: Padding(
                 padding: EdgeInsets.all(12.0),
@@ -55,49 +64,24 @@ class RideDetailsPage extends StatelessWidget {
                     SizedBox(height: 12),
                     CustomCard(label: 'Contact', value: '+94 77 123 4567'),
                     SizedBox(height: 12),
-                    CustomCard(
-                        label: 'From',
-                        value: '23/2, Athapttu Mawatha, Dehiwala'),
-                    SizedBox(height: 12),
-                    CustomCard(
-                        label: 'To', value: '32, Dr. Pons Rd, Bambalpitiya'),
-                    SizedBox(height: 12),
-                    CustomCard(label: 'Distance', value: '45km'),
-                    SizedBox(height: 12),
-                    CustomCard(label: 'Time', value: '-'),
+                    CustomCard(label: 'Ride Time', value: '0hrs 34m'),
                   ],
                 ),
               ),
             ),
             const SizedBox(height: 25),
             InkWell(
-              onTap: () {},
-              child: Container(
-                height: 56,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.white)),
-                child: Center(
-                  child:
-                      Text('Call', style: Theme.of(context).textTheme.normal16),
-                ),
-              ),
-            ),
-            const SizedBox(height: 22),
-            InkWell(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => RideProcessingScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => RideCompleted()));
               },
               child: Container(
                 height: 56,
                 decoration: BoxDecoration(
-                    color: Palette.mainColor30,
+                    color: Palette.green,
                     borderRadius: BorderRadius.circular(12)),
                 child: Center(
-                  child: Text('Waiting',
+                  child: Text('Payment Received',
                       style: Theme.of(context).textTheme.normal16),
                 ),
               ),

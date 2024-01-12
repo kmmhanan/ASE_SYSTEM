@@ -1,16 +1,22 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
-class PasswordChanged extends StatefulWidget {
-  const PasswordChanged({super.key});
+class SuccessMessageScreen extends StatefulWidget {
+  const SuccessMessageScreen({
+    super.key,
+    required this.goToScreen,
+    required this.message,
+  });
+
+  final Widget goToScreen;
+  final String message;
 
   @override
-  State<PasswordChanged> createState() => _PasswordChangedState();
+  State<SuccessMessageScreen> createState() => _SuccessMessageScreenState();
 }
 
-class _PasswordChangedState extends State<PasswordChanged> {
+class _SuccessMessageScreenState extends State<SuccessMessageScreen> {
   @override
   void initState() {
     super.initState();
@@ -18,29 +24,23 @@ class _PasswordChangedState extends State<PasswordChanged> {
   }
 
   _navigatetohome() async {
-    await Future.delayed(const Duration(milliseconds: 3500), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const WelcomeScreen(),
-        ),
-      );
-    });
+    await Future.delayed(
+      const Duration(milliseconds: 3500),
+      () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => widget.goToScreen,
+          ),
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Palette.mainColor60,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Palette.mainColor60,
-        elevation: 0,
-        title: Text(
-          'Password Changed',
-          style: Theme.of(context).textTheme.bold24,
-        ),
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -48,7 +48,7 @@ class _PasswordChangedState extends State<PasswordChanged> {
           Image.asset('assets/logo/icons/tick.png', height: 100),
           const SizedBox(height: 24),
           Text(
-            'You can Login with your New Password',
+            widget.message,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.normal16,
           ),

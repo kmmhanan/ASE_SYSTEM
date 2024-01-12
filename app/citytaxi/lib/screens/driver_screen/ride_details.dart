@@ -1,11 +1,13 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/driverScreens/ride_payment.dart';
+import 'package:citytaxi/screens/driver_screen/ride_processing.dart';
 import 'package:citytaxi/components/customcard_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
-class RideProcessingScreen extends StatelessWidget {
-  const RideProcessingScreen({super.key});
+class RideDetailsPage extends StatelessWidget {
+  const RideDetailsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class RideProcessingScreen extends StatelessWidget {
       ),
       body: Center(
         child: Image.asset(
-          'assets/logo/images/ride2.png',
+          'assets/logo/images/ridedetails.png',
           height: 250,
         ),
       ),
@@ -41,9 +43,9 @@ class RideProcessingScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Center(
-                child: Text('Ride Processing',
+                child: Text('Ride Details',
                     style: Theme.of(context).textTheme.normal16)),
-            const SizedBox(height: 50),
+            const SizedBox(height: 18),
             const Card(
               child: Padding(
                 padding: EdgeInsets.all(12.0),
@@ -69,11 +71,25 @@ class RideProcessingScreen extends StatelessWidget {
             ),
             const SizedBox(height: 25),
             InkWell(
+              onTap: () {},
+              child: Container(
+                height: 56,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.white)),
+                child: Center(
+                  child:
+                      Text('Call', style: Theme.of(context).textTheme.normal16),
+                ),
+              ),
+            ),
+            const SizedBox(height: 22),
+            InkWell(
               onTap: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const RidePaymentScreen()));
+                        builder: (context) => RideProcessingScreen()));
               },
               child: Container(
                 height: 56,
@@ -81,7 +97,7 @@ class RideProcessingScreen extends StatelessWidget {
                     color: Palette.mainColor30,
                     borderRadius: BorderRadius.circular(12)),
                 child: Center(
-                  child: Text('Finish Ride',
+                  child: Text('Waiting',
                       style: Theme.of(context).textTheme.normal16),
                 ),
               ),

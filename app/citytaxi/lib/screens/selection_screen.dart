@@ -1,5 +1,6 @@
 import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/components/default_screen.dart';
+import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/models/user_model.dart';
 import 'package:citytaxi/screens/login_screen.dart';
@@ -50,7 +51,7 @@ class SelectionScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.normal16,
             ),
             const SizedBox(height: 50),
-            CTWhiteButton(
+            FillButton(
               onTapped: () {
                 Navigator.push(
                   context,
@@ -60,6 +61,7 @@ class SelectionScreen extends StatelessWidget {
                 );
               },
               text: 'Create Account',
+              color: Palette.white,
             ),
             const SizedBox(height: 24),
             BorderButton(

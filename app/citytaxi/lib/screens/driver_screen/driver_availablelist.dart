@@ -1,8 +1,8 @@
 import 'package:citytaxi/components/listcard_widget.dart';
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/driverScreens/d_homePage.dart';
-import 'package:citytaxi/screens/driverScreens/ride_details.dart';
+import 'package:citytaxi/screens/driver_screen/d_homePage.dart';
+import 'package:citytaxi/screens/driver_screen/ride_details.dart';
 import 'package:flutter/material.dart';
 
 class DriverList extends StatelessWidget {
