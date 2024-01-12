@@ -1,19 +1,19 @@
 import 'package:citytaxi/constants/palette.dart';
+import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_homePage.dart';
 import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_paymentPage.dart';
-import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
 import 'package:citytaxi/screens/passwordChange/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class PConfirmationPage extends StatefulWidget {
-  const PConfirmationPage({super.key});
+class PRideCompletePage extends StatefulWidget {
+  const PRideCompletePage({super.key});
 
   @override
-  State<PConfirmationPage> createState() => _PConfirmationPageState();
+  State<PRideCompletePage> createState() => _PRideCompletePageState();
 }
 
-class _PConfirmationPageState extends State<PConfirmationPage> {
+class _PRideCompletePageState extends State<PRideCompletePage> {
   void initState() {
     super.initState();
     _navigatetohome();
@@ -22,7 +22,7 @@ class _PConfirmationPageState extends State<PConfirmationPage> {
   _navigatetohome() async {
     await Future.delayed(const Duration(milliseconds: 3500), () {});
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const PPaymentPage()));
+        context, MaterialPageRoute(builder: (context) => const PHomePage()));
   }
 
   @override
@@ -41,13 +41,14 @@ class _PConfirmationPageState extends State<PConfirmationPage> {
             Image.asset('assets/logo/icons/tick.png', height: 100, width: 100),
             SizedBox(height: 25),
             Text(
-              'Thank You For Your Confirmation!',
+              'Ride Completed.\nThank You.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Palette.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400),
-            ),
+                color: Palette.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+              ),
+            )
           ],
         ),
       ),

@@ -1,13 +1,20 @@
 import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/components/default_screen.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/driverScreens/d_signup_screen.dart';
-import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
-import 'package:citytaxi/welcome_screen.dart';
+import 'package:citytaxi/screens/login_screen.dart';
+import 'package:citytaxi/screens/signup_screen.dart';
+import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
-class DWelcomeScreen extends StatelessWidget {
-  const DWelcomeScreen({super.key});
+enum User {
+  driver,
+  passenger,
+}
+
+class SelectionScreen extends StatelessWidget {
+  const SelectionScreen({super.key, required this.user});
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +35,7 @@ class DWelcomeScreen extends StatelessWidget {
             Expanded(
               child: Image.asset(
                 'assets/logo/welcome.png',
+                // height: 450,
                 width: 450,
               ),
             ),
@@ -38,7 +46,9 @@ class DWelcomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Have a good day, Drive Safe',
+              user == User.driver
+                  ? 'Have a good day, Drive Safe'
+                  : 'Have a better sharing experience',
               style: Theme.of(context).textTheme.normal16,
             ),
             const SizedBox(height: 50),
@@ -47,7 +57,7 @@ class DWelcomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const DSignUpScreen(),
+                    builder: (context) => SignUpScreen(user: user),
                   ),
                 );
               },
@@ -59,7 +69,7 @@ class DWelcomeScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const PLoginScreen(),
+                      builder: (context) => LoginScreen(user: user),
                     ),
                   );
                 },

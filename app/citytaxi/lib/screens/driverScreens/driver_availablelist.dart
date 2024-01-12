@@ -1,10 +1,9 @@
+import 'package:citytaxi/components/listcard_widget.dart';
+import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/driverScreens/driver_homePage/d_homePage.dart';
-import 'package:citytaxi/screens/driverScreens/driver_homePage/ride_details.dart';
-import 'package:citytaxi/screens/driverScreens/widgets/listcard_widget.dart';
-import 'package:flutter/material.dart'; 
-
-import '../../../constants/palette.dart';
+import 'package:citytaxi/screens/driverScreens/d_homePage.dart';
+import 'package:citytaxi/screens/driverScreens/ride_details.dart';
+import 'package:flutter/material.dart';
 
 class DriverList extends StatelessWidget {
   const DriverList({super.key});
@@ -20,7 +19,8 @@ class DriverList extends StatelessWidget {
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new, color: Palette.white),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const DHomePage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const DHomePage()));
             }),
         title: Text('Back', style: TextStyle(color: Palette.white)),
       ),
@@ -35,7 +35,9 @@ class DriverList extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 18),
-            Center(child: Text('Hire List', style: Theme.of(context).textTheme.normal16)),
+            Center(
+                child: Text('Hire List',
+                    style: Theme.of(context).textTheme.normal16)),
             const SizedBox(height: 18),
             const SingleChildScrollView(
               child: Column(
@@ -46,8 +48,10 @@ class DriverList extends StatelessWidget {
                     distance: '45km',
                   ),
                   ListCardWidget(
-                    fromAddress: '23/2, Athapttu Mawatha, Dehiwala, Dr. Pons Rd, Bambalpitiya, Athapttu Mawatha, Dehiwala ',
-                    toAddress: 'Airport and Aviation Services (Sri Lanka) (Private) Limited. Bandaranaike International Airport, Katunayake, Sri Lanka.',
+                    fromAddress:
+                        '23/2, Athapttu Mawatha, Dehiwala, Dr. Pons Rd, Bambalpitiya, Athapttu Mawatha, Dehiwala ',
+                    toAddress:
+                        'Airport and Aviation Services (Sri Lanka) (Private) Limited. Bandaranaike International Airport, Katunayake, Sri Lanka.',
                     distance: '45km',
                   ),
                 ],
@@ -69,22 +73,31 @@ class DriverList extends StatelessWidget {
               },
               child: Container(
                 height: 56,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.white)),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.white)),
                 child: Center(
-                  child: Text('Cancel', style: Theme.of(context).textTheme.normal16),
+                  child: Text('Cancel',
+                      style: Theme.of(context).textTheme.normal16),
                 ),
               ),
             ),
             const SizedBox(height: 22),
             InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const RideDetailsPage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RideDetailsPage()));
               },
               child: Container(
                 height: 56,
-                decoration: BoxDecoration(color: Palette.mainColor30, borderRadius: BorderRadius.circular(12)),
+                decoration: BoxDecoration(
+                    color: Palette.mainColor30,
+                    borderRadius: BorderRadius.circular(12)),
                 child: Center(
-                  child: Text('Pick Up', style: Theme.of(context).textTheme.normal16),
+                  child: Text('Pick Up',
+                      style: Theme.of(context).textTheme.normal16),
                 ),
               ),
             ),

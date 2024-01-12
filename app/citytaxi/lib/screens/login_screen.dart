@@ -1,25 +1,29 @@
 import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/components/default_screen.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_homePage.dart';
-import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
-import 'package:citytaxi/screens/passengerScreens/p_welcome_screen.dart';
-import 'package:citytaxi/screens/widgets/custom_text_field.dart';
+import 'package:citytaxi/models/user_model.dart';
+import 'package:citytaxi/screens/driverScreens/d_homePage.dart';
+import 'package:citytaxi/screens/passengerScreens/p_homePage.dart';
+import 'package:citytaxi/screens/passwordChange/forgot_password_screen.dart';
+import 'package:citytaxi/screens/signup_screen.dart';
+import 'package:citytaxi/screens/welcome_screen.dart';
+import 'package:citytaxi/components/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
-class PSignUpScreen extends StatefulWidget {
-  const PSignUpScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key, required this.user});
+
+  final User user;
 
   @override
-  State<PSignUpScreen> createState() => _PSignUpScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _PSignUpScreenState extends State<PSignUpScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController contactNumController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
 
     return DefaultScreen(
       appBarTitle: 'Back',
@@ -27,7 +31,7 @@ class _PSignUpScreenState extends State<PSignUpScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const PWelcomeScreen(),
+            builder: (context) => const WelcomeScreen(),
           ),
         );
       },
@@ -38,23 +42,34 @@ class _PSignUpScreenState extends State<PSignUpScreen> {
           children: [
             const SizedBox(height: 24),
             Text(
-              'Create An Account',
+              'Login',
               style: Theme.of(context).textTheme.bold24,
             ),
             const SizedBox(height: 24),
             CustomTextField(
-              label: 'Name',
-              controller: nameController,
-            ),
-            const SizedBox(height: 16),
-            CustomTextField(
-              label: 'Contact Number',
-              controller: contactNumController,
-            ),
-            const SizedBox(height: 16),
-            CustomTextField(
               label: 'Email Address',
               controller: emailController,
+            ),
+            const SizedBox(height: 16),
+            CustomTextField(
+              label: 'Password',
+              controller: passwordController,
+            ),
+            const SizedBox(height: 24),
+            Center(
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ForgotPasswordScreen(user: widget.user),
+                    ),
+                  );
+                },
+                child: Text('Forgot Password ?',
+                    style: Theme.of(context).textTheme.bold13),
+              ),
             ),
             const Expanded(child: SizedBox()),
             CTWhiteButton(
@@ -62,29 +77,31 @@ class _PSignUpScreenState extends State<PSignUpScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const PHomePage(),
+                    builder: (context) => widget.user == User.passenger
+                        ? const PHomePage()
+                        : const DHomePage(),
                   ),
                 );
               },
-              text: 'SIGN UP',
+              text: 'LOGIN',
             ),
             const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('ALREADY HAVE AN ACCOUNT?   ',
+                Text('DON’T HAVE AN ACCOUNT?   ',
                     style: Theme.of(context).textTheme.normal13),
                 InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const PLoginScreen(),
+                        builder: (context) => SignUpScreen(user: widget.user),
                       ),
                     );
                   },
                   child: Text(
-                    'LOGIN',
+                    'SIGN UP',
                     style: Theme.of(context).textTheme.bold13,
                   ),
                 ),

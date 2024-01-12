@@ -1,9 +1,8 @@
+import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/screens/driverScreens/driver_homePage/driver_availableList.dart';
+import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
-
-import '../../../constants/palette.dart';
-import '../d_welcome_screen.dart';
 
 class DHomePage extends StatefulWidget {
   const DHomePage({super.key});
@@ -26,7 +25,7 @@ class _DHomePageState extends State<DHomePage> {
             icon: Icon(Icons.arrow_back_ios_new, color: Palette.white),
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => DWelcomeScreen()));
+                  MaterialPageRoute(builder: (context) => WelcomeScreen()));
             }),
         title: Text('Back', style: TextStyle(color: Palette.white)),
       ),
@@ -72,13 +71,17 @@ class _DHomePageState extends State<DHomePage> {
             if (!isAvailable)
               InkWell(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => DriverList()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => DriverList()));
                 },
                 child: Container(
                   height: 56,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.white)),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.white)),
                   child: Center(
-                    child: Text('View List', style: Theme.of(context).textTheme.normal16),
+                    child: Text('View List',
+                        style: Theme.of(context).textTheme.normal16),
                   ),
                 ),
               ),
@@ -91,9 +94,12 @@ class _DHomePageState extends State<DHomePage> {
               },
               child: Container(
                 height: 56,
-                decoration: BoxDecoration(color: isAvailable ? Palette.green : Palette.red, borderRadius: BorderRadius.circular(12)),
+                decoration: BoxDecoration(
+                    color: isAvailable ? Palette.green : Palette.red,
+                    borderRadius: BorderRadius.circular(12)),
                 child: Center(
-                  child: Text(isAvailable ? 'Available' : 'BUSY', style: Theme.of(context).textTheme.normal16),
+                  child: Text(isAvailable ? 'Available' : 'BUSY',
+                      style: Theme.of(context).textTheme.normal16),
                   //    Text('BUSY', style: Theme.of(context).textTheme.normal16),
                 ),
               ),

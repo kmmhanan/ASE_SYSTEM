@@ -1,14 +1,16 @@
 import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/components/default_screen.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
+import 'package:citytaxi/models/user_model.dart';
+import 'package:citytaxi/screens/login_screen.dart';
 import 'package:citytaxi/screens/passwordChange/password_changed.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/custom_text_field.dart';
+import 'package:citytaxi/components/custom_text_field.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
-  const ResetPasswordScreen({super.key});
+  const ResetPasswordScreen({super.key, required this.user});
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class ResetPasswordScreen extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const PLoginScreen(),
+            builder: (context) => LoginScreen(user: user),
           ),
         );
       },

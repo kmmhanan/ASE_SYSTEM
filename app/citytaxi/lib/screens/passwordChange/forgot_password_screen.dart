@@ -1,13 +1,16 @@
 import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/components/default_screen.dart';
 import 'package:citytaxi/constants/strings.dart';
+import 'package:citytaxi/models/user_model.dart';
+import 'package:citytaxi/screens/login_screen.dart';
 import 'package:citytaxi/screens/passwordChange/link_forgot_password.dart';
-import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
 import 'package:flutter/material.dart';
-import '../widgets/custom_text_field.dart';
+import '../../components/custom_text_field.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
-  const ForgotPasswordScreen({super.key});
+  const ForgotPasswordScreen({super.key, required this.user});
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class ForgotPasswordScreen extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const PLoginScreen(),
+            builder: (context) => LoginScreen(user: user),
           ),
         );
       },
@@ -44,7 +47,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const LinkForgotPassword(),
+                        builder: (context) => LinkForgotPassword(user: user),
                       ),
                     );
                   },

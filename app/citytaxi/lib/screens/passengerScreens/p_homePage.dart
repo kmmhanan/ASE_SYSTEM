@@ -1,6 +1,6 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_nearDrinvers.dart';
-import 'package:citytaxi/screens/passengerScreens/p_welcome_screen.dart';
+import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -25,7 +25,7 @@ class PHomePage extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PWelcomeScreen(),
+                      builder: (context) => WelcomeScreen(),
                     ));
               }),
           title: Text('Back', style: TextStyle(color: Palette.white)),

@@ -1,7 +1,6 @@
 import 'package:citytaxi/constants/palette.dart';
-import 'package:citytaxi/screens/driverScreens/d_signup_screen.dart';
-import 'package:citytaxi/splash_screen.dart';
-import 'package:citytaxi/welcome_screen.dart';
+import 'package:citytaxi/screens/splash_screen.dart';
+import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

@@ -1,20 +1,18 @@
 import 'package:citytaxi/constants/palette.dart';
-import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_homePage.dart';
 import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_paymentPage.dart';
-import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
 import 'package:citytaxi/screens/passwordChange/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class PRideCompletePage extends StatefulWidget {
-  const PRideCompletePage({super.key});
+class PConfirmationPage extends StatefulWidget {
+  const PConfirmationPage({super.key});
 
   @override
-  State<PRideCompletePage> createState() => _PRideCompletePageState();
+  State<PConfirmationPage> createState() => _PConfirmationPageState();
 }
 
-class _PRideCompletePageState extends State<PRideCompletePage> {
+class _PConfirmationPageState extends State<PConfirmationPage> {
   void initState() {
     super.initState();
     _navigatetohome();
@@ -23,7 +21,7 @@ class _PRideCompletePageState extends State<PRideCompletePage> {
   _navigatetohome() async {
     await Future.delayed(const Duration(milliseconds: 3500), () {});
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const PHomePage()));
+        context, MaterialPageRoute(builder: (context) => const PPaymentPage()));
   }
 
   @override
@@ -42,14 +40,13 @@ class _PRideCompletePageState extends State<PRideCompletePage> {
             Image.asset('assets/logo/icons/tick.png', height: 100, width: 100),
             SizedBox(height: 25),
             Text(
-              'Ride Completed.\nThank You.',
+              'Thank You For Your Confirmation!',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Palette.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-              ),
-            )
+                  color: Palette.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400),
+            ),
           ],
         ),
       ),
