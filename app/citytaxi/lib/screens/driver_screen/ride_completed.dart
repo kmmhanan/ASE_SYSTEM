@@ -19,7 +19,7 @@ class _RideCompletedState extends State<RideCompleted> {
   _navigatetohome() async {
     await Future.delayed(const Duration(milliseconds: 3500), () {});
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const DHomePage()));
+        context, MaterialPageRoute(builder: (context) => const DHomeScreen()));
   }
 
   @override
