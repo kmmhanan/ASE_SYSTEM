@@ -14,6 +14,7 @@ class PHomeScreen extends StatelessWidget {
       backgroundColor: Palette.mainColor60,
       appBar: AppBar(
         backgroundColor: Palette.mainColor60,
+        toolbarHeight: 56,
         elevation: 0,
         leading: IconButton(
           icon: Icon(
@@ -41,83 +42,89 @@ class PHomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Column(
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height - 56,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'Search Vehicle',
-                style: Theme.of(context).textTheme.bold16,
+              Column(
+                children: [
+                  Text(
+                    'Search Vehicle',
+                    style: Theme.of(context).textTheme.bold16,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'START A RIDE',
+                    style: Theme.of(context).textTheme.bold24,
+                  )
+                ],
               ),
-              const SizedBox(height: 4),
-              Text(
-                'START A RIDE',
-                style: Theme.of(context).textTheme.bold24,
-              )
+              const SizedBox(height: 56),
+              Container(
+                margin: const EdgeInsets.all(16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 64),
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  color: Palette.black.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      style: TextStyle(color: Palette.white),
+                      decoration: InputDecoration(
+                        labelText: 'PICKUP',
+                        labelStyle: TextStyle(color: Palette.white),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Palette.white),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Palette.white),
+                        ),
+                      ),
+                      cursorColor: Palette.white,
+                      autocorrect: false,
+                      textCapitalization: TextCapitalization.none,
+                    ),
+                    const SizedBox(height: 48),
+                    TextFormField(
+                      style: TextStyle(color: Palette.white),
+                      decoration: InputDecoration(
+                        labelText: 'DROP-OFF',
+                        labelStyle: TextStyle(color: Palette.white),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Palette.white),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Palette.white),
+                        ),
+                      ),
+                      cursorColor: Palette.white,
+                      autocorrect: false,
+                      textCapitalization: TextCapitalization.none,
+                    ),
+                    const SizedBox(height: 64),
+                    FillButton(
+                      onTapped: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PNearDrivers(),
+                          ),
+                        );
+                      },
+                      text: 'Search',
+                      color: Palette.mainColor30,
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
-          const SizedBox(height: 56),
-          Container(
-            margin: const EdgeInsets.all(16),
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 64),
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              color: Palette.black.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Column(
-              children: [
-                TextFormField(
-                  style: TextStyle(color: Palette.white),
-                  decoration: InputDecoration(
-                    labelText: 'PICKUP',
-                    labelStyle: TextStyle(color: Palette.white),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Palette.white),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Palette.white),
-                    ),
-                  ),
-                  cursorColor: Palette.white,
-                  autocorrect: false,
-                  textCapitalization: TextCapitalization.none,
-                ),
-                const SizedBox(height: 48),
-                TextFormField(
-                  style: TextStyle(color: Palette.white),
-                  decoration: InputDecoration(
-                    labelText: 'DROP-OFF',
-                    labelStyle: TextStyle(color: Palette.white),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Palette.white),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Palette.white),
-                    ),
-                  ),
-                  cursorColor: Palette.white,
-                  autocorrect: false,
-                  textCapitalization: TextCapitalization.none,
-                ),
-                const SizedBox(height: 64),
-                FillButton(
-                  onTapped: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PNearDrivers(),
-                      ),
-                    );
-                  },
-                  text: 'Search',
-                  color: Palette.mainColor30,
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
