@@ -25,8 +25,7 @@ class _DHomePageState extends State<DHomePage> {
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new, color: Palette.white),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => DWelcomeScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => DWelcomeScreen()));
             }),
         title: Text('Back', style: TextStyle(color: Palette.white)),
       ),
@@ -41,8 +40,7 @@ class _DHomePageState extends State<DHomePage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Drive more, Earn more',
-                style: Theme.of(context).textTheme.normal24),
+            Text('Drive more, Earn more', style: Theme.of(context).textTheme.normal24),
             const SizedBox(height: 24),
             ClipRRect(
               borderRadius: BorderRadius.circular(16.0),
@@ -102,8 +100,7 @@ class _DHomePageState extends State<DHomePage> {
             InkWell(
               onTap: () {},
               child: Center(
-                child: Text('Change Status',
-                    style: Theme.of(context).textTheme.normal16),
+                child: Text('Change Status', style: Theme.of(context).textTheme.normal16),
               ),
             )
           ],
