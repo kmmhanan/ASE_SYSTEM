@@ -1,6 +1,6 @@
 import 'package:citytaxi/constants/palette.dart';
-import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_confirmationPage.dart';
-import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_homePage.dart';
+import 'package:citytaxi/screens/passengerScreens/p_confirmationPage.dart';
+import 'package:citytaxi/screens/passengerScreens/p_homePage.dart';
 import 'package:flutter/material.dart';
 
 class PNearDrivers extends StatelessWidget {

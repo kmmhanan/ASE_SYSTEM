@@ -1,5 +1,5 @@
 import 'package:citytaxi/constants/palette.dart';
-import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_nearDrinvers.dart';
+import 'package:citytaxi/screens/passengerScreens/p_nearDrinvers.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';

@@ -1,15 +1,11 @@
 import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/components/default_screen.dart';
 import 'package:citytaxi/constants/strings.dart';
+import 'package:citytaxi/models/user_model.dart';
 import 'package:citytaxi/screens/login_screen.dart';
 import 'package:citytaxi/screens/signup_screen.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
-
-enum User {
-  driver,
-  passenger,
-}
 
 class SelectionScreen extends StatelessWidget {
   const SelectionScreen({super.key, required this.user});

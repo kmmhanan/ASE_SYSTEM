@@ -1,6 +1,6 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/passengerScreens/p_HomePage/p_review.dart';
+import 'package:citytaxi/screens/passengerScreens/p_review.dart';
 import 'package:flutter/material.dart';
 
 class PPaymentPage extends StatelessWidget {
@@ -33,7 +33,9 @@ class PPaymentPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Center(child: Text('Select Payment', style: Theme.of(context).textTheme.normal16)),
+            Center(
+                child: Text('Select Payment',
+                    style: Theme.of(context).textTheme.normal16)),
             const SizedBox(height: 50),
             Text(
               'Amount',
@@ -65,9 +67,11 @@ class PPaymentPage extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Master Card', style: Theme.of(context).textTheme.normal13),
+                      Text('Master Card',
+                          style: Theme.of(context).textTheme.normal13),
                       SizedBox(height: 8),
-                      Text('****    ****    ****   4584', style: Theme.of(context).textTheme.normal13),
+                      Text('****    ****    ****   4584',
+                          style: Theme.of(context).textTheme.normal13),
                     ],
                   ),
                 ],
@@ -76,13 +80,17 @@ class PPaymentPage extends StatelessWidget {
             const SizedBox(height: 25),
             InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PReviewPage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PReviewPage()));
               },
               child: Container(
                 height: 56,
-                decoration: BoxDecoration(color: Palette.green, borderRadius: BorderRadius.circular(12)),
+                decoration: BoxDecoration(
+                    color: Palette.green,
+                    borderRadius: BorderRadius.circular(12)),
                 child: Center(
-                  child: Text('Pay', style: Theme.of(context).textTheme.normal16),
+                  child:
+                      Text('Pay', style: Theme.of(context).textTheme.normal16),
                 ),
               ),
             ),
