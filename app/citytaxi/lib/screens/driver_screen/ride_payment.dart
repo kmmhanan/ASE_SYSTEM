@@ -1,7 +1,7 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/driverScreens/driver_homePage/ride_completed.dart';
-import 'package:citytaxi/screens/driverScreens/widgets/customcard_widget.dart';
+import 'package:citytaxi/screens/driver_screen/ride_completed.dart';
+import 'package:citytaxi/components/customcard_widget.dart';
 import 'package:flutter/material.dart';
 
 class RidePaymentScreen extends StatelessWidget {
@@ -40,7 +40,9 @@ class RidePaymentScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Center(child: Text('Ride Processing', style: Theme.of(context).textTheme.normal16)),
+            Center(
+                child: Text('Ride Processing',
+                    style: Theme.of(context).textTheme.normal16)),
             const SizedBox(height: 50),
             Text(
               'Amount',
@@ -70,13 +72,17 @@ class RidePaymentScreen extends StatelessWidget {
             const SizedBox(height: 25),
             InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => RideCompleted()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => RideCompleted()));
               },
               child: Container(
                 height: 56,
-                decoration: BoxDecoration(color: Palette.green, borderRadius: BorderRadius.circular(12)),
+                decoration: BoxDecoration(
+                    color: Palette.green,
+                    borderRadius: BorderRadius.circular(12)),
                 child: Center(
-                  child: Text('Payment Received', style: Theme.of(context).textTheme.normal16),
+                  child: Text('Payment Received',
+                      style: Theme.of(context).textTheme.normal16),
                 ),
               ),
             ),

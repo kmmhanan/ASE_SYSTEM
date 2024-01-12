@@ -1,24 +1,30 @@
 import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/components/default_screen.dart';
+import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/passwordChange/link_forgot_password.dart';
-import 'package:citytaxi/screens/passengerScreens/p_login_screen.dart';
+import 'package:citytaxi/models/user_model.dart';
+import 'package:citytaxi/screens/login_screen.dart';
+import 'package:citytaxi/screens/success_message_screen.dart';
+import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
-import '../widgets/custom_text_field.dart';
+import 'package:citytaxi/components/custom_text_field.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
-  const ForgotPasswordScreen({super.key});
+class ResetPasswordScreen extends StatelessWidget {
+  const ResetPasswordScreen({super.key, required this.user});
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {
     final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
     return DefaultScreen(
       appBarTitle: 'Back',
       appBarOnPressed: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const PLoginScreen(),
+            builder: (context) => LoginScreen(user: user),
           ),
         );
       },
@@ -28,27 +34,34 @@ class ForgotPasswordScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 24),
-            Text('Forgot Password', style: Theme.of(context).textTheme.bold24),
+            Text('Reset Password', style: Theme.of(context).textTheme.bold24),
             const SizedBox(height: 16),
-            Text(
-                'Submit your email address & we will send you link to reset your password',
+            Text('Set new password',
                 style: Theme.of(context).textTheme.normal13),
             const SizedBox(height: 24),
             CustomTextField(
                 label: 'Email Address', controller: emailController),
+            const SizedBox(height: 16),
+            CustomTextField(label: 'Password', controller: passwordController),
+            const SizedBox(height: 16),
+            CustomTextField(
+                label: 'Confirm Password', controller: passwordController),
             Expanded(
               child: Container(
                 alignment: Alignment.bottomCenter,
-                child: CTWhiteButton(
+                child: FillButton(
                   onTapped: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const LinkForgotPassword(),
+                        builder: (context) => const SuccessMessageScreen(
+                            goToScreen: WelcomeScreen(),
+                            message: 'Password Changed Successfully.'),
                       ),
                     );
                   },
-                  text: 'Reset Password',
+                  text: 'Confirm',
+                  color: Palette.white,
                 ),
               ),
             ),

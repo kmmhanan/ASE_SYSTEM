@@ -1,4 +1,5 @@
 import 'package:citytaxi/constants/palette.dart';
+import 'package:citytaxi/constants/strings.dart';
 import 'package:flutter/material.dart';
 
 class DefaultScreen extends StatelessWidget {
@@ -21,12 +22,16 @@ class DefaultScreen extends StatelessWidget {
         backgroundColor: Palette.mainColor60,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new, color: Palette.white),
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: Palette.white,
+            size: 16,
+          ),
           onPressed: appBarOnPressed,
         ),
         title: Text(
           appBarTitle,
-          style: TextStyle(color: Palette.white),
+          style: Theme.of(context).textTheme.normal16,
         ),
       ),
       body: widget,

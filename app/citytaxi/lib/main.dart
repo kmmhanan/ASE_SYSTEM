@@ -1,9 +1,7 @@
 import 'package:citytaxi/constants/palette.dart';
-import 'package:citytaxi/screens/driverScreens/d_signup_screen.dart';
-import 'package:citytaxi/screens/passwordChange/password_changed.dart';
-import 'package:citytaxi/screens/passwordChange/reset_password_screen.dart';
-import 'package:citytaxi/splash_screen.dart';
-import 'package:citytaxi/welcome_screen.dart';
+// import 'package:citytaxi/screens/passenger_screen/review_screen.dart';
+import 'package:citytaxi/screens/splash_screen.dart';
+import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -23,7 +21,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const SplashScreen(),
       // Current Working Screen
-      // home: const DSignUpScreen(),
+      // home: const PReviewScreen(),
     );
   }
 }

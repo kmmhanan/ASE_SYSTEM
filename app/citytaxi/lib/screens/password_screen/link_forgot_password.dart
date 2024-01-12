@@ -1,10 +1,13 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/passwordChange/reset_password_screen.dart';
+import 'package:citytaxi/models/user_model.dart';
+import 'package:citytaxi/screens/password_screen/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 
 class LinkForgotPassword extends StatefulWidget {
-  const LinkForgotPassword({super.key});
+  const LinkForgotPassword({super.key, required this.user});
+
+  final User user;
 
   @override
   State<LinkForgotPassword> createState() => _LinkForgotPasswordState();
@@ -24,7 +27,7 @@ class _LinkForgotPasswordState extends State<LinkForgotPassword> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const ResetPasswordScreen(),
+            builder: (context) => ResetPasswordScreen(user: widget.user),
           ),
         );
       },
@@ -35,15 +38,6 @@ class _LinkForgotPasswordState extends State<LinkForgotPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Palette.mainColor60,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Palette.mainColor60,
-        elevation: 0,
-        title: Text(
-          'Forgot Password',
-          style: Theme.of(context).textTheme.bold24,
-        ),
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,

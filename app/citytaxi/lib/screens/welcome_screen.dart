@@ -1,7 +1,7 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/driverScreens/d_welcome_screen.dart';
-import 'package:citytaxi/screens/passengerScreens/p_welcome_screen.dart';
+import 'package:citytaxi/models/user_model.dart';
+import 'package:citytaxi/screens/selection_screen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -46,7 +46,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const PWelcomeScreen(),
+                      // builder: (context) => const PWelcomeScreen(),
+                      builder: (context) => const SelectionScreen(
+                        user: User.passenger,
+                      ),
                     ),
                   );
                 },
@@ -72,7 +75,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const DWelcomeScreen(),
+                      // builder: (context) => const DWelcomeScreen(),
+                      builder: (context) => const SelectionScreen(
+                        user: User.driver,
+                      ),
                     ),
                   );
                 },

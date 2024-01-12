@@ -1,7 +1,7 @@
 import 'package:citytaxi/constants/palette.dart';
-import 'package:citytaxi/constants/strings.dart'; 
-import 'package:citytaxi/screens/driverScreens/driver_homePage/ride_processing.dart';
-import 'package:citytaxi/screens/driverScreens/widgets/customcard_widget.dart';
+import 'package:citytaxi/constants/strings.dart';
+import 'package:citytaxi/screens/driver_screen/ride_processing.dart';
+import 'package:citytaxi/components/customcard_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -42,7 +42,9 @@ class RideDetailsPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Center(child: Text('Ride Details', style: Theme.of(context).textTheme.normal16)),
+            Center(
+                child: Text('Ride Details',
+                    style: Theme.of(context).textTheme.normal16)),
             const SizedBox(height: 18),
             const Card(
               child: Padding(
@@ -53,9 +55,12 @@ class RideDetailsPage extends StatelessWidget {
                     SizedBox(height: 12),
                     CustomCard(label: 'Contact', value: '+94 77 123 4567'),
                     SizedBox(height: 12),
-                    CustomCard(label: 'From', value: '23/2, Athapttu Mawatha, Dehiwala'),
+                    CustomCard(
+                        label: 'From',
+                        value: '23/2, Athapttu Mawatha, Dehiwala'),
                     SizedBox(height: 12),
-                    CustomCard(label: 'To', value: '32, Dr. Pons Rd, Bambalpitiya'),
+                    CustomCard(
+                        label: 'To', value: '32, Dr. Pons Rd, Bambalpitiya'),
                     SizedBox(height: 12),
                     CustomCard(label: 'Distance', value: '45km'),
                     SizedBox(height: 12),
@@ -81,13 +86,19 @@ class RideDetailsPage extends StatelessWidget {
             const SizedBox(height: 22),
             InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => RideProcessingScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RideProcessingScreen()));
               },
               child: Container(
                 height: 56,
-                decoration: BoxDecoration(color: Palette.mainColor30, borderRadius: BorderRadius.circular(12)),
+                decoration: BoxDecoration(
+                    color: Palette.mainColor30,
+                    borderRadius: BorderRadius.circular(12)),
                 child: Center(
-                  child: Text('Waiting', style: Theme.of(context).textTheme.normal16),
+                  child: Text('Waiting',
+                      style: Theme.of(context).textTheme.normal16),
                 ),
               ),
             ),

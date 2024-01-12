@@ -1,7 +1,7 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/driverScreens/driver_homePage/ride_payment.dart';
-import 'package:citytaxi/screens/driverScreens/widgets/customcard_widget.dart';
+import 'package:citytaxi/screens/driver_screen/ride_payment.dart';
+import 'package:citytaxi/components/customcard_widget.dart';
 import 'package:flutter/material.dart';
 
 class RideProcessingScreen extends StatelessWidget {
@@ -40,7 +40,9 @@ class RideProcessingScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Center(child: Text('Ride Processing', style: Theme.of(context).textTheme.normal16)),
+            Center(
+                child: Text('Ride Processing',
+                    style: Theme.of(context).textTheme.normal16)),
             const SizedBox(height: 50),
             const Card(
               child: Padding(
@@ -51,9 +53,12 @@ class RideProcessingScreen extends StatelessWidget {
                     SizedBox(height: 12),
                     CustomCard(label: 'Contact', value: '+94 77 123 4567'),
                     SizedBox(height: 12),
-                    CustomCard(label: 'From', value: '23/2, Athapttu Mawatha, Dehiwala'),
+                    CustomCard(
+                        label: 'From',
+                        value: '23/2, Athapttu Mawatha, Dehiwala'),
                     SizedBox(height: 12),
-                    CustomCard(label: 'To', value: '32, Dr. Pons Rd, Bambalpitiya'),
+                    CustomCard(
+                        label: 'To', value: '32, Dr. Pons Rd, Bambalpitiya'),
                     SizedBox(height: 12),
                     CustomCard(label: 'Distance', value: '45km'),
                     SizedBox(height: 12),
@@ -65,13 +70,19 @@ class RideProcessingScreen extends StatelessWidget {
             const SizedBox(height: 25),
             InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const RidePaymentScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RidePaymentScreen()));
               },
               child: Container(
                 height: 56,
-                decoration: BoxDecoration(color: Palette.mainColor30, borderRadius: BorderRadius.circular(12)),
+                decoration: BoxDecoration(
+                    color: Palette.mainColor30,
+                    borderRadius: BorderRadius.circular(12)),
                 child: Center(
-                  child: Text('Finish Ride', style: Theme.of(context).textTheme.normal16),
+                  child: Text('Finish Ride',
+                      style: Theme.of(context).textTheme.normal16),
                 ),
               ),
             ),
