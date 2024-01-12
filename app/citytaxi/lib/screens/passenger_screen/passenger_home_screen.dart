@@ -22,6 +22,7 @@ class _PHomeScreenState extends State<PHomeScreen> {
     return Scaffold(
       backgroundColor: Palette.mainColor60,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Palette.mainColor60,
         toolbarHeight: 56,
         elevation: 0,

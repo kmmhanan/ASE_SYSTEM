@@ -23,31 +23,21 @@ class _DHomeScreenState extends State<DHomeScreen> {
     return Scaffold(
       backgroundColor: Palette.mainColor60,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Palette.mainColor60,
-        elevation: 0,
         toolbarHeight: 56,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios_new,
-            color: Palette.white,
-            size: 20,
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const WelcomeScreen(),
-              ),
-            );
-          },
-        ),
+        elevation: 0,
         title: Text(
-          'Back',
-          style: Theme.of(context).textTheme.normal16,
+          'Passenger Home',
+          style: Theme.of(context).textTheme.normal18,
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                isDropdownVisible = !isDropdownVisible;
+              });
+            },
             icon: const Icon(Icons.menu),
           ),
         ],
