@@ -26,39 +26,43 @@ class ForgotPasswordScreen extends StatelessWidget {
           ),
         );
       },
-      widget: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 24),
-            Text('Forgot Password', style: Theme.of(context).textTheme.bold24),
-            const SizedBox(height: 16),
-            Text(
-                'Submit your email address & we will send you link to reset your password',
-                style: Theme.of(context).textTheme.normal13),
-            const SizedBox(height: 24),
-            CustomTextField(
-                label: 'Email Address', controller: emailController),
-            Expanded(
-              child: Container(
-                alignment: Alignment.bottomCenter,
-                child: FillButton(
-                  onTapped: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LinkForgotPassword(user: user),
-                      ),
-                    );
-                  },
-                  text: 'Reset Password',
-                  color: Palette.white,
+      widget: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height - 56,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 24),
+              Text('Forgot Password',
+                  style: Theme.of(context).textTheme.bold24),
+              const SizedBox(height: 16),
+              Text(
+                  'Submit your email address & we will send you link to reset your password',
+                  style: Theme.of(context).textTheme.normal13),
+              const SizedBox(height: 24),
+              CustomTextField(
+                  label: 'Email Address', controller: emailController),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.bottomCenter,
+                  child: FillButton(
+                    onTapped: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LinkForgotPassword(user: user),
+                        ),
+                      );
+                    },
+                    text: 'Reset Password',
+                    color: Palette.white,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 48),
-          ],
+              const SizedBox(height: 48),
+            ],
+          ),
         ),
       ),
     );
