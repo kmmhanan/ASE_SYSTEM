@@ -1,6 +1,6 @@
 import 'package:citytaxi/constants/palette.dart';
-import 'package:citytaxi/screens/passenger_screen/review_screen.dart';
-// import 'package:citytaxi/screens/splash_screen.dart';
+// import 'package:citytaxi/screens/passenger_screen/review_screen.dart';
+import 'package:citytaxi/screens/splash_screen.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -19,9 +19,9 @@ class MyApp extends StatelessWidget {
         primaryColor: Palette.mainColor60,
         fontFamily: 'Merriweather Sans',
       ),
-      // home: const SplashScreen(),
+      home: const SplashScreen(),
       // Current Working Screen
-      home: const PReviewScreen(),
+      // home: const PReviewScreen(),
     );
   }
 }
