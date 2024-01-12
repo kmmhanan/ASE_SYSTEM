@@ -1,6 +1,6 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/driverScreens/driver_homePage/driver_availableList.dart';
+import 'package:citytaxi/screens/driverScreens/driver_availablelist.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 

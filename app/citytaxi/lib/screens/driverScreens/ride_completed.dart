@@ -1,6 +1,6 @@
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/screens/driverScreens/driver_homePage/d_homepage.dart';
+import 'package:citytaxi/screens/driverScreens/d_homePage.dart';
 import 'package:flutter/material.dart';
 
 class RideCompleted extends StatefulWidget {
@@ -18,7 +18,8 @@ class _RideCompletedState extends State<RideCompleted> {
 
   _navigatetohome() async {
     await Future.delayed(const Duration(milliseconds: 3500), () {});
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const DHomePage()));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const DHomePage()));
   }
 
   @override
