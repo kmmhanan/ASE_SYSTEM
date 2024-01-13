@@ -21,138 +21,129 @@ class ProfileScreen extends StatelessWidget {
           right: 16,
           bottom: MediaQuery.of(context).padding.bottom + 48,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Palette.white,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Column(
-                children: [
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 32,
-                          width: double.infinity,
-                          child: Text(
-                            'Profile',
-                            style: Theme.of(context).textTheme.bold18.copyWith(
-                                  color: Palette.black,
-                                ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        right: -8,
-                        top: -8,
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: const Icon(
-                            Icons.cancel,
-                            size: 32,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 350,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.account_circle_sharp,
-                            size: 96,
-                            color: Palette.black.withOpacity(0.4),
-                          ),
-                          const SizedBox(height: 32),
-                          Column(
-                            children: [
-                              Text(
-                                'User Name',
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .normal16
-                                    .copyWith(
-                                      color: Palette.black,
-                                    ),
-                              ),
-                              const SizedBox(height: 16),
-                              Text(
-                                'usertest@gmail.com',
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .normal16
-                                    .copyWith(
-                                      color: Palette.black,
-                                    ),
-                              ),
-                            ],
-                          )
-                        ]),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const WelcomeScreen(),
-                        ),
-                      );
-                    },
-                    child: Container(
+        child: Center(
+          child: Container(
+            width: double.infinity,
+            height: 500,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Palette.white,
+              borderRadius: BorderRadius.circular(24),
+            ),
+            child: Column(
+              children: [
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      height: 32,
                       width: double.infinity,
-                      height: 56,
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 1,
-                            color: Palette.black,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
+                      child: Text(
+                        'Profile',
+                        style: Theme.of(context).textTheme.bold18.copyWith(
+                              color: Palette.black,
+                            ),
+                      ),
+                    ),
+                    Positioned(
+                      right: -8,
+                      top: -8,
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.cancel,
+                          size: 32,
                         ),
                       ),
-                      child: Center(
-                        child: Text(
-                          'Sign out',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.normal16.copyWith(
-                                color: Palette.black,
-                              ),
+                    )
+                  ],
+                ),
+                Expanded(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.account_circle_sharp,
+                          size: 96,
+                          color: Palette.black.withOpacity(0.4),
                         ),
+                        const SizedBox(height: 32),
+                        Column(
+                          children: [
+                            Text(
+                              'User Name',
+                              textAlign: TextAlign.center,
+                              style:
+                                  Theme.of(context).textTheme.normal16.copyWith(
+                                        color: Palette.black,
+                                      ),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              'usertest@gmail.com',
+                              textAlign: TextAlign.center,
+                              style:
+                                  Theme.of(context).textTheme.normal16.copyWith(
+                                        color: Palette.black,
+                                      ),
+                            ),
+                          ],
+                        )
+                      ]),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const WelcomeScreen(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    height: 56,
+                    decoration: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 1,
+                          color: Palette.black,
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Sign out',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.normal16.copyWith(
+                              color: Palette.black,
+                            ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  FillButton(
-                      onTapped: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SuccessMessageScreen(
-                              goToScreen: WelcomeScreen(),
-                              message: 'Account Deleted Successfully',
-                            ),
+                ),
+                const SizedBox(height: 16),
+                FillButton(
+                    onTapped: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SuccessMessageScreen(
+                            goToScreen: WelcomeScreen(),
+                            message: 'Account Deleted Successfully',
                           ),
-                        );
-                      },
-                      text: 'Delete Account',
-                      color: Palette.red)
-                ],
-              ),
+                        ),
+                      );
+                    },
+                    text: 'Delete Account',
+                    color: Palette.red)
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
