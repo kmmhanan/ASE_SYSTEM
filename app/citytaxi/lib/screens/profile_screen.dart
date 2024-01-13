@@ -1,6 +1,8 @@
 import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
+import 'package:citytaxi/screens/success_message_screen.dart';
+import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -101,7 +103,14 @@ class ProfileScreen extends StatelessWidget {
                         ]),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const WelcomeScreen(),
+                        ),
+                      );
+                    },
                     child: Container(
                       width: double.infinity,
                       height: 56,
@@ -127,7 +136,17 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   FillButton(
-                      onTapped: () {},
+                      onTapped: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SuccessMessageScreen(
+                              goToScreen: WelcomeScreen(),
+                              message: 'Account Deleted Successfully',
+                            ),
+                          ),
+                        );
+                      },
                       text: 'Delete Account',
                       color: Palette.red)
                 ],
