@@ -13,7 +13,12 @@ class ProfileScreen extends StatelessWidget {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
+        padding: EdgeInsets.only(
+          left: 16,
+          top: MediaQuery.of(context).padding.top + 24,
+          right: 16,
+          bottom: MediaQuery.of(context).padding.bottom + 48,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

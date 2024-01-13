@@ -45,7 +45,9 @@ class _PHomeScreenState extends State<PHomeScreen> {
         children: [
           SingleChildScrollView(
             child: SizedBox(
-              height: MediaQuery.of(context).size.height - 56,
+              height: MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).padding.bottom -
+                  56,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

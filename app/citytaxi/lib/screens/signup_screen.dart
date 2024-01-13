@@ -40,7 +40,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       widget: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height - 56,
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 48),
+          padding: EdgeInsets.only(
+            left: 16,
+            top: MediaQuery.of(context).padding.top,
+            right: 16,
+            bottom: MediaQuery.of(context).padding.bottom + 48,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

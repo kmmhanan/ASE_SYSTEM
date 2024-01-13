@@ -42,7 +42,7 @@ class PPaymentScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.all(18),
+                  padding: const EdgeInsets.all(16),
                   decoration: ShapeDecoration(
                     color: Palette.black.withOpacity(0.1),
                     shape: RoundedRectangleBorder(

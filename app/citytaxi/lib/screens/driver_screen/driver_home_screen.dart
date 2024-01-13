@@ -46,8 +46,15 @@ class _DHomeScreenState extends State<DHomeScreen> {
         children: [
           SingleChildScrollView(
             child: Container(
-              height: MediaQuery.of(context).size.height - 56,
-              padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
+              height: MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).padding.bottom -
+                  56,
+              padding: EdgeInsets.only(
+                left: 16,
+                top: MediaQuery.of(context).padding.top + 24,
+                right: 16,
+                bottom: MediaQuery.of(context).padding.bottom + 48,
+              ),
               child: Column(
                 children: [
                   Container(
