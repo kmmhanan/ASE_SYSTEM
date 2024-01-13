@@ -1,40 +1,54 @@
 import 'package:citytaxi/components/baground_container.dart';
 import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/components/default_screen.dart';
+import 'package:citytaxi/components/listcard_widget.dart';
 import 'package:citytaxi/constants/palette.dart';
-import 'package:citytaxi/screens/driver_screen/ride_processing.dart';
-import 'package:citytaxi/components/detailed_card.dart';
+import 'package:citytaxi/screens/driver_screen/driver_home_screen.dart';
+import 'package:citytaxi/screens/driver_screen/ride_details.dart';
 import 'package:flutter/material.dart';
 
-class RideDetailsScreen extends StatelessWidget {
-  const RideDetailsScreen({super.key});
+class AvailableHire extends StatelessWidget {
+  const AvailableHire({super.key});
 
   @override
   Widget build(BuildContext context) {
     return DefaultScreen(
       appBarTitle: 'Back',
       appBarOnPressed: () {
-        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const DHomeScreen(),
+          ),
+        );
       },
       widget: BagroundContainer(
-        heading: 'Ride Details',
+        heading: 'Hire List',
         bodyWidgets: [
           Expanded(
             child: Column(
               children: [
                 Expanded(
-                  child: Image.asset(
-                    // Need to change the image
-                    'assets/logo/images/ridedetails.png',
-                    height: 250,
+                  child: ListView.builder(
+                    itemCount: 6,
+                    itemBuilder: (context, index) {
+                      return const HireCard(
+                        fromAddress: '23/2, Athapttu Mawatha, Dehiwala ',
+                        toAddress: '32, Dr. Pons Rd, Bambalpitiya ',
+                        distance: '45km',
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(height: 16),
-                const DetailedCard(),
-                const SizedBox(height: 16),
                 BorderButton(
                     onTapped: () {
-                      // Call function
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DHomeScreen(),
+                        ),
+                      );
                     },
                     text: 'Cancel'),
                 const SizedBox(height: 16),
@@ -43,7 +57,7 @@ class RideDetailsScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const RideProcessingScreen(),
+                        builder: (context) => const RideDetailsScreen(),
                       ),
                     );
                   },

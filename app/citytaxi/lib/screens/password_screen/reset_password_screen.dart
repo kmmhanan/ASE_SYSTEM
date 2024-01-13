@@ -30,7 +30,9 @@ class ResetPasswordScreen extends StatelessWidget {
       },
       widget: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height - 56,
+          height: MediaQuery.of(context).size.height -
+              MediaQuery.of(context).padding.bottom -
+              56,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
