@@ -3,7 +3,12 @@ import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/screens/success_message_screen.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
+import 'package:citytaxi/utils/firebase_auth_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -62,40 +67,38 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
                 Expanded(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Icon(
+                      Icons.account_circle_sharp,
+                      size: 96,
+                      color: Palette.black.withOpacity(0.4),
+                    ),
+                    const SizedBox(height: 32),
+                    Column(
                       children: [
-                        Icon(
-                          Icons.account_circle_sharp,
-                          size: 96,
-                          color: Palette.black.withOpacity(0.4),
+                        Text(
+                          // firebase_auth.currentFirebaseUser.name,
+                          'User Name',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.normal16.copyWith(
+                                color: Palette.black,
+                              ),
                         ),
-                        const SizedBox(height: 32),
-                        Column(
-                          children: [
-                            Text(
-                              'User Name',
-                              textAlign: TextAlign.center,
-                              style:
-                                  Theme.of(context).textTheme.normal16.copyWith(
-                                        color: Palette.black,
-                                      ),
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              'usertest@gmail.com',
-                              textAlign: TextAlign.center,
-                              style:
-                                  Theme.of(context).textTheme.normal16.copyWith(
-                                        color: Palette.black,
-                                      ),
-                            ),
-                          ],
-                        )
-                      ]),
+                        const SizedBox(height: 16),
+                        Text(
+                          'email',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.normal16.copyWith(
+                                color: Palette.black,
+                              ),
+                        ),
+                      ],
+                    )
+                  ]),
                 ),
                 InkWell(
                   onTap: () {
+                    // firebase_auth.signOut();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
