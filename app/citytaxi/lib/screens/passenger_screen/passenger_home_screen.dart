@@ -28,7 +28,7 @@ class _PHomeScreenState extends State<PHomeScreen> {
 
 // theme path in json
   void updateMapTheme(GoogleMapController controller) {
-    getJsonFileFromThemes("themes/retro_style.json").then((value) => setGoogleMapStyle(value, controller));
+    getJsonFileFromThemes("themes/night_style.json").then((value) => setGoogleMapStyle(value, controller));
   }
 
   Future<String> getJsonFileFromThemes(String mapStylePath) async {
