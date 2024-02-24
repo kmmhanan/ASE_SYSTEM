@@ -73,6 +73,7 @@ flutter:
     - assets/logo/
     - assets/logo/icons/
     - assets/logo/images/
+    - themes/
     # - assets/logo/applogo.png
     # - assets/logo/carlogo.png
     # - assets/logo/welcome.png
