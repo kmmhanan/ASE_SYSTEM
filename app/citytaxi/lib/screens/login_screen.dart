@@ -3,7 +3,6 @@ import 'package:citytaxi/components/default_screen.dart';
 import 'package:citytaxi/components/progress_dialog.dart';
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
-import 'package:citytaxi/models/user_model.dart';
 import 'package:citytaxi/screens/driver_screen/driver_home_screen.dart';
 import 'package:citytaxi/screens/passenger_screen/passenger_home_screen.dart';
 import 'package:citytaxi/screens/password_screen/forgot_password_screen.dart';
