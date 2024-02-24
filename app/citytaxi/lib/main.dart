@@ -4,14 +4,18 @@ import 'package:citytaxi/screens/splash_screen.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  //.then(
-  // (FirebaseApp (value) => Get.put(AuthenticationRepository()))
-//  );
+
+  await Permission.locationWhenInUse.isDenied.then((valueOfPermission) {
+    if (valueOfPermission) {
+      Permission.locationWhenInUse.request();
+    }
+  });
 
   runApp(const MyApp());
 }

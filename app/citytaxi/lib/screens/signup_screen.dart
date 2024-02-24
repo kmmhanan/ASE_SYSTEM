@@ -16,7 +16,7 @@ import 'package:citytaxi/models/user_model.dart' as my_user;
 import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUpScreen extends StatefulWidget {
-  SignUpScreen({Key? key, required this.user}) : super(key: key);
+  const SignUpScreen({Key? key, required this.user}) : super(key: key);
 
   final my_user.User user;
 

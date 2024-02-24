@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:citytaxi/components/custom_buttons.dart';
 import 'package:citytaxi/components/home_dropdown.dart';
 import 'package:citytaxi/constants/palette.dart';
@@ -6,7 +9,10 @@ import 'package:citytaxi/screens/aboutus_screen.dart';
 import 'package:citytaxi/screens/driver_screen/available_hire.dart';
 import 'package:citytaxi/screens/profile_screen.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
+import 'package:citytaxi/utils/global/global_variables.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class DHomeScreen extends StatefulWidget {
   const DHomeScreen({super.key});
@@ -16,12 +22,30 @@ class DHomeScreen extends StatefulWidget {
 }
 
 class _DHomeScreenState extends State<DHomeScreen> {
+  final Completer<GoogleMapController> googleMapCompleterController = Completer<GoogleMapController>();
+  GoogleMapController? controllerGoogleMap;
+
+// theme path in json
+  void updateMapTheme(GoogleMapController controller) {
+    getJsonFileFromThemes("themes/retro_style.json").then((value) => setGoogleMapStyle(value, controller));
+  }
+
+  Future<String> getJsonFileFromThemes(String mapStylePath) async {
+    ByteData byteData = await rootBundle.load(mapStylePath);
+    var list = byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
+    return utf8.decode(list);
+  }
+
+  setGoogleMapStyle(String googleMapStyle, GoogleMapController controller) {
+    controller.setMapStyle(googleMapStyle);
+  }
+
   bool isDropdownVisible = false;
   bool isAvailable = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Palette.mainColor60,
+      //  backgroundColor: Palette.mainColor60,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Palette.mainColor60,
@@ -44,11 +68,21 @@ class _DHomeScreenState extends State<DHomeScreen> {
       ),
       body: Stack(
         children: [
+          GoogleMap(
+            mapType: MapType.normal,
+            myLocationEnabled: true,
+            initialCameraPosition: googlePlexInitialPosition,
+            onMapCreated: (GoogleMapController mapController) {
+              googleMapCompleterController.complete(mapController);
+              controllerGoogleMap = mapController;
+
+              // black theme google map
+              updateMapTheme(controllerGoogleMap!);
+            },
+          ),
           SingleChildScrollView(
             child: Container(
-              height: MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).padding.bottom -
-                  56,
+              height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.bottom - 56,
               padding: EdgeInsets.only(
                 left: 16,
                 top: MediaQuery.of(context).padding.top + 24,
@@ -57,40 +91,41 @@ class _DHomeScreenState extends State<DHomeScreen> {
               ),
               child: Column(
                 children: [
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 24,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Palette.black.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Drive More, Earn More.',
-                          style: Theme.of(context).textTheme.bold18,
-                        ),
-                        const SizedBox(height: 16),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(16),
-                          child: Image.asset(
-                            'assets/logo/images/map.png',
-                            height: 300,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          'Drive Safe... 😊',
-                          style: Theme.of(context).textTheme.normal16,
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   width: double.infinity,
+                  //   padding: const EdgeInsets.symmetric(
+                  //     horizontal: 16,
+                  //     vertical: 24,
+                  //   ),
+                  //   decoration: BoxDecoration(
+                  //     color: Palette.black.withOpacity(0.3),
+                  //     borderRadius: BorderRadius.circular(16),
+                  //   ),
+                  //   child: Column(
+                  //     children: [
+                  //       Text(
+                  //         'Drive More, Earn More.',
+                  //         style: Theme.of(context).textTheme.bold18,
+                  //       ),
+                  //       const SizedBox(height: 16),
+                  //       ClipRRect(
+                  //         borderRadius: BorderRadius.circular(16),
+                  //         child: Image.asset(
+                  //           'assets/logo/images/map.png',
+                  //           height: 300,
+                  //           width: double.infinity,
+                  //           fit: BoxFit.cover,
+                  //         ),
+                  //       ),
+                  //       const SizedBox(height: 16),
+                  //       Text(
+                  //         'Drive Safe... 😊',
+                  //         style: Theme.of(context).textTheme.normal16,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+
                   const Expanded(child: SizedBox()),
                   if (!isAvailable)
                     BorderButton(
