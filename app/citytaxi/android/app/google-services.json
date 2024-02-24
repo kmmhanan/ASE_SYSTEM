@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "364495813911",
+    "project_id": "city-taxi-93be1",
+    "storage_bucket": "city-taxi-93be1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364495813911:android:64ae2bad2b748aad214b52",
+        "android_client_info": {
+          "package_name": "com.example.citytaxi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWVggAL03kp1_-rbaBUL0KQvMnNBffn5U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

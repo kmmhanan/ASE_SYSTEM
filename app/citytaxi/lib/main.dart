@@ -1,9 +1,18 @@
 import 'package:citytaxi/constants/palette.dart';
+import 'package:citytaxi/firebase_options.dart';
 import 'package:citytaxi/screens/splash_screen.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  //.then(
+  // (FirebaseApp (value) => Get.put(AuthenticationRepository()))
+//  );
+
   runApp(const MyApp());
 }
 

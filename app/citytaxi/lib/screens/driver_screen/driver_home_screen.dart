@@ -28,7 +28,7 @@ class _DHomeScreenState extends State<DHomeScreen> {
         toolbarHeight: 56,
         elevation: 0,
         title: Text(
-          'Passenger Home',
+          'Driver Home',
           style: Theme.of(context).textTheme.normal18,
         ),
         actions: [
