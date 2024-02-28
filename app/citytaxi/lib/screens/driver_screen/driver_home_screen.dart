@@ -30,6 +30,7 @@ class _DHomeScreenState extends State<DHomeScreen> {
     getJsonFileFromThemes("themes/retro_style.json").then((value) => setGoogleMapStyle(value, controller));
   }
 
+  // make it into byte form
   Future<String> getJsonFileFromThemes(String mapStylePath) async {
     ByteData byteData = await rootBundle.load(mapStylePath);
     var list = byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
@@ -52,7 +53,7 @@ class _DHomeScreenState extends State<DHomeScreen> {
         toolbarHeight: 56,
         elevation: 0,
         title: Text(
-          'Driver Home',
+          'Driver ',
           style: Theme.of(context).textTheme.normal18,
         ),
         actions: [
