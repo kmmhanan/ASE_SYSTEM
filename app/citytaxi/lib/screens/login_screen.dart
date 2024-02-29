@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
             }
           } else {
             FirebaseAuth.instance.signOut();
-            Fluttertoast.showToast(msg: 'Your record do not exist as a User');
+            Fluttertoast.showToast(msg: 'Your record do not exist as a Driver');
           }
         });
       }
