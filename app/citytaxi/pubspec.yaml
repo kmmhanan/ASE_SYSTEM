@@ -20,10 +20,10 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.19.0-146.2.beta <3.0.0"
-  
+  sdk: ">=2.19.0-146.2.beta <3.13.0"
+
 # ">=2.12.0 <3.0.0"
-# ">=2.19.0-146.2.beta <3.0.0" 
+# ">=2.19.0-146.2.beta <3.0.0"
 # ">=3.1.0 <4.0.0"
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -41,16 +41,15 @@ dependencies:
   connectivity_plus:
 
   #firebase
-  firebase_core: ^2.25.4
-  cloud_firestore: ^4.15.5
-  firebase_auth: ^4.17.5
-  firebase_storage: ^11.6.6
-  firebase_database: ^10.4.6
+  firebase_core: ^2.24.2
+  cloud_firestore: ^4.14.0
+  firebase_auth: ^4.16.0
+  firebase_storage: ^11.6.0
+  firebase_database: ^10.4.0
   fluttertoast: ^8.2.4
   google_maps_flutter: ^2.5.3
-  permission_handler: ^11.3.0
+  permission_handler:
   geolocator: ^11.0.0
-
 
 dev_dependencies:
   flutter_test:
@@ -62,7 +61,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.1
-  test: ^1.25.2
+  test:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
