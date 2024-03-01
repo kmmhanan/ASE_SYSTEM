@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (!context.mounted) return;
       Navigator.pop(context);
-      //Fluttertoast.showToast(msg: 'Account has been created');
+      //Fluttertoast.showToast(msg: 'Login Successful');
 
       //
       if (firebaseUser != null) {
@@ -120,9 +120,11 @@ class _LoginScreenState extends State<LoginScreen> {
           if (snap.snapshot.value != null) {
             if ((snap.snapshot.value as Map)["blockStatus"] == "no") {
               userName = (snap.snapshot.value as Map)["name"];
+              userEmail = (snap.snapshot.value as Map)["email"];
               Navigator.push(context, MaterialPageRoute(builder: ((context) => const PHomeScreen())));
             } else {
               FirebaseAuth.instance.signOut();
+
               Fluttertoast.showToast(msg: 'You are blocked. Contact Admin: admin.citytaxi@.com');
             }
           } else {

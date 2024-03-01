@@ -2,6 +2,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 String userName = "";
 
+String userEmail = "";
+
 String googleMapKey = "AIzaSyDWVggAL03kp1_-rbaBUL0KQvMnNBffn5U"; //andriod
 
 const CameraPosition googlePlexInitialPosition = CameraPosition(

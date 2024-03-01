@@ -10,8 +10,10 @@ import 'package:citytaxi/screens/driver_screen/available_hire.dart';
 import 'package:citytaxi/screens/profile_screen.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:citytaxi/utils/global/global_variables.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class DHomeScreen extends StatefulWidget {
@@ -24,6 +26,7 @@ class DHomeScreen extends StatefulWidget {
 class _DHomeScreenState extends State<DHomeScreen> {
   final Completer<GoogleMapController> googleMapCompleterController = Completer<GoogleMapController>();
   GoogleMapController? controllerGoogleMap;
+  Position? currenctPositionOfUser;
 
 // theme path in json
   void updateMapTheme(GoogleMapController controller) {
@@ -39,6 +42,18 @@ class _DHomeScreenState extends State<DHomeScreen> {
 
   setGoogleMapStyle(String googleMapStyle, GoogleMapController controller) {
     controller.setMapStyle(googleMapStyle);
+  }
+
+  //get the drivers current location
+  getCurrentLiveLocationOfDriver() async {
+    Position positionOfUser = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
+    currenctPositionOfUser = positionOfUser;
+
+    LatLng positionOfUserInLatLng = LatLng(currenctPositionOfUser!.latitude, currenctPositionOfUser!.longitude);
+
+    CameraPosition cameraPosition = CameraPosition(target: positionOfUserInLatLng, zoom: 18);
+    //display the current location of the user
+    controllerGoogleMap!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
   }
 
   bool isDropdownVisible = false;
@@ -63,7 +78,10 @@ class _DHomeScreenState extends State<DHomeScreen> {
                 isDropdownVisible = !isDropdownVisible;
               });
             },
-            icon: const Icon(Icons.menu),
+            icon: Icon(
+              Icons.menu,
+              color: Palette.white,
+            ),
           ),
         ],
       ),
@@ -79,6 +97,9 @@ class _DHomeScreenState extends State<DHomeScreen> {
 
               // black theme google map
               updateMapTheme(controllerGoogleMap!);
+
+              // live location
+              getCurrentLiveLocationOfDriver();
             },
           ),
           SingleChildScrollView(
@@ -193,10 +214,12 @@ class _DHomeScreenState extends State<DHomeScreen> {
                       goTo: AboutusScreen(),
                     ),
                     Container(width: 120, height: 1, color: Palette.black),
-                    const HomeDropdown(
+                    HomeDropdown(
                       name: 'Signout',
                       icon: Icons.exit_to_app_rounded,
-                      goTo: WelcomeScreen(),
+                      onSignOut: () async {
+                        await FirebaseAuth.instance.signOut();
+                      },
                     ),
 
                     // Add more options as needed

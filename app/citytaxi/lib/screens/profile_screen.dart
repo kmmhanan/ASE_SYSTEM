@@ -3,12 +3,20 @@ import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/screens/success_message_screen.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
+import 'package:citytaxi/utils/firebase_auth_services.dart';
+import 'package:citytaxi/utils/global/global_variables.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,35 +78,64 @@ class ProfileScreen extends StatelessWidget {
                       color: Palette.black.withOpacity(0.4),
                     ),
                     const SizedBox(height: 32),
-                    Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          // firebase_auth.currentFirebaseUser.name,
-                          'User Name',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.normal16.copyWith(
-                                color: Palette.black,
-                              ),
+                        // text name and email
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Name: ',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.normal16.copyWith(
+                                    color: Palette.darkgrey,
+                                  ),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              'Email: ',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.normal16.copyWith(
+                                    color: Palette.darkgrey,
+                                  ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 16),
-                        Text(
-                          'email',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.normal16.copyWith(
-                                color: Palette.black,
-                              ),
+                        SizedBox(width: 20),
+                        // user's name and email
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              userName,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.normal16.copyWith(
+                                    color: Palette.mainColor60,
+                                  ),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              userEmail,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.normal16.copyWith(
+                                    color: Palette.mainColor60,
+                                  ),
+                            ),
+                          ],
                         ),
                       ],
                     )
                   ]),
                 ),
                 InkWell(
-                  onTap: () {
-                    // firebase_auth.signOut();
-                    Navigator.push(
+                  onTap: () async {
+                    await FirebaseAuth.instance.signOut();
+                    Fluttertoast.showToast(msg: 'Signed out successfully');
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const WelcomeScreen(),
+                        builder: (context) => WelcomeScreen(),
                       ),
                     );
                   },

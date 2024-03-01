@@ -10,8 +10,10 @@ import 'package:citytaxi/screens/passenger_screen/nearby_drivers.dart';
 import 'package:citytaxi/screens/profile_screen.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:citytaxi/utils/global/global_variables.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -29,7 +31,7 @@ class _PHomeScreenState extends State<PHomeScreen> {
 
 // theme path in json
   void updateMapTheme(GoogleMapController controller) {
-    getJsonFileFromThemes("themes/night_style.json").then((value) => setGoogleMapStyle(value, controller));
+    getJsonFileFromThemes("themes/retro_style.json").then((value) => setGoogleMapStyle(value, controller));
   }
 
   Future<String> getJsonFileFromThemes(String mapStylePath) async {
@@ -75,7 +77,10 @@ class _PHomeScreenState extends State<PHomeScreen> {
                 isDropdownVisible = !isDropdownVisible;
               });
             },
-            icon: const Icon(Icons.menu),
+            icon: Icon(
+              Icons.menu,
+              color: Palette.white,
+            ),
           ),
         ],
       ),
@@ -96,7 +101,7 @@ class _PHomeScreenState extends State<PHomeScreen> {
               getCurrentLiveLocationOfUser();
             },
           ),
-          SizedBox(
+          const SizedBox(
             // height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.bottom - 56,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -114,7 +119,7 @@ class _PHomeScreenState extends State<PHomeScreen> {
                 //     )
                 //   ],
                 // ),
-                const SizedBox(height: 56),
+                SizedBox(height: 56),
                 // Container(
                 //   margin: const EdgeInsets.all(16),
                 //   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 64),
@@ -212,13 +217,21 @@ class _PHomeScreenState extends State<PHomeScreen> {
                       goTo: AboutusScreen(),
                     ),
                     Container(width: 120, height: 1, color: Palette.black),
-                    const HomeDropdown(
+                    HomeDropdown(
                       name: 'Signout',
                       icon: Icons.exit_to_app_rounded,
-                      goTo: WelcomeScreen(),
+                      //   goTo: WelcomeScreen(),
+                      onSignOut: () async {
+                        await FirebaseAuth.instance.signOut();
+                        Fluttertoast.showToast(msg: 'Signed out successfully');
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => WelcomeScreen(),
+                          ),
+                        );
+                      },
                     ),
-
-                    // Add more options as needed
                   ],
                 ),
               ),
