@@ -23,6 +23,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 
 class PHomeScreen extends StatefulWidget {
@@ -46,8 +47,8 @@ class _PHomeScreenState extends State<PHomeScreen> {
   Set<Polyline> polylineSet = {};
   Set<Marker> markerSet = {};
   Set<Circle> circleSet = {};
-  // bool isDrawerOpened = true;
   bool isDefaultScreen = true;
+  String stateOfApp = "normal";
 
 // theme path in json
   void updateMapTheme(GoogleMapController controller) {
@@ -173,14 +174,14 @@ class _PHomeScreenState extends State<PHomeScreen> {
 
     // add markers to pickup nd drop off point
     Marker pickUpPointMarker = Marker(
-      markerId: MarkerId("pickUpPointMarkerID"),
+      markerId: const MarkerId("pickUpPointMarkerID"),
       position: pickupGeoGraphicCoOrdinates,
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
       infoWindow: InfoWindow(title: pickUpLocation.placeName, snippet: "Pickup Location"),
     );
 
     Marker dropOffDestinationPointMarker = Marker(
-      markerId: MarkerId("dropOffDestinationPointMarkerID"),
+      markerId: const MarkerId("dropOffDestinationPointMarkerID"),
       position: dropOffDestinationGeoGraphicCoOrdinates,
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
       infoWindow: InfoWindow(title: dropOffDestinationLocation.placeName, snippet: "Drop Off Location"),
@@ -193,7 +194,7 @@ class _PHomeScreenState extends State<PHomeScreen> {
 
     // add circles to pickup nd drop off point
     Circle pickUpPointCircle = Circle(
-      circleId: CircleId('pickupCircleID'),
+      circleId: const CircleId('pickupCircleID'),
       strokeColor: Colors.pink, // border
       strokeWidth: 4,
       radius: 14,
@@ -201,7 +202,7 @@ class _PHomeScreenState extends State<PHomeScreen> {
       fillColor: Colors.pink,
     );
     Circle dropOffDestinationPointCircle = Circle(
-      circleId: CircleId('dropOffDestinationCircleID'),
+      circleId: const CircleId('dropOffDestinationCircleID'),
       strokeColor: Colors.blue, // border
       strokeWidth: 4,
       radius: 14,
@@ -236,6 +237,24 @@ class _PHomeScreenState extends State<PHomeScreen> {
       carDetailsDriver = "";
       tripStatusDisplay = "Driver is Arriving";
     });
+  }
+
+  cancelRideRequest() {
+    // remove ride request from db
+    setState(() {
+      stateOfApp = "normal";
+    });
+  }
+
+  displayRequestContainer() {
+    setState(() {
+      rideDetailsContainerHeight = 0;
+      requestContainerHeight = 220;
+      bottomMapPadding = 200;
+      isDefaultScreen = true;
+    });
+
+    // send ride request
   }
 
   @override
@@ -541,7 +560,7 @@ class _PHomeScreenState extends State<PHomeScreen> {
                                       "In ${(tripDirectionDetailsInfo != null) ? tripDirectionDetailsInfo!.durationTextString! : ""}   -",
                                       style: Theme.of(context).textTheme.normal16.copyWith(color: Palette.white),
                                     ),
-                                    SizedBox(width: 10),
+                                    const SizedBox(width: 10),
                                     // km
                                     Text(
                                       (tripDirectionDetailsInfo != null) ? tripDirectionDetailsInfo!.distanceTextString! : "",
@@ -552,7 +571,17 @@ class _PHomeScreenState extends State<PHomeScreen> {
 
                                 // vehicle pic
                                 InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    setState(() {
+                                      stateOfApp = "requesting";
+                                    });
+
+                                    displayRequestContainer();
+
+                                    // get nearest available online drivers
+
+                                    //search driver
+                                  },
                                   child: Image.asset(
                                     "assets/logo/images/blackCar.png",
                                     height: 122,
@@ -574,7 +603,58 @@ class _PHomeScreenState extends State<PHomeScreen> {
                 ),
               ),
             ),
-          )
+          ),
+         
+          // request container
+          Positioned(
+              right: 0,
+              left: 0,
+              bottom: 0,
+              child: Container(
+                height: requestContainerHeight,
+                decoration: const BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 12),
+                      SizedBox(
+                        width: 200,
+                        child: LoadingAnimationWidget.flickr(
+                          leftDotColor: Colors.greenAccent,
+                          rightDotColor: Colors.pinkAccent,
+                          size: 50,
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      // cancel button for cancel the ride request when loading
+                      GestureDetector(
+                        onTap: () {
+                          resetAppNow();
+                          cancelRideRequest();
+                        },
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.white70,
+                            borderRadius: BorderRadius.circular(25),
+                            border: Border.all(width: 1.5, color: Colors.grey),
+                          ),
+                          child: Icon(
+                            Icons.close,
+                            color: Palette.black,
+                            size: 25,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )),
         ],
       ),
     );

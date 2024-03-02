@@ -13,6 +13,7 @@ import 'package:citytaxi/utils/global/global_variables.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -67,8 +68,9 @@ class _DHomeScreenState extends State<DHomeScreen> {
         backgroundColor: Palette.mainColor60,
         toolbarHeight: 56,
         elevation: 0,
+        centerTitle: true,
         title: Text(
-          'Driver ',
+          'Drive More   -   Earn More',
           style: Theme.of(context).textTheme.normal18,
         ),
         actions: [
@@ -87,6 +89,7 @@ class _DHomeScreenState extends State<DHomeScreen> {
       ),
       body: Stack(
         children: [
+          // google map
           GoogleMap(
             mapType: MapType.normal,
             myLocationEnabled: true,
@@ -102,6 +105,8 @@ class _DHomeScreenState extends State<DHomeScreen> {
               getCurrentLiveLocationOfDriver();
             },
           ),
+
+          //
           SingleChildScrollView(
             child: Container(
               height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.bottom - 56,
@@ -113,6 +118,7 @@ class _DHomeScreenState extends State<DHomeScreen> {
               ),
               child: Column(
                 children: [
+                  // old ui
                   // Container(
                   //   width: double.infinity,
                   //   padding: const EdgeInsets.symmetric(
@@ -148,6 +154,7 @@ class _DHomeScreenState extends State<DHomeScreen> {
                   //   ),
                   // ),
 
+                  // go online, offline
                   const Expanded(child: SizedBox()),
                   if (!isAvailable)
                     BorderButton(
@@ -179,9 +186,11 @@ class _DHomeScreenState extends State<DHomeScreen> {
               ),
             ),
           ),
+
+          // profile drawer
           Positioned(
-            top: 0.0, // Adjust the top position as needed
-            right: 16.0, // Adjust the right position as needed
+            top: 0.0,
+            right: 16.0,
             child: Visibility(
               visible: isDropdownVisible,
               child: Container(
@@ -219,6 +228,13 @@ class _DHomeScreenState extends State<DHomeScreen> {
                       icon: Icons.exit_to_app_rounded,
                       onSignOut: () async {
                         await FirebaseAuth.instance.signOut();
+                        Fluttertoast.showToast(msg: 'Signed out successfully');
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const WelcomeScreen(),
+                          ),
+                        );
                       },
                     ),
 
