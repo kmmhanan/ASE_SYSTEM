@@ -3,7 +3,7 @@ import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/screens/success_message_screen.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
-import 'package:citytaxi/utils/firebase_auth_services.dart';
+import 'package:citytaxi/utils/authentication/firebase_auth_services.dart';
 import 'package:citytaxi/utils/global/global_variables.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

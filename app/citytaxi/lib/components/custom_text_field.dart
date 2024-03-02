@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
-    required this.label,
+    this.label,
     required this.controller,
     this.validator,
     this.inputFormatters,
@@ -16,9 +16,10 @@ class CustomTextField extends StatelessWidget {
     this.keyBoardType,
     this.hintText,
     this.fontStyle,
+    this.onChanged,
   });
 
-  final String label;
+  final String? label;
   final TextEditingController controller;
   final FormFieldValidator<String>? validator;
   final List<TextInputFormatter>? inputFormatters;
@@ -28,6 +29,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final String? hintText;
   final FontStyle? fontStyle;
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +42,20 @@ class CustomTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 8),
-        Text(label, style: Theme.of(context).textTheme.normal16),
+        if (label != null) ...[
+          const SizedBox(height: 8),
+          Text(label!, style: Theme.of(context).textTheme.normal16),
+          const SizedBox(height: 8),
+        ],
         const SizedBox(height: 8),
         SizedBox(
           height: 56,
           child: TextFormField(
             controller: controller,
+            onChanged: onChanged,
             validator: validator,
             inputFormatters: inputFormatters,
+            // obscureText: false,
             maxLength: maxLength,
             maxLines: maxLine,
             textInputAction: textInputAction,

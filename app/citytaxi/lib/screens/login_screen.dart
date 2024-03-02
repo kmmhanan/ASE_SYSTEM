@@ -169,6 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
               CustomTextField(
                 label: 'Email Address',
                 controller: emailTextEditingController,
+                keyBoardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 16),
               CustomTextField(
