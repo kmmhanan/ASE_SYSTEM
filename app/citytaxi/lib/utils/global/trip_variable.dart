@@ -1,7 +1,7 @@
 String nameDriver = "";
-String? phoneNumberDriver; 
+String? phoneNumberDriver;
 
-int requestTimeoutDriver = 30;
+int requestTimeoutDriver = 20;
 String status = "";
 String carDetailsDriver = "";
 String tripStatusDisplay = "Driver is Arriving";

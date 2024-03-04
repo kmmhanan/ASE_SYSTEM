@@ -57,6 +57,7 @@ dependencies:
   flutter_geofire:
   firebase_messaging:
   restart_app:
+  assets_audio_player:
 
 
 dev_dependencies:
@@ -87,6 +88,7 @@ flutter:
     - assets/logo/icons/
     - assets/logo/images/
     - themes/
+    - assets/audio/
     # - assets/logo/applogo.png
     # - assets/logo/carlogo.png
     # - assets/logo/welcome.png

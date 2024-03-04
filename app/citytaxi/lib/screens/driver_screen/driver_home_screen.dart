@@ -120,7 +120,7 @@ class _DHomeScreenState extends State<DHomeScreen> {
   initializePushNotificationSystem() {
     PushNotificationSystem notificationSystem = PushNotificationSystem();
     notificationSystem.generateDeviceRegistrationToken();
-    notificationSystem.startListeningForNewNotification();
+    notificationSystem.startListeningForNewNotification(context);
   }
 
   @override
@@ -178,165 +178,163 @@ class _DHomeScreenState extends State<DHomeScreen> {
           ),
 
           //
-          SingleChildScrollView(
-            child: Container(
-              height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.bottom - 56,
-              padding: EdgeInsets.only(
-                left: 16,
-                top: MediaQuery.of(context).padding.top + 24,
-                right: 16,
-                bottom: MediaQuery.of(context).padding.bottom + 48,
-              ),
-              child: Column(
-                children: [
-                  // old ui
-                  // Container(
-                  //   width: double.infinity,
-                  //   padding: const EdgeInsets.symmetric(
-                  //     horizontal: 16,
-                  //     vertical: 24,
-                  //   ),
-                  //   decoration: BoxDecoration(
-                  //     color: Palette.black.withOpacity(0.3),
-                  //     borderRadius: BorderRadius.circular(16),
-                  //   ),
-                  //   child: Column(
-                  //     children: [
-                  //       Text(
-                  //         'Drive More, Earn More.',
-                  //         style: Theme.of(context).textTheme.bold18,
-                  //       ),
-                  //       const SizedBox(height: 16),
-                  //       ClipRRect(
-                  //         borderRadius: BorderRadius.circular(16),
-                  //         child: Image.asset(
-                  //           'assets/logo/images/map.png',
-                  //           height: 300,
-                  //           width: double.infinity,
-                  //           fit: BoxFit.cover,
-                  //         ),
-                  //       ),
-                  //       const SizedBox(height: 16),
-                  //       Text(
-                  //         'Drive Safe... 😊',
-                  //         style: Theme.of(context).textTheme.normal16,
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+          Container(
+            height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.bottom - 56,
+            padding: EdgeInsets.only(
+              left: 16,
+              top: MediaQuery.of(context).padding.top + 24,
+              right: 16,
+              bottom: MediaQuery.of(context).padding.bottom + 16,
+            ),
+            child: Column(
+              children: [
+                // old ui
+                // Container(
+                //   width: double.infinity,
+                //   padding: const EdgeInsets.symmetric(
+                //     horizontal: 16,
+                //     vertical: 24,
+                //   ),
+                //   decoration: BoxDecoration(
+                //     color: Palette.black.withOpacity(0.3),
+                //     borderRadius: BorderRadius.circular(16),
+                //   ),
+                //   child: Column(
+                //     children: [
+                //       Text(
+                //         'Drive More, Earn More.',
+                //         style: Theme.of(context).textTheme.bold18,
+                //       ),
+                //       const SizedBox(height: 16),
+                //       ClipRRect(
+                //         borderRadius: BorderRadius.circular(16),
+                //         child: Image.asset(
+                //           'assets/logo/images/map.png',
+                //           height: 300,
+                //           width: double.infinity,
+                //           fit: BoxFit.cover,
+                //         ),
+                //       ),
+                //       const SizedBox(height: 16),
+                //       Text(
+                //         'Drive Safe... 😊',
+                //         style: Theme.of(context).textTheme.normal16,
+                //       ),
+                //     ],
+                //   ),
+                // ),
 
-                  // go online, offline
-                  const Expanded(child: SizedBox()),
+                // go online, offline
+                const Expanded(child: SizedBox()),
 
-                  // if (!isAvailable)
-                  //   BorderButton(
-                  //       onTapped: () {
-                  //         Navigator.push(context, MaterialPageRoute(builder: (context) => const AvailableHire()));
-                  //       },
-                  //       text: 'View Hire List'),
-                  // const SizedBox(height: 16),
-                  // available
-                  FillButton(
-                    onTapped: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isDismissible: false,
-                        builder: (BuildContext context) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: Colors.black87,
-                            ),
-                            height: 221,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 18),
-                              child: Column(
-                                children: [
-                                  SizedBox(height: 11),
-                                  Text(
-                                    (!isDriverAvailable) ? "Available" : "Busy",
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context).textTheme.normal18,
-                                  ),
-                                  SizedBox(height: 21),
-                                  Text(
-                                    (!isDriverAvailable) ? "You are about to go online, you will be become available to receieve trip requests from Users" : "You are about to go offline, you will stop receiving new trip requests from users",
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context).textTheme.normal16.copyWith(color: Colors.white70),
-                                  ),
-                                  SizedBox(height: 25),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: ElevatedButton(
-                                            onPressed: () {
+                // if (!isAvailable)
+                //   BorderButton(
+                //       onTapped: () {
+                //         Navigator.push(context, MaterialPageRoute(builder: (context) => const AvailableHire()));
+                //       },
+                //       text: 'View Hire List'),
+                // const SizedBox(height: 16),
+                // available
+                FillButton(
+                  onTapped: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isDismissible: false,
+                      builder: (BuildContext context) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black87,
+                          ),
+                          height: 240,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+                            child: Column(
+                              children: [
+                                SizedBox(height: 11),
+                                Text(
+                                  (!isDriverAvailable) ? "Available" : "Busy",
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.normal18,
+                                ),
+                                SizedBox(height: 21),
+                                Text(
+                                  (!isDriverAvailable) ? "You are about to go online, you will be become available to receieve trip requests from Users" : "You are about to go offline, you will stop receiving new trip requests from users",
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.normal16.copyWith(color: Colors.white70),
+                                ),
+                                SizedBox(height: 25),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text(
+                                            "BACK",
+                                            style: Theme.of(context).textTheme.normal13.copyWith(color: Palette.black),
+                                          )),
+                                    ),
+                                    SizedBox(width: 16),
+                                    // confirm
+                                    Expanded(
+                                      child: ElevatedButton(
+                                          onPressed: () {
+                                            if (!isDriverAvailable) {
+                                              // go online
+                                              Available();
+
+                                              // get driver location updates
+                                              setAndGetLocationUpdates();
+
                                               Navigator.pop(context);
-                                            },
-                                            child: Text(
-                                              "BACK",
-                                              style: Theme.of(context).textTheme.normal13.copyWith(color: Palette.black),
-                                            )),
-                                      ),
-                                      SizedBox(width: 16),
-                                      // confirm
-                                      Expanded(
-                                        child: ElevatedButton(
-                                            onPressed: () {
-                                              if (!isDriverAvailable) {
-                                                // go online
-                                                Available();
 
-                                                // get driver location updates
-                                                setAndGetLocationUpdates();
+                                              setState(() {
+                                                colorToShow = Palette.red;
+                                                titleToShow = "Busy";
+                                                isDriverAvailable = true;
+                                              });
+                                            } else {
+                                              // go offline
+                                              Busy();
+                                              Navigator.pop(context);
 
-                                                Navigator.pop(context);
-
-                                                setState(() {
-                                                  colorToShow = Palette.red;
-                                                  titleToShow = "Busy";
-                                                  isDriverAvailable = true;
-                                                });
-                                              } else {
-                                                // go offline
-                                                Busy();
-                                                Navigator.pop(context);
-
-                                                setState(() {
-                                                  colorToShow = Palette.green;
-                                                  titleToShow = "Available";
-                                                  isDriverAvailable = false;
-                                                });
-                                              }
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: (titleToShow == "Available") ? Palette.green : Palette.red,
-                                            ),
-                                            child: Text(
-                                              "CONFIRM",
-                                              style: Theme.of(context).textTheme.normal13.copyWith(color: Palette.black),
-                                            )),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
+                                              setState(() {
+                                                colorToShow = Palette.green;
+                                                titleToShow = "Available";
+                                                isDriverAvailable = false;
+                                              });
+                                            }
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: (titleToShow == "Available") ? Palette.green : Palette.red,
+                                          ),
+                                          child: Text(
+                                            "CONFIRM",
+                                            style: Theme.of(context).textTheme.normal13.copyWith(color: Palette.black),
+                                          )),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                          );
-                        },
-                      );
-                      // setState(() {
-                      //   isAvailable = !isAvailable;
-                      // });
-                    },
-                    text: titleToShow,
-                    color: colorToShow,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Change Status',
-                    style: Theme.of(context).textTheme.normal16.copyWith(color: Palette.black),
-                  )
-                ],
-              ),
+                          ),
+                        );
+                      },
+                    );
+                    // setState(() {
+                    //   isAvailable = !isAvailable;
+                    // });
+                  },
+                  text: titleToShow,
+                  color: colorToShow,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Change Status',
+                  style: Theme.of(context).textTheme.normal16.copyWith(color: Palette.black),
+                )
+              ],
             ),
           ),
 

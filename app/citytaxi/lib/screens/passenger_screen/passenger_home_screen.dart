@@ -259,8 +259,6 @@ class _PHomeScreenState extends State<PHomeScreen> {
       carDetailsDriver = "";
       tripStatusDisplay = "Driver is Arriving";
     });
-
-    // Restart.restartApp();
   }
 
   cancelRideRequest() {
@@ -471,6 +469,39 @@ class _PHomeScreenState extends State<PHomeScreen> {
       } else {
         return;
       }
+      const oneTickPerSec = Duration(seconds: 1);
+
+      var timeCountDown = Timer.periodic(oneTickPerSec, (timer) {
+        requestTimeoutDriver = requestTimeoutDriver - 1;
+
+        // when trip request is not requesting- trip request is cancelled - stop timer
+        if (stateOfApp != "requesting") {
+          timer.cancel();
+          currentDriverRef.set("cancelled");
+          currentDriverRef.onDisconnect();
+          requestTimeoutDriver = 20;
+        }
+
+        // when trip request is accepted by online nearest available driver
+        currentDriverRef.onValue.listen((dataSnapshot) {
+          if (dataSnapshot.snapshot.value.toString() == "accepted") {
+            timer.cancel();
+            currentDriverRef.onDisconnect();
+            requestTimeoutDriver = 20;
+          }
+        });
+
+        // if 20 seconds passed - when driver ignore - send notification to next nearest online driver
+        if (requestTimeoutDriver == 0) {
+          currentDriverRef.set("timeout");
+          timer.cancel();
+          currentDriverRef.onDisconnect();
+          requestTimeoutDriver = 20;
+
+          //send notification to next nearest online driver
+          searchDriver();
+        }
+      });
     });
   }
 
