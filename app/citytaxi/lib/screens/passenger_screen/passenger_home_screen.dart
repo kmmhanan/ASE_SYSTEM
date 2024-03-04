@@ -7,24 +7,31 @@ import 'package:citytaxi/components/progress_dialog.dart';
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/models/direction_details.dart';
+import 'package:citytaxi/models/online_nearby_drivers.dart';
 import 'package:citytaxi/screens/aboutus_screen.dart';
 import 'package:citytaxi/screens/passenger_screen/nearby_drivers.dart';
 import 'package:citytaxi/screens/passenger_screen/search_destination.dart';
+import 'package:citytaxi/screens/passenger_screen/widgets/info_dialog.dart';
 import 'package:citytaxi/screens/profile_screen.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:citytaxi/utils/appInfo/app_info.dart';
 import 'package:citytaxi/utils/global/global_variables.dart';
 import 'package:citytaxi/utils/global/trip_variable.dart';
 import 'package:citytaxi/utils/methods/common_methods.dart';
+import 'package:citytaxi/utils/methods/manage_drivers_methods.dart';
+import 'package:citytaxi/utils/methods/push_notification_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:restart_app/restart_app.dart';
 
 class PHomeScreen extends StatefulWidget {
   const PHomeScreen({super.key});
@@ -49,6 +56,19 @@ class _PHomeScreenState extends State<PHomeScreen> {
   Set<Circle> circleSet = {};
   bool isDefaultScreen = true;
   String stateOfApp = "normal";
+  bool nearbyOnlineDriversKeysLoaded = false;
+  BitmapDescriptor? carIconNearbyDriver;
+  DatabaseReference? tripRequestRef;
+  List<OnlineNearbyDrivers>? availableNearbyOnlineDriversList;
+
+  makeDriverNearbyCarIcon() {
+    if (carIconNearbyDriver == null) {
+      ImageConfiguration configuration = createLocalImageConfiguration(context, size: const Size(1, 1));
+      BitmapDescriptor.fromAssetImage(configuration, "assets/logo/icons/tracking1.png").then((iconImage) {
+        carIconNearbyDriver = iconImage;
+      });
+    }
+  }
 
 // theme path in json
   void updateMapTheme(GoogleMapController controller) {
@@ -77,6 +97,8 @@ class _PHomeScreenState extends State<PHomeScreen> {
     controllerGoogleMap!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
     await CommonMethods.convertGeoGraphicCoorIntoHumanReadableAddress(currenctPositionOfUser!, context);
+
+    await initializeGeoFireListner(); // Geo fire initialization
   }
 
   displayUserRideDetailsContainer() async {
@@ -237,10 +259,14 @@ class _PHomeScreenState extends State<PHomeScreen> {
       carDetailsDriver = "";
       tripStatusDisplay = "Driver is Arriving";
     });
+
+    // Restart.restartApp();
   }
 
   cancelRideRequest() {
     // remove ride request from db
+    tripRequestRef!.remove();
+
     setState(() {
       stateOfApp = "normal";
     });
@@ -255,10 +281,202 @@ class _PHomeScreenState extends State<PHomeScreen> {
     });
 
     // send ride request
+    makeTripRequest();
+  }
+
+  updateAvailableNearbyOnlineDriversOnMap() {
+    setState(() {
+      markerSet.clear();
+    });
+
+    Set<Marker> markersTempSet = Set<Marker>();
+
+// ex- 5 online drivers, get their details one by one nd showing the marekr ,icon
+    for (OnlineNearbyDrivers eachOnlineNearbyDriver in ManageDriversMethods.nearbyOnlineDriversList) {
+      LatLng driverCurrentPosition = LatLng(eachOnlineNearbyDriver.latDriver!, eachOnlineNearbyDriver.lngDriver!);
+
+      Marker driverMarker = Marker(
+        markerId: MarkerId("driver ID = " + eachOnlineNearbyDriver.uidDriver.toString()),
+        position: driverCurrentPosition,
+        icon: carIconNearbyDriver!,
+      );
+
+      markersTempSet.add(driverMarker); // that 5 markers in the markersTempSet
+    }
+
+    setState(() {
+      markerSet = markersTempSet;
+    });
+  }
+
+  // get all nearest, online drivers current location.
+  initializeGeoFireListner() {
+    Geofire.initialize("onlineDrivers");
+    // within the radius 22, get all online drivers of this user
+    Geofire.queryAtLocation(
+      currenctPositionOfUser!.latitude,
+      currenctPositionOfUser!.longitude,
+      22,
+    )!
+        .listen((driverEvent) {
+      if (driverEvent != null) {
+        var onlineDriverChild = driverEvent["callBack"];
+
+        switch (onlineDriverChild) {
+          //1
+          case Geofire.onKeyEntered: // new driver came inside the radius
+
+            OnlineNearbyDrivers onlineNearbyDrivers = OnlineNearbyDrivers();
+            onlineNearbyDrivers.uidDriver = driverEvent["key"]; // driver id
+            onlineNearbyDrivers.latDriver = driverEvent["latitude"];
+            onlineNearbyDrivers.lngDriver = driverEvent["longitude"];
+            ManageDriversMethods.nearbyOnlineDriversList.add(onlineNearbyDrivers);
+
+            if (nearbyOnlineDriversKeysLoaded == true) {
+              // update drivers on google map
+              updateAvailableNearbyOnlineDriversOnMap();
+            }
+
+            break;
+
+          //2
+          case Geofire.onKeyExited: // driver went outside from the users radius
+            ManageDriversMethods.removeDriverFromList(driverEvent["key"]);
+            // update drivers on google map
+            updateAvailableNearbyOnlineDriversOnMap();
+
+            break;
+
+          //3
+          case Geofire.onKeyMoved: // driver move within the radius
+
+            OnlineNearbyDrivers onlineNearbyDrivers = OnlineNearbyDrivers();
+            onlineNearbyDrivers.uidDriver = driverEvent["key"];
+            onlineNearbyDrivers.latDriver = driverEvent["latitude"];
+            onlineNearbyDrivers.lngDriver = driverEvent["longitude"];
+            ManageDriversMethods.updateOnlineNearbyDriversLocation(onlineNearbyDrivers);
+
+            // update drivers on google map
+            updateAvailableNearbyOnlineDriversOnMap();
+
+            break;
+
+          //4
+          case Geofire.onGeoQueryReady: // first, whenever user open the app, display nearest online drivers
+            nearbyOnlineDriversKeysLoaded = true;
+            // update drivers on google map
+            updateAvailableNearbyOnlineDriversOnMap();
+            break;
+        }
+      }
+    });
+  }
+
+//
+  makeTripRequest() {
+    tripRequestRef = FirebaseDatabase.instance.ref().child("tripRequests").push();
+
+    var pickUpLocation = Provider.of<AppInfo>(context, listen: false).pickUpLocation;
+    var dropOffDestinationLocation = Provider.of<AppInfo>(context, listen: false).dropOffLocation;
+
+    Map pickUpCoOrdinatesMap = {
+      "latitude": pickUpLocation!.latitudePosition.toString(),
+      "longitude": pickUpLocation.longitudePosition.toString(),
+    };
+
+    Map dropOffDestinationCoOrdinatesMap = {
+      "latitude": dropOffDestinationLocation!.latitudePosition.toString(),
+      "longitude": dropOffDestinationLocation.longitudePosition.toString(),
+    };
+
+    Map driverCoOrdinates = {
+      "latitude": "",
+      "longitude": "",
+    };
+
+// data for new trip
+    Map dataMap = {
+      "tripID": tripRequestRef!.key,
+      "publishDateTime": DateTime.now().toString(),
+
+      // user info
+      "userName": userName,
+      "userPhone": userPhone,
+      "userID": userID,
+      "pickUpLatLng": pickUpCoOrdinatesMap,
+      "dropOffLatLng": dropOffDestinationCoOrdinatesMap,
+      "pickUpAddress": pickUpLocation.placeName,
+      "dropOffAddress": dropOffDestinationLocation.placeName,
+
+      //
+      "driverID": "waiting",
+      "carDetails": "",
+      "driverLocation": driverCoOrdinates,
+      "driverName": "",
+      "driverPhone": "",
+      "fareAmount": "",
+      "status": "new",
+    };
+
+    tripRequestRef!.set(dataMap);
+  }
+
+  noDriverAvailable() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => InfoDialog(
+        title: "No Driver Available",
+        description: "No Driver found in the nearby location. Please try again shortly",
+      ),
+    );
+  }
+
+  //
+  searchDriver() {
+    if (availableNearbyOnlineDriversList!.length == 0) {
+      cancelRideRequest();
+      resetAppNow();
+      noDriverAvailable();
+      return;
+    }
+
+    var currentDriver = availableNearbyOnlineDriversList![0];
+
+    // send push notfication to this current Driver. means selected driver
+    sendNotificationToDriver(currentDriver);
+
+    availableNearbyOnlineDriversList!.removeAt(0);
+  }
+
+  sendNotificationToDriver(OnlineNearbyDrivers currentDriver) {
+    // update driver's newTripStatus - asign tripID to current driver
+    DatabaseReference currentDriverRef = FirebaseDatabase.instance.ref().child("drivers").child(currentDriver.uidDriver.toString()).child("newTripStatus");
+
+    currentDriverRef.set(tripRequestRef!.key);
+
+    // get current driver registration recognition token
+    DatabaseReference tokenOfCurrentDriverRef = FirebaseDatabase.instance.ref().child("drivers").child(currentDriver.uidDriver.toString()).child("deviceToken");
+
+    tokenOfCurrentDriverRef.once().then((dataSnapshot) {
+      if (dataSnapshot.snapshot.value != null) {
+        String deviceToken = dataSnapshot.snapshot.value.toString();
+
+        //send notification
+        PushNotificationService.sendNotificationToSelectedDriver(
+          deviceToken,
+          context,
+          tripRequestRef!.key.toString(),
+        );
+      } else {
+        return;
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    makeDriverNearbyCarIcon();
     return Scaffold(
       //   backgroundColor: Palette.mainColor60,
       appBar: AppBar(
@@ -579,8 +797,10 @@ class _PHomeScreenState extends State<PHomeScreen> {
                                     displayRequestContainer();
 
                                     // get nearest available online drivers
+                                    availableNearbyOnlineDriversList = ManageDriversMethods.nearbyOnlineDriversList;
 
                                     //search driver
+                                    searchDriver();
                                   },
                                   child: Image.asset(
                                     "assets/logo/images/blackCar.png",
@@ -604,7 +824,7 @@ class _PHomeScreenState extends State<PHomeScreen> {
               ),
             ),
           ),
-         
+
           // request container
           Positioned(
               right: 0,

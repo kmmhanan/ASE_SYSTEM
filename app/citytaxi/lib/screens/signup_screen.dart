@@ -54,13 +54,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  saveDriverInforNow() async {
-    showDialog(
+  saveDriverInforNow() async { 
+    await showDialog(
       context: context,
       barrierDismissible: false,
       builder: ((context) {
         return ProgressDialog(
-          message: 'Processing, Please wait..',
+          message: 'Processing, Please wait..', 
         );
       }),
     );
