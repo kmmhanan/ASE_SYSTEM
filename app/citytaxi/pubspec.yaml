@@ -58,6 +58,9 @@ dependencies:
   firebase_messaging:
   restart_app:
   assets_audio_player:
+  url_launcher:
+  # smooth_star_rating:
+  flutter_rating_bar:
 
 
 dev_dependencies:

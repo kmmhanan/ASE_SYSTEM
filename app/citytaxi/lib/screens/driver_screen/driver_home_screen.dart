@@ -7,10 +7,15 @@ import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/screens/aboutus_screen.dart';
 import 'package:citytaxi/screens/driver_screen/available_hire.dart';
+import 'package:citytaxi/screens/driver_screen/drawer/earnings_page.dart';
+import 'package:citytaxi/screens/driver_screen/drawer/trip_page.dart';
+import 'package:citytaxi/screens/driver_screen/drawer/drivers_trips_history_page.dart';
+import 'package:citytaxi/screens/driver_screen/driver_profile_screen.dart';
 import 'package:citytaxi/screens/pushNotification/push_notification_system.dart';
 import 'package:citytaxi/screens/profile_screen.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:citytaxi/utils/global/global_variables.dart';
+import 'package:citytaxi/utils/methods/map_theme_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -31,36 +36,21 @@ class DHomeScreen extends StatefulWidget {
 class _DHomeScreenState extends State<DHomeScreen> {
   final Completer<GoogleMapController> googleMapCompleterController = Completer<GoogleMapController>();
   GoogleMapController? controllerGoogleMap;
-  Position? currenctPositionOfUser;
+  Position? currenctPositionOfDriver;
   bool isDropdownVisible = false;
-  // bool isAvailable = true;
   Color colorToShow = Palette.green;
   String titleToShow = "Available";
   bool isDriverAvailable = false;
   DatabaseReference? newTripRequestReference;
-
-// theme path in json
-  void updateMapTheme(GoogleMapController controller) {
-    getJsonFileFromThemes("themes/retro_style.json").then((value) => setGoogleMapStyle(value, controller));
-  }
-
-  // make it into byte form
-  Future<String> getJsonFileFromThemes(String mapStylePath) async {
-    ByteData byteData = await rootBundle.load(mapStylePath);
-    var list = byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
-    return utf8.decode(list);
-  }
-
-  setGoogleMapStyle(String googleMapStyle, GoogleMapController controller) {
-    controller.setMapStyle(googleMapStyle);
-  }
+  MapThemeMethods themeMethods = MapThemeMethods();
 
   //get the drivers current location
   getCurrentLiveLocationOfDriver() async {
     Position positionOfUser = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
-    currenctPositionOfUser = positionOfUser;
+    currenctPositionOfDriver = positionOfUser;
+    driverCurrentPosition = currenctPositionOfDriver;
 
-    LatLng positionOfUserInLatLng = LatLng(currenctPositionOfUser!.latitude, currenctPositionOfUser!.longitude);
+    LatLng positionOfUserInLatLng = LatLng(currenctPositionOfDriver!.latitude, currenctPositionOfDriver!.longitude);
 
     CameraPosition cameraPosition = CameraPosition(target: positionOfUserInLatLng, zoom: 18);
     //display the current location of the user
@@ -75,8 +65,8 @@ class _DHomeScreenState extends State<DHomeScreen> {
     // initialize set location
     Geofire.setLocation(
       FirebaseAuth.instance.currentUser!.uid, // driver id
-      currenctPositionOfUser!.latitude,
-      currenctPositionOfUser!.longitude,
+      currenctPositionOfDriver!.latitude,
+      currenctPositionOfDriver!.longitude,
     );
 
     newTripRequestReference = FirebaseDatabase.instance.ref().child("drivers").child(FirebaseAuth.instance.currentUser!.uid).child("newTripStatus");
@@ -87,14 +77,14 @@ class _DHomeScreenState extends State<DHomeScreen> {
 
   setAndGetLocationUpdates() {
     positionStreamDHomePage = Geolocator.getPositionStream().listen((Position position) {
-      currenctPositionOfUser = position;
+      currenctPositionOfDriver = position;
 
       // live location sharing if the driver is online
       if (isDriverAvailable) {
         Geofire.setLocation(
           FirebaseAuth.instance.currentUser!.uid,
-          currenctPositionOfUser!.latitude,
-          currenctPositionOfUser!.longitude,
+          currenctPositionOfDriver!.latitude,
+          currenctPositionOfDriver!.longitude,
         );
       }
       LatLng positionLatLng = LatLng(
@@ -123,11 +113,25 @@ class _DHomeScreenState extends State<DHomeScreen> {
     notificationSystem.startListeningForNewNotification(context);
   }
 
+  retrieveCurrentDriverInfo() async {
+    await FirebaseDatabase.instance.ref().child("drivers").child(FirebaseAuth.instance.currentUser!.uid).once().then((snap) {
+      driverName = (snap.snapshot.value as Map)["name"];
+      driverPhone = (snap.snapshot.value as Map)["contactNum"];
+      // (snap.snapshot.value as Map)["email"];
+      // (snap.snapshot.value as Map)["nic"];
+      carModel = (snap.snapshot.value as Map)["car_details"]["car_model"];
+      carNumber = (snap.snapshot.value as Map)["car_details"]["car_num"];
+      carType = (snap.snapshot.value as Map)["car_details"]["type"];
+    });
+
+    initializePushNotificationSystem();
+  }
+
   @override
   void initState() {
     super.initState();
 
-    initializePushNotificationSystem();
+    retrieveCurrentDriverInfo();
   }
 
   @override
@@ -169,8 +173,8 @@ class _DHomeScreenState extends State<DHomeScreen> {
               googleMapCompleterController.complete(mapController);
               controllerGoogleMap = mapController;
 
-              // black theme google map
-              updateMapTheme(controllerGoogleMap!);
+              //   theme google map
+              themeMethods.updateMapTheme(controllerGoogleMap!);
 
               // live location
               getCurrentLiveLocationOfDriver();
@@ -365,7 +369,27 @@ class _DHomeScreenState extends State<DHomeScreen> {
                     const HomeDropdown(
                       name: 'Profile',
                       icon: Icons.account_circle_rounded,
-                      goTo: ProfileScreen(),
+                      goTo: DriverProfileScreen(),
+                      //ProfileScreen(),
+                    ),
+
+                    Container(width: 120, height: 1, color: Palette.black),
+                    const HomeDropdown(
+                      name: 'Total Trips',
+                      icon: Icons.lightbulb_circle,
+                      goTo: TripsPage(),
+                    ),
+                    Container(width: 120, height: 1, color: Palette.black),
+                    const HomeDropdown(
+                      name: 'Earnings',
+                      icon: Icons.lightbulb_circle,
+                      goTo: EarningsPage(),
+                    ),
+                    Container(width: 120, height: 1, color: Palette.black),
+                    const HomeDropdown(
+                      name: 'Trip History',
+                      icon: Icons.lightbulb_circle,
+                      goTo: DriversTripsHistoryPage(),
                     ),
                     Container(width: 120, height: 1, color: Palette.black),
                     const HomeDropdown(

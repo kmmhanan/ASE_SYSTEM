@@ -5,7 +5,9 @@ import 'package:citytaxi/models/direction_details.dart';
 import 'package:citytaxi/utils/appInfo/app_info.dart';
 import 'package:citytaxi/utils/global/global_variables.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -62,7 +64,7 @@ class CommonMethods {
     return humanReadableAddress;
   }
 
-  // directions api
+  // Directions api
   static Future<DirectionDetails?> getDrectionDetailsFromAPI(LatLng source, LatLng destination) async {
     String urlDrectionAPI = "https://maps.googleapis.com/maps/api/directions/json?destination=${destination.latitude},${destination.longitude}&origin=${source.latitude},${source.longitude}&mode=driving&key=$googleMapKey";
 
@@ -95,5 +97,22 @@ class CommonMethods {
     double overallAllTotalFareAmount = baseFareAmount + totalDistanceTravelFareAmount + totalDurationSpendFareAmount;
 
     return overallAllTotalFareAmount.toStringAsFixed(0);
+  }
+
+  // when driver busy
+  turnOffLocationUpdatesForHomePage() {
+    positionStreamDHomePage!.pause();
+    Geofire.removeLocation(FirebaseAuth.instance.currentUser!.uid);
+  }
+
+//
+  turnOnLocationUpdatesForHomePage() {
+    positionStreamDHomePage!.pause();
+
+    Geofire.setLocation(
+      FirebaseAuth.instance.currentUser!.uid,
+      driverCurrentPosition!.latitude,
+      driverCurrentPosition!.longitude,
+    );
   }
 }

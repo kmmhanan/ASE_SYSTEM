@@ -45,7 +45,7 @@ class _InfoDialogState extends State<InfoDialog> {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      Restart.restartApp();
+                      //  Restart.restartApp();
                     },
                     child: const Text("OK"),
                   ),

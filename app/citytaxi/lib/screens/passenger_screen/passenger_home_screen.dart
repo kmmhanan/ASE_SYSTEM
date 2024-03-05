@@ -9,9 +9,12 @@ import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/models/direction_details.dart';
 import 'package:citytaxi/models/online_nearby_drivers.dart';
 import 'package:citytaxi/screens/aboutus_screen.dart';
+import 'package:citytaxi/screens/passenger_screen/drawer/users_trips_history_page.dart';
 import 'package:citytaxi/screens/passenger_screen/nearby_drivers.dart';
+import 'package:citytaxi/screens/passenger_screen/rate_driver_screen.dart';
 import 'package:citytaxi/screens/passenger_screen/search_destination.dart';
 import 'package:citytaxi/screens/passenger_screen/widgets/info_dialog.dart';
+import 'package:citytaxi/screens/passenger_screen/widgets/payment_dialog.dart';
 import 'package:citytaxi/screens/profile_screen.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:citytaxi/utils/appInfo/app_info.dart';
@@ -32,6 +35,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:restart_app/restart_app.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PHomeScreen extends StatefulWidget {
   const PHomeScreen({super.key});
@@ -60,6 +64,8 @@ class _PHomeScreenState extends State<PHomeScreen> {
   BitmapDescriptor? carIconNearbyDriver;
   DatabaseReference? tripRequestRef;
   List<OnlineNearbyDrivers>? availableNearbyOnlineDriversList;
+  StreamSubscription<DatabaseEvent>? tripstreamSubscription;
+  bool requestingDirectionDetailsInfo = false;
 
   makeDriverNearbyCarIcon() {
     if (carIconNearbyDriver == null) {
@@ -370,7 +376,7 @@ class _PHomeScreenState extends State<PHomeScreen> {
     });
   }
 
-//
+// user making new trip request
   makeTripRequest() {
     tripRequestRef = FirebaseDatabase.instance.ref().child("tripRequests").push();
 
@@ -417,6 +423,136 @@ class _PHomeScreenState extends State<PHomeScreen> {
     };
 
     tripRequestRef!.set(dataMap);
+
+    tripstreamSubscription = tripRequestRef!.onValue.listen((eventSnapshot) async {
+      if (eventSnapshot.snapshot.value == null) {
+        return;
+      }
+      if ((eventSnapshot.snapshot.value as Map)["driverName"] != null) {
+        nameDriver = (eventSnapshot.snapshot.value as Map)["driverName"];
+      }
+      if ((eventSnapshot.snapshot.value as Map)["driverPhone"] != null) {
+        phoneNumberDriver = (eventSnapshot.snapshot.value as Map)["driverPhone"];
+      }
+      if ((eventSnapshot.snapshot.value as Map)["carDetails"] != null) {
+        carDetailsDriver = (eventSnapshot.snapshot.value as Map)["carDetails"];
+      }
+      if ((eventSnapshot.snapshot.value as Map)["status"] != null) {
+        status = (eventSnapshot.snapshot.value as Map)["status"];
+      }
+      if ((eventSnapshot.snapshot.value as Map)["driverLocation"] != null) {
+        double driverLatitude = double.parse((eventSnapshot.snapshot.value as Map)["driverLocation"]["latitude"].toString());
+        double driverLongitude = double.parse((eventSnapshot.snapshot.value as Map)["driverLocation"]["longitude"].toString());
+
+        LatLng driverCurrentLocationLatLng = LatLng(driverLatitude, driverLongitude);
+
+        if (status == "accepted") {
+          // update information for pickup to user UI
+          // driver current location to user pickup location
+          updateFromDriverCurrentLocationToPickup(driverCurrentLocationLatLng);
+        } else if (status == "arrived") {
+          // update into for arrived - when driver reach at the pickup point of user
+          setState(() {
+            tripStatusDisplay = "Driver has Arrived";
+          });
+        }
+        // when driver clicked ontrip
+        else if (status == "ontrip") {
+          // update into for dropoff to user UI
+          // infor from driver current location to user dropoff location
+          updateFromDriverCurrentLocationToDropOffDestination(driverCurrentLocationLatLng);
+        }
+      }
+
+      //
+      if (status == "accepted") {
+        displayTripDetailsContainer();
+        Geofire.stopListener();
+        // remove drivers markers
+        setState(() {
+          markerSet.removeWhere((element) => element.markerId.value.contains("driver"));
+        });
+      }
+      //
+      if (status == "ended") {
+        if ((eventSnapshot.snapshot.value as Map)["fareAmount"] != null) {
+          double fareAmount = double.parse((eventSnapshot.snapshot.value as Map)["fareAmount"].toString());
+
+          var responseFromPaymentDialog = await showDialog(
+            context: context,
+            builder: (BuildContext context) => PaymentDialog(fareAmount: fareAmount.toString()),
+          );
+
+          if (responseFromPaymentDialog == "paid") {
+            if ((eventSnapshot.snapshot.value as Map)["driverID"] != null) {
+              String assignedDriverID = (eventSnapshot.snapshot.value as Map)["driverID"].toString();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RateDriverScreen(
+                            assignedDriverId: assignedDriverID,
+                          )));
+            }
+            tripRequestRef!.onDisconnect();
+            tripRequestRef = null;
+
+            tripstreamSubscription!.cancel();
+            tripstreamSubscription = null;
+
+            // resetAppNow();
+
+            // Restart.restartApp();
+          }
+        }
+      }
+    });
+  }
+
+  displayTripDetailsContainer() {
+    setState(() {
+      requestContainerHeight = 0;
+      tripContainerHeight = 291;
+      bottomMapPadding = 281;
+    });
+  }
+
+  updateFromDriverCurrentLocationToPickup(driverCurrentLocationLatLng) async {
+    if (!requestingDirectionDetailsInfo) {
+      requestingDirectionDetailsInfo = true;
+
+      var userPickUplocationLatLng = LatLng(currenctPositionOfUser!.latitude, currenctPositionOfUser!.longitude);
+
+      var directionDetailsPickUp = await CommonMethods.getDrectionDetailsFromAPI(driverCurrentLocationLatLng, userPickUplocationLatLng);
+
+      if (directionDetailsPickUp == null) {
+        return;
+      }
+      setState(() {
+        tripStatusDisplay = "Driver is Coming - ${directionDetailsPickUp.durationTextString}";
+      });
+
+      requestingDirectionDetailsInfo = false;
+    }
+  }
+
+  updateFromDriverCurrentLocationToDropOffDestination(driverCurrentLocationLatLng) async {
+    if (!requestingDirectionDetailsInfo) {
+      requestingDirectionDetailsInfo = true;
+
+      var dropOffLocation = Provider.of<AppInfo>(context, listen: false).dropOffLocation;
+      var userDropOfflocationLatLng = LatLng(dropOffLocation!.latitudePosition!, dropOffLocation.longitudePosition!);
+
+      var directionDetailsPickUp = await CommonMethods.getDrectionDetailsFromAPI(driverCurrentLocationLatLng, userDropOfflocationLatLng);
+
+      if (directionDetailsPickUp == null) {
+        return;
+      }
+      setState(() {
+        tripStatusDisplay = "Driving to DropOff Location - ${directionDetailsPickUp.durationTextString}";
+      });
+
+      requestingDirectionDetailsInfo = false;
+    }
   }
 
   noDriverAvailable() {
@@ -681,6 +817,12 @@ class _PHomeScreenState extends State<PHomeScreen> {
                     ),
                     Container(width: 120, height: 1, color: Palette.black),
                     const HomeDropdown(
+                      name: 'History',
+                      icon: Icons.lightbulb_circle,
+                      goTo: UsersTripsHistoryPage(),
+                    ),
+                    Container(width: 120, height: 1, color: Palette.black),
+                    const HomeDropdown(
                       name: 'About',
                       icon: Icons.lightbulb_circle,
                       goTo: AboutusScreen(),
@@ -880,7 +1022,7 @@ class _PHomeScreenState extends State<PHomeScreen> {
                           size: 50,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       // cancel button for cancel the ride request when loading
                       GestureDetector(
                         onTap: () {
@@ -906,6 +1048,119 @@ class _PHomeScreenState extends State<PHomeScreen> {
                   ),
                 ),
               )),
+
+          // trip details container
+          Positioned(
+            right: 0,
+            left: 0,
+            bottom: 0,
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.black87,
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+              ),
+              height: tripContainerHeight,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 5),
+                    // trip status disply
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          tripStatusDisplay,
+                          style: const TextStyle(fontSize: 19, color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 19),
+                    const Divider(
+                      height: 1,
+                      color: Colors.white70,
+                      thickness: 1,
+                    ),
+                    const SizedBox(height: 19),
+
+                    // driver name , driver car details
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ClipOval(
+                          child: Image.network(
+                            // "assets/logo/images/profile.png",
+                            "https://firebasestorage.googleapis.com/v0/b/city-taxi-93be1.appspot.com/o/profile.png?alt=media&token=95b07262-36db-4aa3-9f24-ec461d905591",
+                            width: 60,
+                            height: 60,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        const SizedBox(width: 15),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              nameDriver,
+                              style: const TextStyle(fontSize: 19, color: Colors.grey),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              carDetailsDriver,
+                              style: const TextStyle(fontSize: 14, color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 19),
+                    const Divider(
+                      height: 1,
+                      color: Colors.white70,
+                      thickness: 1,
+                    ),
+                    const SizedBox(height: 19),
+
+                    // car driver button
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            launchUrl(Uri.parse("tel://$phoneNumberDriver"));
+                          },
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  border: Border.all(width: 1, color: Palette.white),
+                                ),
+                                child: Icon(
+                                  Icons.phone,
+                                  color: Palette.white,
+                                ),
+                              ),
+                              const SizedBox(height: 11),
+                              const Text(
+                                "Call",
+                                style: TextStyle(color: Colors.grey),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );
