@@ -54,13 +54,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  saveDriverInforNow() async { 
-    await showDialog(
+  saveDriverInforNow() async {
+    showDialog(
       context: context,
       barrierDismissible: false,
       builder: ((context) {
         return ProgressDialog(
-          message: 'Processing, Please wait..', 
+          message: 'Processing, Please wait..',
         );
       }),
     );
@@ -72,9 +72,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         email: emailTextEditingController.text.trim(),
         password: passwordTextEditingController.text.trim(),
       )
-              .catchError((errorMsg) {
+              .catchError((msg) {
         Navigator.pop(context);
-        Fluttertoast.showToast(msg: 'Error: $errorMsg');
+        Fluttertoast.showToast(msg: 'Error: $msg');
       }))
           .user;
 
@@ -96,8 +96,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       // save the driver data nd pass the data to map
       driverRef.set(driverMap);
       currentFirebaseUser = firebaseDriver;
-      // Fluttertoast.showToast(msg: 'Account has   been created');
-      Navigator.push(context, MaterialPageRoute(builder: ((context) => const CarInfoScreen())));
+      //  Fluttertoast.showToast(msg: 'Account has been created');
+      Navigator.push(context, MaterialPageRoute(builder: ((context) => CarInfoScreen())));
     }
 
     /// passenger database - working fine
