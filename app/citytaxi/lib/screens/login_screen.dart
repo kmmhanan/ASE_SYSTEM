@@ -96,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
 
-    // checking passenger login
+// checking passenger login
     if (widget.user == my_user.User.passenger) {
       final firebase_auth.User? firebaseUser = (await firebase_auth.FirebaseAuth.instance
               .signInWithEmailAndPassword(
@@ -111,19 +111,23 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (!context.mounted) return;
       Navigator.pop(context);
-      //Fluttertoast.showToast(msg: 'Account has been created');
+      //Fluttertoast.showToast(msg: 'Login Successful');
 
       //
       if (firebaseUser != null) {
         DatabaseReference usersRef = FirebaseDatabase.instance.ref().child("passengers").child(firebaseUser.uid);
+
         usersRef.once().then((snap) {
           if (snap.snapshot.value != null) {
             if ((snap.snapshot.value as Map)["blockStatus"] == "no") {
               userName = (snap.snapshot.value as Map)["name"];
+              userEmail = (snap.snapshot.value as Map)["email"];
+              userPhone = (snap.snapshot.value as Map)["contactNum"];
               Navigator.push(context, MaterialPageRoute(builder: ((context) => const PHomeScreen())));
             } else {
               FirebaseAuth.instance.signOut();
-              Fluttertoast.showToast(msg: 'You are blocked. Contact Admin: admin.citytaxi@.com');
+
+              Fluttertoast.showToast(msg: 'You are blocked. Contact Admin: admin.citytaxi@gmail.com');
             }
           } else {
             FirebaseAuth.instance.signOut();
@@ -167,6 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
               CustomTextField(
                 label: 'Email Address',
                 controller: emailTextEditingController,
+                keyBoardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 16),
               CustomTextField(

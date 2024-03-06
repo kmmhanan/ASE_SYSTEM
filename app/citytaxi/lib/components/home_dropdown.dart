@@ -7,23 +7,29 @@ class HomeDropdown extends StatelessWidget {
     super.key,
     required this.name,
     required this.icon,
-    required this.goTo,
+    this.goTo,
+    this.onSignOut,
   });
 
-  final Widget goTo;
+  final Widget? goTo;
   final IconData icon;
   final String name;
+  final VoidCallback? onSignOut;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => goTo,
-          ),
-        );
+      onTap: () async {
+        if (name == 'Signout' && onSignOut != null) {
+          onSignOut!(); // If onSignOut is provided, call it
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => goTo!, // Navigate to goTo if provided
+            ),
+          );
+        }
       },
       child: SizedBox(
         height: 40,

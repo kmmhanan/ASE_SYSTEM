@@ -17,6 +17,8 @@ class Palette {
 
   static Color yellow = const Color(0xFFFFCC00);
 
+  static Color darkgrey = Colors.grey.shade700;
+
   static Gradient topBarGradient = LinearGradient(
     colors: [Palette.mainColor30, Palette.mainColor10],
     begin: Alignment.topLeft,

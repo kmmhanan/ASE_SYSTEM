@@ -5,7 +5,7 @@ import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/models/user_model.dart';
 import 'package:citytaxi/screens/login_screen.dart';
-import 'package:citytaxi/utils/firebase_auth_services.dart';
+import 'package:citytaxi/utils/authentication/firebase_auth_services.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
