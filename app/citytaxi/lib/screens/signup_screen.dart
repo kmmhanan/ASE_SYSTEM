@@ -3,7 +3,7 @@ import 'package:citytaxi/components/default_screen.dart';
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/screens/driver_screen/car_info_screen.dart';
-import 'package:citytaxi/utils/firebase_auth_services.dart';
+import 'package:citytaxi/utils/authentication/firebase_auth_services.dart';
 import 'package:citytaxi/utils/methods/common_methods.dart';
 import 'package:citytaxi/components/progress_dialog.dart';
 import 'package:citytaxi/screens/login_screen.dart';
@@ -54,13 +54,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  saveDriverInforNow() async {
-    showDialog(
+  saveDriverInforNow() async { 
+    await showDialog(
       context: context,
       barrierDismissible: false,
       builder: ((context) {
         return ProgressDialog(
-          message: 'Processing, Please wait..',
+          message: 'Processing, Please wait..', 
         );
       }),
     );
@@ -173,11 +173,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
               CustomTextField(
                 label: 'Name',
                 controller: nameTextEditingController,
+                keyBoardType: TextInputType.name,
               ),
               const SizedBox(height: 16),
               CustomTextField(
                 label: 'Contact Number',
                 controller: contactNumTextEditingController,
+                keyBoardType: TextInputType.phone,
               ),
               if (widget.user == my_user.User.driver) const SizedBox(height: 16),
               if (widget.user == my_user.User.driver)
@@ -189,6 +191,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               CustomTextField(
                 label: 'Email Address',
                 controller: emailTextEditingController,
+                keyBoardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 16),
               CustomTextField(
