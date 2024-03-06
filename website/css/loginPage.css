@@ -1,0 +1,53 @@
+#loginBody {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.loginCard {
+  width: 450px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 48px;
+  gap: 32px;
+  border-radius: 16px;
+  align-items: center;
+  background: var(--colorWhite30);
+}
+
+.loginCard p {
+  font-size: var(--font-size-24);
+  color: var(--colorWhite);
+}
+
+.loginDetails {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.loginImage {
+  width: 150px;
+  height: 150px;
+  padding: 16px 16px 0;
+  background: var(--colorBlack20);
+  border-radius: 100%;
+}
+
+.logInput {
+  width: 100%;
+  height: 56px;
+  background: var(--colorBlack20);
+  border-radius: 12px;
+  padding: 0 32px;
+}
+
+.logInput::placeholder {
+  text-align: center;
+  color: var(--colorWhite);
+  font-size: var(--font-size-18);
+  opacity: 0.8;
+}
