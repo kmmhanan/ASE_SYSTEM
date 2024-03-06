@@ -1,0 +1,63 @@
+<div class="blank-layout-container justify-content-center align-items-center bg-light-primary">
+  <div
+    class="position-relative row w-100 h-100 bg-gredient justify-content-center"
+  >
+    <div class="col-lg-4 d-flex align-items-center">
+      <mat-card class="cardWithShadow boxed-auth">
+        <mat-card-content class="p-32">
+          <div class="text-center">
+            <a [routerLink]="['/dashboard']">
+              <img
+                src="./assets/images/logos/logo.png"
+                class="align-middle m-2" width="150"
+                alt="logo"
+              />
+            </a>
+          </div>
+
+          <div class="or-border m-t-30">Login</div>
+
+          <form class="m-t-30" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+              >Email
+              <div class="input-error" *ngIf="email !=null && email.invalid && (email.dirty || email.touched)">
+                <div *ngIf="email.errors?.['required']">Required!</div>
+                <div *ngIf="email.errors?.['email']">Invalid email format!</div>
+              </div>
+              </mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput type="email" formControlName="email" />
+             
+            </mat-form-field>
+            
+
+            <!-- password -->
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+              >Password
+              <div class="input-error" *ngIf="password !=null && password.invalid && (password.dirty || password.touched)">
+                <div *ngIf="password.errors?.['required']">Required!</div>
+              </div>
+            </mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput type="password" formControlName="password" required />
+            </mat-form-field>
+
+            <button type="submit" [disabled]="form.invalid" mat-flat-button color="primary" class="w-100" >
+              Sign In
+            </button>
+            <!-- input -->
+          </form>
+          <!-- <span class="d-block f-w-500 text-center m-t-24"
+            >
+            <a
+              [routerLink]="['/authentication/register']"
+              class="text-decoration-none text-primary f-w-500 f-s-14"
+            >
+              Create an account</a
+            >
+          </span> -->
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
