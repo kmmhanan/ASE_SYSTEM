@@ -25,7 +25,7 @@ class PHomeScreen extends StatefulWidget {
 class _PHomeScreenState extends State<PHomeScreen> {
   final Completer<GoogleMapController> googleMapCompleterController = Completer<GoogleMapController>();
   GoogleMapController? controllerGoogleMap;
-  late Position currenctPositionOfUser;
+  Position? currenctPositionOfUser;
 
 // theme path in json
   void updateMapTheme(GoogleMapController controller) {
@@ -42,16 +42,17 @@ class _PHomeScreenState extends State<PHomeScreen> {
     controller.setMapStyle(googleMapStyle);
   }
 
-  
-  // getCurrentLiveLocationOfUser()async {
-  //   Position positionOfUser = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
-  //   currenctPositionOfUser = positionOfUser;
+  //get the users current location
+  getCurrentLiveLocationOfUser() async {
+    Position positionOfUser = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
+    currenctPositionOfUser = positionOfUser;
 
-  //   LatLng positionOfUserInLatLng  =  LatLng(currenctPositionOfUser.latitude, currenctPositionOfUser.longitude);
-  
-  //   CameraPosition cameraPosition = CameraPosition(target:positionOfUserInLatLng, zoom:15);
-  //   controllerGoogleMap!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-  // }
+    LatLng positionOfUserInLatLng = LatLng(currenctPositionOfUser!.latitude, currenctPositionOfUser!.longitude);
+
+    CameraPosition cameraPosition = CameraPosition(target: positionOfUserInLatLng, zoom: 18);
+    //display the current location of the user
+    controllerGoogleMap!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+  }
 
   bool isDropdownVisible = false;
   @override
@@ -91,8 +92,8 @@ class _PHomeScreenState extends State<PHomeScreen> {
 
               // black theme google map
               updateMapTheme(controllerGoogleMap!);
-
-          //    getCurrentLiveLocationOfUser();
+              // current location of the user
+              getCurrentLiveLocationOfUser();
             },
           ),
           SizedBox(
@@ -114,65 +115,65 @@ class _PHomeScreenState extends State<PHomeScreen> {
                 //   ],
                 // ),
                 const SizedBox(height: 56),
-                Container(
-                  margin: const EdgeInsets.all(16),
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 64),
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    color: Palette.black.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        style: TextStyle(color: Palette.white),
-                        decoration: InputDecoration(
-                          labelText: 'PICKUP',
-                          labelStyle: TextStyle(color: Palette.white),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Palette.white),
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Palette.white),
-                          ),
-                        ),
-                        cursorColor: Palette.white,
-                        autocorrect: false,
-                        textCapitalization: TextCapitalization.none,
-                      ),
-                      const SizedBox(height: 48),
-                      TextFormField(
-                        style: TextStyle(color: Palette.white),
-                        decoration: InputDecoration(
-                          labelText: 'DROP-OFF',
-                          labelStyle: TextStyle(color: Palette.white),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Palette.white),
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Palette.white),
-                          ),
-                        ),
-                        cursorColor: Palette.white,
-                        autocorrect: false,
-                        textCapitalization: TextCapitalization.none,
-                      ),
-                      const SizedBox(height: 64),
-                      FillButton(
-                        onTapped: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const PNearDrivers(),
-                            ),
-                          );
-                        },
-                        text: 'Search',
-                        color: Palette.mainColor30,
-                      ),
-                    ],
-                  ),
-                ),
+                // Container(
+                //   margin: const EdgeInsets.all(16),
+                //   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 64),
+                //   clipBehavior: Clip.antiAlias,
+                //   decoration: BoxDecoration(
+                //     color: Palette.black.withOpacity(0.3),
+                //     borderRadius: BorderRadius.circular(16),
+                //   ),
+                //   child: Column(
+                //     children: [
+                //       TextFormField(
+                //         style: TextStyle(color: Palette.white),
+                //         decoration: InputDecoration(
+                //           labelText: 'PICKUP',
+                //           labelStyle: TextStyle(color: Palette.white),
+                //           focusedBorder: UnderlineInputBorder(
+                //             borderSide: BorderSide(color: Palette.white),
+                //           ),
+                //           enabledBorder: UnderlineInputBorder(
+                //             borderSide: BorderSide(color: Palette.white),
+                //           ),
+                //         ),
+                //         cursorColor: Palette.white,
+                //         autocorrect: false,
+                //         textCapitalization: TextCapitalization.none,
+                //       ),
+                //       const SizedBox(height: 48),
+                //       TextFormField(
+                //         style: TextStyle(color: Palette.white),
+                //         decoration: InputDecoration(
+                //           labelText: 'DROP-OFF',
+                //           labelStyle: TextStyle(color: Palette.white),
+                //           focusedBorder: UnderlineInputBorder(
+                //             borderSide: BorderSide(color: Palette.white),
+                //           ),
+                //           enabledBorder: UnderlineInputBorder(
+                //             borderSide: BorderSide(color: Palette.white),
+                //           ),
+                //         ),
+                //         cursorColor: Palette.white,
+                //         autocorrect: false,
+                //         textCapitalization: TextCapitalization.none,
+                //       ),
+                //       const SizedBox(height: 64),
+                //       FillButton(
+                //         onTapped: () {
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //               builder: (context) => const PNearDrivers(),
+                //             ),
+                //           );
+                //         },
+                //         text: 'Search',
+                //         color: Palette.mainColor30,
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           ),

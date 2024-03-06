@@ -41,9 +41,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   signupvalidateForm() {
     if (nameTextEditingController.text.length < 3) {
       Fluttertoast.showToast(msg: "Name must be at least 3 Characters");
-    } else if (contactNumTextEditingController.text.isEmpty) {
-      Fluttertoast.showToast(msg: "Phone Number is required");
-    } else if (my_user.User.driver == !nicTextEditingController.text.contains(RegExp(r'^\d{9}[VX]|\d{12}$'))) {
+    } else if (contactNumTextEditingController.text.isEmpty || contactNumTextEditingController.text.length < 10) {
+      Fluttertoast.showToast(msg: "Phone Number is required and should be 10 characters long");
+    } else if (widget.user == my_user.User.driver && !nicTextEditingController.text.contains(RegExp(r'^\d{9}[VX]|d{9}[vx]|\d{12}$'))) {
       Fluttertoast.showToast(msg: "NIC is not Valid");
     } else if (!emailTextEditingController.text.contains("@")) {
       Fluttertoast.showToast(msg: "Email address is not Valid");
@@ -67,12 +67,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     // driver database
     if (widget.user == my_user.User.driver) {
-      final firebase_auth.User? firebaseUser = (await firebase_auth.FirebaseAuth.instance
+      final firebase_auth.User? firebaseDriver = (await firebase_auth.FirebaseAuth.instance
               .createUserWithEmailAndPassword(
         email: emailTextEditingController.text.trim(),
         password: passwordTextEditingController.text.trim(),
       )
               .catchError((errorMsg) {
+        Navigator.pop(context);
         Fluttertoast.showToast(msg: 'Error: $errorMsg');
       }))
           .user;
@@ -83,23 +84,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       //saving driver data to real time database
 
-      DatabaseReference driverRef = FirebaseDatabase.instance.ref().child("drivers").child(firebaseUser!.uid);
+      DatabaseReference driverRef = FirebaseDatabase.instance.ref().child("drivers").child(firebaseDriver!.uid);
       Map driverMap = {
-        "id": firebaseUser.uid,
+        "id": firebaseDriver.uid,
         "name": nameTextEditingController.text.trim(),
         "contactNum": contactNumTextEditingController.text.trim(),
         "email": emailTextEditingController.text.trim(),
         "nic": nicTextEditingController.text.trim(),
         "blockStatus": "no",
       };
-
+      // save the driver data nd pass the data to map
       driverRef.set(driverMap);
-      currentFirebaseUser = firebaseUser;
-      Fluttertoast.showToast(msg: 'Account has not been created');
+      currentFirebaseUser = firebaseDriver;
+      // Fluttertoast.showToast(msg: 'Account has   been created');
       Navigator.push(context, MaterialPageRoute(builder: ((context) => const CarInfoScreen())));
     }
 
-    // passenger database
+    /// passenger database - working fine
     if (widget.user == my_user.User.passenger) {
       final firebase_auth.User? firebaseUser = (await firebase_auth.FirebaseAuth.instance
               .createUserWithEmailAndPassword(
@@ -107,6 +108,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         password: passwordTextEditingController.text.trim(),
       )
               .catchError((errorMsg) {
+        Navigator.pop(context);
         Fluttertoast.showToast(msg: 'Error: $errorMsg');
       }))
           .user;
@@ -127,8 +129,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       };
 
       usersRef.set(usersMap);
-      currentFirebaseUser = firebaseUser;
-      Fluttertoast.showToast(msg: 'Account has not been created');
+      //   currentFirebaseUser = firebaseUser;
+      //   Fluttertoast.showToast(msg: 'Account has not been created');
       Navigator.push(
           context,
           MaterialPageRoute(

@@ -63,11 +63,11 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
                 ),
                 const SizedBox(height: 16),
                 CustomTextField(
-                  label: 'Car Model',
+                  label: 'Your Car Model',
                   controller: carModelTextEditingController,
                 ),
                 CustomTextField(
-                  label: 'Car Number',
+                  label: 'Your Car Number',
                   controller: carNumTextEditingController,
                 ),
                 const SizedBox(height: 16),
@@ -100,12 +100,6 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
                     if (carModelTextEditingController.text.isNotEmpty && carNumTextEditingController.text.isNotEmpty && selectedCarType != null) {
                       saveCarInfo();
                     }
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const RidePaymentScreen(),
-                    //   ),
-                    // );
                   },
                   text: 'Save Now',
                   color: Palette.mainColor30,
