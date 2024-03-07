@@ -14,6 +14,18 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "assets_audio_player",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/assets_audio_player-3.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "assets_audio_player_web",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/assets_audio_player_web-3.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "async",
       "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/async-2.11.0",
       "packageUri": "lib/",
@@ -164,6 +176,24 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "firebase_messaging",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/firebase_messaging-14.7.10",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "firebase_messaging_platform_interface",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/firebase_messaging_platform_interface-4.5.18",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "firebase_messaging_web",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/firebase_messaging_web-3.5.18",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "firebase_storage",
       "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/firebase_storage-11.6.0",
       "packageUri": "lib/",
@@ -188,6 +218,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "flutter_geofire",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/flutter_geofire-2.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_lints",
       "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/flutter_lints-3.0.1",
       "packageUri": "lib/",
@@ -198,6 +234,18 @@
       "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.17",
       "packageUri": "lib/",
       "languageVersion": "2.19"
+    },
+    {
+      "name": "flutter_polyline_points",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/flutter_polyline_points-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "flutter_rating_bar",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/flutter_rating_bar-4.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
     },
     {
       "name": "flutter_test",
@@ -225,7 +273,7 @@
     },
     {
       "name": "geolocator_android",
-      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/geolocator_android-4.4.1",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/geolocator_android-4.3.1",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
@@ -344,6 +392,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "loading_animation_widget",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/loading_animation_widget-1.2.0+4",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
       "name": "matcher",
       "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/matcher-0.12.16+1",
       "packageUri": "lib/",
@@ -362,6 +416,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "nested",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/nested-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "nm",
       "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/nm-0.5.0",
       "packageUri": "lib/",
@@ -372,6 +432,42 @@
       "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/path-1.9.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "path_provider",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/path_provider-2.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "path_provider_android",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/path_provider_android-2.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "path_provider_foundation",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/path_provider_foundation-2.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "path_provider_linux",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "path_provider_platform_interface",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/path_provider_platform_interface-2.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "path_provider_windows",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/path_provider_windows-2.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
     },
     {
       "name": "permission_handler",
@@ -410,10 +506,34 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "platform",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/platform-3.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "plugin_platform_interface",
       "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.8",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "provider",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/provider-6.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "restart_app",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/restart_app-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "rxdart",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/rxdart-0.27.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "sanitize_html",
@@ -432,12 +552,6 @@
       "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/source_span-1.10.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
-    },
-    {
-      "name": "sprintf",
-      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/sprintf-7.0.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
     },
     {
       "name": "stack_trace",
@@ -482,10 +596,58 @@
       "languageVersion": "2.17"
     },
     {
-      "name": "uuid",
-      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/uuid-4.2.2",
+      "name": "url_launcher",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/url_launcher-6.2.5",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "url_launcher_android",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "url_launcher_ios",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/url_launcher_ios-6.2.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "url_launcher_linux",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/url_launcher_linux-3.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "url_launcher_macos",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/url_launcher_macos-3.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "url_launcher_platform_interface",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/url_launcher_platform_interface-2.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "url_launcher_web",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/url_launcher_web-2.2.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "url_launcher_windows",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/url_launcher_windows-3.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "uuid",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/uuid-3.0.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "vector_math",
@@ -506,6 +668,18 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "win32",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/win32-5.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "xdg_directories",
+      "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/xdg_directories-1.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "xml",
       "rootUri": "file:///Users/kmmhanan/.pub-cache/hosted/pub.dev/xml-6.5.0",
       "packageUri": "lib/",
@@ -518,7 +692,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2024-03-07T09:05:04.782620Z",
+  "generated": "2024-03-07T09:17:17.942269Z",
   "generator": "pub",
   "generatorVersion": "3.3.0"
 }
