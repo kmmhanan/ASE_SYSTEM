@@ -8,14 +8,9 @@ import 'package:citytaxi/screens/passenger_screen/passenger_payment_screen.dart'
 import 'package:citytaxi/screens/success_message_screen.dart';
 import 'package:flutter/material.dart';
 
-class PReviewScreen extends StatefulWidget {
+class PReviewScreen extends StatelessWidget {
   const PReviewScreen({super.key});
 
-  @override
-  State<PReviewScreen> createState() => _PReviewScreenState();
-}
-
-class _PReviewScreenState extends State<PReviewScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultScreen(

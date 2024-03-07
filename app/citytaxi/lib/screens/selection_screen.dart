@@ -32,7 +32,7 @@ class SelectionScreen extends StatelessWidget {
             Expanded(
               child: Image.asset(
                 user == User.driver
-                    ? 'assets/logo/images/driverWelcome.png'
+                    ? 'assets/logo/welcome2.png'
                     : 'assets/logo/welcome.png',
                 // height: 450,
                 width: 450,

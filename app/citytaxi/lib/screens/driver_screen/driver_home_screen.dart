@@ -7,23 +7,11 @@ import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/screens/aboutus_screen.dart';
 import 'package:citytaxi/screens/driver_screen/available_hire.dart';
-import 'package:citytaxi/screens/driver_screen/drawer/earnings_page.dart';
-import 'package:citytaxi/screens/driver_screen/drawer/trip_page.dart';
-import 'package:citytaxi/screens/driver_screen/drawer/drivers_trips_history_page.dart';
-import 'package:citytaxi/screens/driver_screen/driver_profile_screen.dart';
-import 'package:citytaxi/screens/pushNotification/push_notification_system.dart';
 import 'package:citytaxi/screens/profile_screen.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
 import 'package:citytaxi/utils/global/global_variables.dart';
-import 'package:citytaxi/utils/methods/map_theme_methods.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_geofire/flutter_geofire.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class DHomeScreen extends StatefulWidget {
@@ -36,104 +24,25 @@ class DHomeScreen extends StatefulWidget {
 class _DHomeScreenState extends State<DHomeScreen> {
   final Completer<GoogleMapController> googleMapCompleterController = Completer<GoogleMapController>();
   GoogleMapController? controllerGoogleMap;
-  Position? currenctPositionOfDriver;
+
+// theme path in json
+  void updateMapTheme(GoogleMapController controller) {
+    getJsonFileFromThemes("themes/retro_style.json").then((value) => setGoogleMapStyle(value, controller));
+  }
+
+  // make it into byte form
+  Future<String> getJsonFileFromThemes(String mapStylePath) async {
+    ByteData byteData = await rootBundle.load(mapStylePath);
+    var list = byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
+    return utf8.decode(list);
+  }
+
+  setGoogleMapStyle(String googleMapStyle, GoogleMapController controller) {
+    controller.setMapStyle(googleMapStyle);
+  }
+
   bool isDropdownVisible = false;
-  Color colorToShow = Palette.green;
-  String titleToShow = "Available";
-  bool isDriverAvailable = false;
-  DatabaseReference? newTripRequestReference;
-  MapThemeMethods themeMethods = MapThemeMethods();
-
-  //get the drivers current location
-  getCurrentLiveLocationOfDriver() async {
-    Position positionOfUser = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
-    currenctPositionOfDriver = positionOfUser;
-    driverCurrentPosition = currenctPositionOfDriver;
-
-    LatLng positionOfUserInLatLng = LatLng(currenctPositionOfDriver!.latitude, currenctPositionOfDriver!.longitude);
-
-    CameraPosition cameraPosition = CameraPosition(target: positionOfUserInLatLng, zoom: 18);
-    //display the current location of the user
-    controllerGoogleMap!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-  }
-
-  // go online now
-  Available() {
-    // all drivers who are available for new trip requests
-    Geofire.initialize("onlineDrivers");
-
-    // initialize set location
-    Geofire.setLocation(
-      FirebaseAuth.instance.currentUser!.uid, // driver id
-      currenctPositionOfDriver!.latitude,
-      currenctPositionOfDriver!.longitude,
-    );
-
-    newTripRequestReference = FirebaseDatabase.instance.ref().child("drivers").child(FirebaseAuth.instance.currentUser!.uid).child("newTripStatus");
-    newTripRequestReference!.set("waiting");
-
-    newTripRequestReference!.onValue.listen((event) {});
-  }
-
-  setAndGetLocationUpdates() {
-    positionStreamDHomePage = Geolocator.getPositionStream().listen((Position position) {
-      currenctPositionOfDriver = position;
-
-      // live location sharing if the driver is online
-      if (isDriverAvailable) {
-        Geofire.setLocation(
-          FirebaseAuth.instance.currentUser!.uid,
-          currenctPositionOfDriver!.latitude,
-          currenctPositionOfDriver!.longitude,
-        );
-      }
-      LatLng positionLatLng = LatLng(
-        position.latitude,
-        position.longitude,
-      );
-      //
-      controllerGoogleMap!.animateCamera(CameraUpdate.newLatLng(positionLatLng));
-    });
-  }
-
-// go offline now
-  Busy() {
-    //stop sharing live location updates
-    Geofire.removeLocation(FirebaseAuth.instance.currentUser!.uid);
-
-    // stop listening to the newTripStatus
-    newTripRequestReference!.onDisconnect();
-    newTripRequestReference!.remove();
-    newTripRequestReference = null;
-  }
-
-  initializePushNotificationSystem() {
-    PushNotificationSystem notificationSystem = PushNotificationSystem();
-    notificationSystem.generateDeviceRegistrationToken();
-    notificationSystem.startListeningForNewNotification(context);
-  }
-
-  retrieveCurrentDriverInfo() async {
-    await FirebaseDatabase.instance.ref().child("drivers").child(FirebaseAuth.instance.currentUser!.uid).once().then((snap) {
-      driverName = (snap.snapshot.value as Map)["name"];
-      driverPhone = (snap.snapshot.value as Map)["contactNum"];
-      // (snap.snapshot.value as Map)["email"];
-      // (snap.snapshot.value as Map)["nic"];
-      carModel = (snap.snapshot.value as Map)["car_details"]["car_model"];
-      carNumber = (snap.snapshot.value as Map)["car_details"]["car_num"];
-      carType = (snap.snapshot.value as Map)["car_details"]["type"];
-    });
-
-    initializePushNotificationSystem();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    retrieveCurrentDriverInfo();
-  }
-
+  bool isAvailable = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,9 +52,8 @@ class _DHomeScreenState extends State<DHomeScreen> {
         backgroundColor: Palette.mainColor60,
         toolbarHeight: 56,
         elevation: 0,
-        centerTitle: true,
         title: Text(
-          'Drive More   -   Earn More',
+          'Driver ',
           style: Theme.of(context).textTheme.normal18,
         ),
         actions: [
@@ -155,16 +63,12 @@ class _DHomeScreenState extends State<DHomeScreen> {
                 isDropdownVisible = !isDropdownVisible;
               });
             },
-            icon: Icon(
-              Icons.menu,
-              color: Palette.white,
-            ),
+            icon: const Icon(Icons.menu),
           ),
         ],
       ),
       body: Stack(
         children: [
-          // google map
           GoogleMap(
             mapType: MapType.normal,
             myLocationEnabled: true,
@@ -173,179 +77,90 @@ class _DHomeScreenState extends State<DHomeScreen> {
               googleMapCompleterController.complete(mapController);
               controllerGoogleMap = mapController;
 
-              //   theme google map
-              themeMethods.updateMapTheme(controllerGoogleMap!);
-
-              // live location
-              getCurrentLiveLocationOfDriver();
+              // black theme google map
+              updateMapTheme(controllerGoogleMap!);
             },
           ),
+          SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.bottom - 56,
+              padding: EdgeInsets.only(
+                left: 16,
+                top: MediaQuery.of(context).padding.top + 24,
+                right: 16,
+                bottom: MediaQuery.of(context).padding.bottom + 48,
+              ),
+              child: Column(
+                children: [
+                  // Container(
+                  //   width: double.infinity,
+                  //   padding: const EdgeInsets.symmetric(
+                  //     horizontal: 16,
+                  //     vertical: 24,
+                  //   ),
+                  //   decoration: BoxDecoration(
+                  //     color: Palette.black.withOpacity(0.3),
+                  //     borderRadius: BorderRadius.circular(16),
+                  //   ),
+                  //   child: Column(
+                  //     children: [
+                  //       Text(
+                  //         'Drive More, Earn More.',
+                  //         style: Theme.of(context).textTheme.bold18,
+                  //       ),
+                  //       const SizedBox(height: 16),
+                  //       ClipRRect(
+                  //         borderRadius: BorderRadius.circular(16),
+                  //         child: Image.asset(
+                  //           'assets/logo/images/map.png',
+                  //           height: 300,
+                  //           width: double.infinity,
+                  //           fit: BoxFit.cover,
+                  //         ),
+                  //       ),
+                  //       const SizedBox(height: 16),
+                  //       Text(
+                  //         'Drive Safe... 😊',
+                  //         style: Theme.of(context).textTheme.normal16,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
 
-          //
-          Container(
-            height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.bottom - 56,
-            padding: EdgeInsets.only(
-              left: 16,
-              top: MediaQuery.of(context).padding.top + 24,
-              right: 16,
-              bottom: MediaQuery.of(context).padding.bottom + 16,
-            ),
-            child: Column(
-              children: [
-                // old ui
-                // Container(
-                //   width: double.infinity,
-                //   padding: const EdgeInsets.symmetric(
-                //     horizontal: 16,
-                //     vertical: 24,
-                //   ),
-                //   decoration: BoxDecoration(
-                //     color: Palette.black.withOpacity(0.3),
-                //     borderRadius: BorderRadius.circular(16),
-                //   ),
-                //   child: Column(
-                //     children: [
-                //       Text(
-                //         'Drive More, Earn More.',
-                //         style: Theme.of(context).textTheme.bold18,
-                //       ),
-                //       const SizedBox(height: 16),
-                //       ClipRRect(
-                //         borderRadius: BorderRadius.circular(16),
-                //         child: Image.asset(
-                //           'assets/logo/images/map.png',
-                //           height: 300,
-                //           width: double.infinity,
-                //           fit: BoxFit.cover,
-                //         ),
-                //       ),
-                //       const SizedBox(height: 16),
-                //       Text(
-                //         'Drive Safe... 😊',
-                //         style: Theme.of(context).textTheme.normal16,
-                //       ),
-                //     ],
-                //   ),
-                // ),
-
-                // go online, offline
-                const Expanded(child: SizedBox()),
-
-                // if (!isAvailable)
-                //   BorderButton(
-                //       onTapped: () {
-                //         Navigator.push(context, MaterialPageRoute(builder: (context) => const AvailableHire()));
-                //       },
-                //       text: 'View Hire List'),
-                // const SizedBox(height: 16),
-                // available
-                FillButton(
-                  onTapped: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isDismissible: false,
-                      builder: (BuildContext context) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: Colors.black87,
-                          ),
-                          height: 240,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 18),
-                            child: Column(
-                              children: [
-                                SizedBox(height: 11),
-                                Text(
-                                  (!isDriverAvailable) ? "Available" : "Busy",
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.normal18,
-                                ),
-                                SizedBox(height: 21),
-                                Text(
-                                  (!isDriverAvailable) ? "You are about to go online, you will be become available to receieve trip requests from Users" : "You are about to go offline, you will stop receiving new trip requests from users",
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.normal16.copyWith(color: Colors.white70),
-                                ),
-                                SizedBox(height: 25),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text(
-                                            "BACK",
-                                            style: Theme.of(context).textTheme.normal13.copyWith(color: Palette.black),
-                                          )),
-                                    ),
-                                    SizedBox(width: 16),
-                                    // confirm
-                                    Expanded(
-                                      child: ElevatedButton(
-                                          onPressed: () {
-                                            if (!isDriverAvailable) {
-                                              // go online
-                                              Available();
-
-                                              // get driver location updates
-                                              setAndGetLocationUpdates();
-
-                                              Navigator.pop(context);
-
-                                              setState(() {
-                                                colorToShow = Palette.red;
-                                                titleToShow = "Busy";
-                                                isDriverAvailable = true;
-                                              });
-                                            } else {
-                                              // go offline
-                                              Busy();
-                                              Navigator.pop(context);
-
-                                              setState(() {
-                                                colorToShow = Palette.green;
-                                                titleToShow = "Available";
-                                                isDriverAvailable = false;
-                                              });
-                                            }
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: (titleToShow == "Available") ? Palette.green : Palette.red,
-                                          ),
-                                          child: Text(
-                                            "CONFIRM",
-                                            style: Theme.of(context).textTheme.normal13.copyWith(color: Palette.black),
-                                          )),
-                                    ),
-                                  ],
-                                )
-                              ],
+                  const Expanded(child: SizedBox()),
+                  if (!isAvailable)
+                    BorderButton(
+                        onTapped: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AvailableHire(),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                    // setState(() {
-                    //   isAvailable = !isAvailable;
-                    // });
-                  },
-                  text: titleToShow,
-                  color: colorToShow,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Change Status',
-                  style: Theme.of(context).textTheme.normal16.copyWith(color: Palette.black),
-                )
-              ],
+                          );
+                        },
+                        text: 'View Hire List'),
+                  const SizedBox(height: 16),
+                  FillButton(
+                    onTapped: () {
+                      setState(() {
+                        isAvailable = !isAvailable;
+                      });
+                    },
+                    text: isAvailable ? 'Available' : 'BUSY',
+                    color: isAvailable ? Palette.green : Palette.red,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Change Status',
+                    style: Theme.of(context).textTheme.normal16,
+                  )
+                ],
+              ),
             ),
           ),
-
-          // profile drawer
           Positioned(
-            top: 0.0,
-            right: 16.0,
+            top: 0.0, // Adjust the top position as needed
+            right: 16.0, // Adjust the right position as needed
             child: Visibility(
               visible: isDropdownVisible,
               child: Container(
@@ -369,27 +184,7 @@ class _DHomeScreenState extends State<DHomeScreen> {
                     const HomeDropdown(
                       name: 'Profile',
                       icon: Icons.account_circle_rounded,
-                      goTo: DriverProfileScreen(),
-                      //ProfileScreen(),
-                    ),
-
-                    Container(width: 120, height: 1, color: Palette.black),
-                    const HomeDropdown(
-                      name: 'Total Trips',
-                      icon: Icons.lightbulb_circle,
-                      goTo: TripsPage(),
-                    ),
-                    Container(width: 120, height: 1, color: Palette.black),
-                    const HomeDropdown(
-                      name: 'Earnings',
-                      icon: Icons.lightbulb_circle,
-                      goTo: EarningsPage(),
-                    ),
-                    Container(width: 120, height: 1, color: Palette.black),
-                    const HomeDropdown(
-                      name: 'Trip History',
-                      icon: Icons.lightbulb_circle,
-                      goTo: DriversTripsHistoryPage(),
+                      goTo: ProfileScreen(),
                     ),
                     Container(width: 120, height: 1, color: Palette.black),
                     const HomeDropdown(
@@ -398,19 +193,10 @@ class _DHomeScreenState extends State<DHomeScreen> {
                       goTo: AboutusScreen(),
                     ),
                     Container(width: 120, height: 1, color: Palette.black),
-                    HomeDropdown(
+                    const HomeDropdown(
                       name: 'Signout',
                       icon: Icons.exit_to_app_rounded,
-                      onSignOut: () async {
-                        await FirebaseAuth.instance.signOut();
-                        Fluttertoast.showToast(msg: 'Signed out successfully');
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const WelcomeScreen(),
-                          ),
-                        );
-                      },
+                      goTo: WelcomeScreen(),
                     ),
 
                     // Add more options as needed

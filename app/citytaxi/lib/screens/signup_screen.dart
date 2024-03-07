@@ -3,7 +3,7 @@ import 'package:citytaxi/components/default_screen.dart';
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/screens/driver_screen/car_info_screen.dart';
-import 'package:citytaxi/utils/authentication/firebase_auth_services.dart';
+import 'package:citytaxi/utils/firebase_auth_services.dart';
 import 'package:citytaxi/utils/methods/common_methods.dart';
 import 'package:citytaxi/components/progress_dialog.dart';
 import 'package:citytaxi/screens/login_screen.dart';
@@ -72,9 +72,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         email: emailTextEditingController.text.trim(),
         password: passwordTextEditingController.text.trim(),
       )
-              .catchError((msg) {
+              .catchError((errorMsg) {
         Navigator.pop(context);
-        Fluttertoast.showToast(msg: 'Error: $msg');
+        Fluttertoast.showToast(msg: 'Error: $errorMsg');
       }))
           .user;
 
@@ -96,8 +96,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       // save the driver data nd pass the data to map
       driverRef.set(driverMap);
       currentFirebaseUser = firebaseDriver;
-      //  Fluttertoast.showToast(msg: 'Account has been created');
-      Navigator.push(context, MaterialPageRoute(builder: ((context) => CarInfoScreen())));
+      // Fluttertoast.showToast(msg: 'Account has   been created');
+      Navigator.push(context, MaterialPageRoute(builder: ((context) => const CarInfoScreen())));
     }
 
     /// passenger database - working fine
@@ -173,13 +173,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
               CustomTextField(
                 label: 'Name',
                 controller: nameTextEditingController,
-                keyBoardType: TextInputType.name,
               ),
               const SizedBox(height: 16),
               CustomTextField(
                 label: 'Contact Number',
                 controller: contactNumTextEditingController,
-                keyBoardType: TextInputType.phone,
               ),
               if (widget.user == my_user.User.driver) const SizedBox(height: 16),
               if (widget.user == my_user.User.driver)
@@ -191,7 +189,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               CustomTextField(
                 label: 'Email Address',
                 controller: emailTextEditingController,
-                keyBoardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 16),
               CustomTextField(

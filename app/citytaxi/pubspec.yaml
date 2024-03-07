@@ -50,17 +50,6 @@ dependencies:
   google_maps_flutter: ^2.5.3
   permission_handler:
   geolocator: ^11.0.0
-  http:
-  provider:
-  flutter_polyline_points:
-  loading_animation_widget:
-  flutter_geofire:
-  firebase_messaging:
-  restart_app:
-  assets_audio_player:
-  url_launcher:
-  # smooth_star_rating:
-  flutter_rating_bar:
 
 dev_dependencies:
   flutter_test:
@@ -90,7 +79,6 @@ flutter:
     - assets/logo/icons/
     - assets/logo/images/
     - themes/
-    - assets/audio/
     # - assets/logo/applogo.png
     # - assets/logo/carlogo.png
     # - assets/logo/welcome.png

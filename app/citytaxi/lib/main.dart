@@ -2,11 +2,9 @@ import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/firebase_options.dart';
 import 'package:citytaxi/screens/splash_screen.dart';
 import 'package:citytaxi/screens/welcome_screen.dart';
-import 'package:citytaxi/utils/appInfo/app_info.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,13 +17,6 @@ Future<void> main() async {
     }
   });
 
-  await Permission.notification.isDenied.then((valueOfPermission) {
-    if (valueOfPermission) {
-      Permission.notification.request();
-    }
-  });
-  
-
   runApp(const MyApp());
 }
 
@@ -35,16 +26,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AppInfo(),
-      child: MaterialApp(
-        title: 'CityTaxi',
-        theme: ThemeData(
-          primaryColor: Palette.mainColor60,
-          fontFamily: 'Merriweather Sans',
-        ),
-        home: const SplashScreen(),
+    return MaterialApp(
+      title: 'CityTaxi',
+      theme: ThemeData(
+        primaryColor: Palette.mainColor60,
+        fontFamily: 'Merriweather Sans',
       ),
+      home: const SplashScreen(),
     );
   }
 }

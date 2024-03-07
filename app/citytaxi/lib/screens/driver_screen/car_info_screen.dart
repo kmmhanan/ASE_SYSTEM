@@ -5,7 +5,7 @@ import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/models/user_model.dart';
 import 'package:citytaxi/screens/login_screen.dart';
-import 'package:citytaxi/utils/authentication/firebase_auth_services.dart';
+import 'package:citytaxi/utils/firebase_auth_services.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -21,15 +21,11 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
   final TextEditingController carModelTextEditingController = TextEditingController();
   final TextEditingController carNumTextEditingController = TextEditingController();
 
-  List<String> carTypesList = [
-    "cityTaxi-x",
-    "cityTaxi-go",
-    "bike"
-  ];
+  List<String> carTypesList = ["cityTaxi-x", "cityTaxi-go", "bike"];
   String? selectedCarType;
 
   saveCarInfo() {
-    // DatabaseReference driverRef = FirebaseDatabase.instance.ref().child("drivers").child(currentFirebaseUser!.uid).child("car_details");
+    DatabaseReference driverRef = FirebaseDatabase.instance.ref().child("drivers").child(currentFirebaseUser!.uid).child("car_details");
 
     Map driverCarInfoMap = {
       "car_model": carModelTextEditingController.text.trim(),
@@ -37,11 +33,14 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
       "type": selectedCarType,
     };
 
-    DatabaseReference driverRef = FirebaseDatabase.instance.ref().child("drivers").child(currentFirebaseUser!.uid).child("car_details");
-
     driverRef.set(driverCarInfoMap);
-    Fluttertoast.showToast(msg: 'Car Details has been saved. You can Login Now');
-    Navigator.push(context, MaterialPageRoute(builder: ((context) => const LoginScreen(user: User.driver))));
+    Fluttertoast.showToast(msg: 'Car Details has been saved. Congratulations');
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: ((context) => const LoginScreen(
+                  user: User.driver,
+                ))));
   }
 
   @override
