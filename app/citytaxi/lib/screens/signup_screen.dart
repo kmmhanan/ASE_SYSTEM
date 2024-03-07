@@ -3,7 +3,7 @@ import 'package:citytaxi/components/default_screen.dart';
 import 'package:citytaxi/constants/palette.dart';
 import 'package:citytaxi/constants/strings.dart';
 import 'package:citytaxi/screens/driver_screen/car_info_screen.dart';
-import 'package:citytaxi/utils/firebase_auth_services.dart';
+import 'package:citytaxi/utils/authentication/firebase_auth_services.dart';
 import 'package:citytaxi/utils/methods/common_methods.dart';
 import 'package:citytaxi/components/progress_dialog.dart';
 import 'package:citytaxi/screens/login_screen.dart';
@@ -72,15 +72,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
         email: emailTextEditingController.text.trim(),
         password: passwordTextEditingController.text.trim(),
       )
-              .catchError((errorMsg) {
+              .catchError((msg) {
         Navigator.pop(context);
-        Fluttertoast.showToast(msg: 'Error: $errorMsg');
       }))
           .user;
 
-      if (!context.mounted) return;
-      Navigator.pop(context);
-      Fluttertoast.showToast(msg: 'Account has been created');
+      if (context.mounted) {
+        await Fluttertoast.showToast(msg: 'Account has been created Sucessfully, Please Enter Your Car Details');
+        // await Fluttertoast.showToast(msg: 'Account has been created');
+        // await Navigator.push(context, MaterialPageRoute(builder: ((context) => CarInfoScreen())));
+
+        Navigator.pop(context);
+      } else {
+        Fluttertoast.showToast(msg: 'Account Creation Failed! Try Again Later');
+
+        return;
+      }
 
       //saving driver data to real time database
 
@@ -93,29 +100,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
         "nic": nicTextEditingController.text.trim(),
         "blockStatus": "no",
       };
+
       // save the driver data nd pass the data to map
+      // try {
+      //   driverRef.set(driverMap);
+      //   currentFirebaseUser = firebaseDriver;
+      //   await Navigator.push(context, MaterialPageRoute(builder: ((context) => CarInfoScreen())));
+      //   await Fluttertoast.showToast(msg: 'Account has been created');
+      // } catch (e) {
+      //   await Fluttertoast.showToast(msg: 'Driver Registration Failed!');
+      // }
       driverRef.set(driverMap);
       currentFirebaseUser = firebaseDriver;
-      // Fluttertoast.showToast(msg: 'Account has   been created');
-      Navigator.push(context, MaterialPageRoute(builder: ((context) => const CarInfoScreen())));
+      await Navigator.push(context, MaterialPageRoute(builder: ((context) => CarInfoScreen())));
+      // await Fluttertoast.showToast(msg: 'Account has been created');
+      // Fluttertoast.showToast(msg: 'Account has been created');
     }
 
     /// passenger database - working fine
+
     if (widget.user == my_user.User.passenger) {
       final firebase_auth.User? firebaseUser = (await firebase_auth.FirebaseAuth.instance
               .createUserWithEmailAndPassword(
         email: emailTextEditingController.text.trim(),
         password: passwordTextEditingController.text.trim(),
       )
-              .catchError((errorMsg) {
-        Navigator.pop(context);
-        Fluttertoast.showToast(msg: 'Error: $errorMsg');
-      }))
+              .catchError(
+        (errorMsg) {
+          // Fluttertoast.showToast(msg: 'Pessenger Registration Failed!');
+          // Navigator.pop(context);
+        },
+      ))
           .user;
 
-      if (!context.mounted) return;
-      Navigator.pop(context);
-      Fluttertoast.showToast(msg: 'Account has been created');
+      if (context.mounted) {
+        await Fluttertoast.showToast(msg: 'Account has been created');
+        // Navigator.pop(context);
+      } else {
+        await Fluttertoast.showToast(msg: 'Pessenger Registration Failed!');
+        return;
+      }
 
       // saving passenger data to real time database
       DatabaseReference usersRef = FirebaseDatabase.instance.ref().child("passengers").child(firebaseUser!.uid);
@@ -130,7 +154,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       usersRef.set(usersMap);
       //   currentFirebaseUser = firebaseUser;
-      //   Fluttertoast.showToast(msg: 'Account has not been created');
+      await Fluttertoast.showToast(msg: 'Your Car Details Successfully Saved');
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -154,12 +178,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       widget: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height - 56,
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             left: 16,
-            top: MediaQuery.of(context).padding.top,
             right: 16,
-            bottom: MediaQuery.of(context).padding.bottom + 48,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,11 +194,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
               CustomTextField(
                 label: 'Name',
                 controller: nameTextEditingController,
+                keyBoardType: TextInputType.name,
               ),
               const SizedBox(height: 16),
               CustomTextField(
                 label: 'Contact Number',
                 controller: contactNumTextEditingController,
+                keyBoardType: TextInputType.phone,
               ),
               if (widget.user == my_user.User.driver) const SizedBox(height: 16),
               if (widget.user == my_user.User.driver)
@@ -189,13 +212,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               CustomTextField(
                 label: 'Email Address',
                 controller: emailTextEditingController,
+                keyBoardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 16),
               CustomTextField(
                 label: 'Password',
                 controller: passwordTextEditingController,
               ),
-              const Expanded(child: SizedBox()),
+              const SizedBox(height: 48),
               FillButton(
                 onTapped: () {
                   checkIfNetworkIsAvailable();
@@ -231,6 +255,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ],
               ),
+              const SizedBox(height: 32),
             ],
           ),
         ),
