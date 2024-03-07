@@ -1,0 +1,12 @@
+:root {
+  /* Main Colors - Solid */
+  --color60: #3a2a46;
+  --color30: #6c97b1;
+  --color10: #8500ed;
+  --colorBlack: #000000;
+  --colorWhite: #ffffff;
+  --colorWhite30: #ffffff4d;
+  --colorBlack20: #00000033;
+  --colorBlack30: #0000004d;
+  --icon-BG: linear-gradient(135deg, var(--color30) 0%, var(--color10) 136.53%);
+}

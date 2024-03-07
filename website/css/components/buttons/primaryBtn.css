@@ -1,0 +1,11 @@
+.pBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 56px;
+  padding: 8px 24px;
+  border-radius: 8px;
+  font-size: var(--font-size-24);
+  color: var(--colorWhite);
+  background: var(--icon-BG);
+}
